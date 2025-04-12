@@ -1,5 +1,6 @@
 package acr.appcradle.shoppinglist.ui.screens.lists_all.nav
 
+import acr.appcradle.shoppinglist.ui.AppViewModel
 import acr.appcradle.shoppinglist.ui.screens.lists_all.ListsAll
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
@@ -14,8 +15,11 @@ data object ListsAllRoute
 fun NavController.navigateListsAll() = navigate(route = ListsAllRoute)
 
 fun NavGraphBuilder.listsAll(
+    viewModel: AppViewModel
 ) {
     composable<ListsAllRoute> {
-        ListsAll()
+        ListsAll(
+            viewModel = viewModel
+        )
     }
 }

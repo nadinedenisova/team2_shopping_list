@@ -1,5 +1,6 @@
 package acr.appcradle.shoppinglist
 
+import acr.appcradle.shoppinglist.ui.AppViewModel
 import acr.appcradle.shoppinglist.ui.screens.greeting.nav.GreetingRoute
 import acr.appcradle.shoppinglist.ui.screens.greeting.nav.greeting
 import acr.appcradle.shoppinglist.ui.screens.lists_all.nav.listsAll
@@ -18,12 +19,14 @@ fun AppNavHost(
 ) {
     val navController = rememberNavController()
 
+    val viewModel = AppViewModel()
+
     NavHost(
         navController = navController,
         startDestination = GreetingRoute,
         modifier = modifier.padding(scaffoldPaddings),
     ) {
-        greeting { navController.navigateListsAll() }
-        listsAll()
+        greeting(onClick = { navController.navigateListsAll() })
+        listsAll(viewModel = viewModel)
     }
 }
