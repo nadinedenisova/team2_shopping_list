@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
+    id ("kotlinx-serialization")
 }
 
 android {
@@ -63,7 +64,11 @@ dependencies {
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
 
+    //Navigation
+    implementation(libs.androidx.navigation.compose)
 
+    //Serialize JSON
+    implementation(libs.kotlinx.serialization.json)
 }
 
 
