@@ -1,6 +1,6 @@
 package acr.appcradle.shoppinglist.ui.screens.greeting.nav
 
-import acr.appcradle.shoppinglist.ui.screens.greeting.Greeting
+import acr.appcradle.shoppinglist.ui.screens.greeting.GreetingScreen
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
@@ -18,6 +18,6 @@ fun NavGraphBuilder.greeting(
     onClick: () -> Unit
 ) {
     composable<GreetingRoute> {
-        Greeting(onClick = onClick)
+        GreetingScreen(onClick = onClick)
     }
 }

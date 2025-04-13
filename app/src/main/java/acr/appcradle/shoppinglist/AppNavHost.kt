@@ -3,6 +3,7 @@ package acr.appcradle.shoppinglist
 import acr.appcradle.shoppinglist.ui.AppViewModel
 import acr.appcradle.shoppinglist.ui.screens.greeting.nav.GreetingRoute
 import acr.appcradle.shoppinglist.ui.screens.greeting.nav.greeting
+import acr.appcradle.shoppinglist.ui.screens.list_creation.nav.creationScreen
 import acr.appcradle.shoppinglist.ui.screens.lists_all.nav.listsAll
 import acr.appcradle.shoppinglist.ui.screens.lists_all.nav.navigateListsAll
 import androidx.compose.foundation.layout.PaddingValues
@@ -26,7 +27,8 @@ fun AppNavHost(
         startDestination = GreetingRoute,
         modifier = modifier.padding(scaffoldPaddings),
     ) {
-        greeting(onClick = { navController.navigateListsAll() })
+        greeting { navController.navigateListsAll() }
         listsAll(viewModel = viewModel)
+        creationScreen { }
     }
 }

@@ -16,6 +16,7 @@ val RubikFontFamily = FontFamily(
 data class CustomTypography(
     val headlineLarge: TextStyle,
     val headlineSmall: TextStyle,
+    val titleLarge: TextStyle,
     val bodyLarge: TextStyle,
 )
 
@@ -32,6 +33,13 @@ val Typography = CustomTypography(
         fontWeight = FontWeight.W400,
         fontSize = 24.sp,
         lineHeight = 32.sp,
+        letterSpacing = 0.sp
+    ),
+    titleLarge = TextStyle(
+        fontFamily = RubikFontFamily,
+        fontWeight = FontWeight.W400,
+        fontSize = 22.sp,
+        lineHeight = 28.sp,
         letterSpacing = 0.sp
     ),
     bodyLarge = TextStyle(
