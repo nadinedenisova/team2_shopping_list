@@ -13,24 +13,33 @@ val RubikFontFamily = FontFamily(
     Font(R.font.rubik_variablefont_wght, FontWeight.W500, FontStyle.Normal),
 )
 
+data class CustomTypography(
+    val headlineLarge: TextStyle,
+    val headlineSmall: TextStyle,
+    val bodyLarge: TextStyle,
+)
+
 val Typography = CustomTypography(
-    header = TextStyle(
+    headlineLarge = TextStyle(
         fontFamily = RubikFontFamily,
         fontWeight = FontWeight.W400,
-        fontSize = 30.sp,
-        lineHeight = 36.sp,
+        fontSize = 40.sp,
+        lineHeight = 40.sp,
         letterSpacing = 0.sp
     ),
-    body = TextStyle(
+    headlineSmall = TextStyle(
         fontFamily = RubikFontFamily,
-        fontWeight = FontWeight.SemiBold,
-        fontSize = 20.sp,
-        lineHeight = 28.sp,
+        fontWeight = FontWeight.W400,
+        fontSize = 24.sp,
+        lineHeight = 32.sp,
         letterSpacing = 0.sp
+    ),
+    bodyLarge = TextStyle(
+        fontFamily = RubikFontFamily,
+        fontWeight = FontWeight.W400,
+        fontSize = 16.sp,
+        lineHeight = 24.sp,
+        letterSpacing = 0.5.sp
     ),
 )
 
-data class CustomTypography(
-    val header: TextStyle,
-    val body: TextStyle,
-)
