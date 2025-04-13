@@ -5,14 +5,15 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
+import androidx.navigation.navOptions
 import kotlinx.serialization.Serializable
 
 
 @Serializable
 data object ListCreationRoute
 
-fun NavController.navigateToListCreation(navOptions: NavOptions) =
-    navigate(route = ListCreationRoute, navOptions)
+fun NavController.navigateToListCreation() =
+    navigate(route = ListCreationRoute)
 
 
 fun NavGraphBuilder.creationScreen(

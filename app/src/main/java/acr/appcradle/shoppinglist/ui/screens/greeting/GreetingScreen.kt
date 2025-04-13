@@ -52,7 +52,7 @@ fun GreetingScreen(onClick: () -> Unit) {
         Spacer(Modifier.weight(1f))
         AppLargeButton(
             text = "Начать",
-            onClick = { onClick }
+            onClick = { onClick() }
         )
     }
 }
