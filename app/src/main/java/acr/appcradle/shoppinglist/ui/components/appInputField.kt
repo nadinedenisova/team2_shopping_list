@@ -47,8 +47,6 @@ fun appInputField(
                     modifier = Modifier.clickable { inputText = "" },
                     imageVector = Icons.Default.Clear, contentDescription = null
                 )
-            else
-                null
         },
         leadingIcon = {
             if (isSearchIconNeeded)
@@ -68,7 +66,7 @@ fun Preview() {
         Surface {
             appInputField(
                 placeholderText = "Введите название списка",
-                isSearchIconNeeded = true
+                isSearchIconNeeded = false
             )
         }
     }

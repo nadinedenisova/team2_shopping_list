@@ -12,4 +12,11 @@ val Pink40 = Color(0xFF7D5260)
 
 
 //Custom
-val tortoise =Color(0xFF147A85)
+val tortoise = Color(0xFF147A85)
+val iconsBg = Color(0xFFCBCCCC)
+
+val additionalColorGreen = Color(0xFFB4D8CC)
+val additionalColorPurple = Color(0xFFBDBAD8)
+val additionalColorBlue = Color(0xFF96CDE4)
+val additionalColorRed = Color(0xFFE7ABA7)
+val additionalColorYellow = Color(0xFFFCE7A2)
