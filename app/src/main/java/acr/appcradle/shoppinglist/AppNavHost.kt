@@ -21,7 +21,6 @@ fun AppNavHost(
     modifier: Modifier = Modifier
 ) {
     val navController = rememberNavController()
-
     val viewModel = AppViewModel()
 
     NavHost(

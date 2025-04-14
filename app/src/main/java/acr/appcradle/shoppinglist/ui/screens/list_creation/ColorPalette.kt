@@ -2,6 +2,7 @@ package acr.appcradle.shoppinglist.ui.screens.list_creation
 
 import acr.appcradle.shoppinglist.model.NewListData
 import acr.appcradle.shoppinglist.ui.theme.ShoppingListTheme
+import acr.appcradle.shoppinglist.ui.theme.Typography
 import acr.appcradle.shoppinglist.ui.theme.additionalColorBlue
 import acr.appcradle.shoppinglist.ui.theme.additionalColorGreen
 import acr.appcradle.shoppinglist.ui.theme.additionalColorPurple
@@ -51,7 +52,8 @@ fun ColorPalette(
         Column {
             Text(
                 modifier = Modifier.padding(top = 12.dp, start = 16.dp, bottom = 12.dp),
-                text = "Выберите дизайн"
+                text = "Выберите дизайн",
+                style = Typography.bodyLarge
             )
             Row(
                 modifier = Modifier
@@ -72,7 +74,7 @@ fun ColorPalette(
                             .drawBehind {
                                 if (it == iconsState.iconColor) {
                                     val strokeWidth = 2.dp.toPx()
-                                    val circleRadius = size.minDimension / 2 + strokeWidth*2
+                                    val circleRadius = size.minDimension / 2 + strokeWidth * 2
 
                                     drawCircle(
                                         color = tortoise,

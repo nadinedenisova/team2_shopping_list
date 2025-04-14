@@ -40,7 +40,6 @@ fun ListCreationScreen(
     )
 }
 
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ListCreationScreenUi(
@@ -55,7 +54,7 @@ fun ListCreationScreenUi(
         topBar = {
             AppNavTopBar(
                 title = "Создать список",
-                onBackIconClick = { onBackClick }
+                onBackIconClick = { onBackClick() }
             )
         }
     ) { innerPaddings ->
@@ -86,7 +85,10 @@ fun ListCreationScreenUi(
 fun GreetingPreview() {
     ShoppingListTheme {
         Surface {
-            ListCreationScreen(onBackClick = { }, viewModel = AppViewModel())
+            ListCreationScreen(
+                viewModel = AppViewModel(),
+                onBackClick = {}
+            )
         }
     }
 }
