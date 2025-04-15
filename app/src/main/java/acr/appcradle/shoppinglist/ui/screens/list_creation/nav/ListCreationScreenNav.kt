@@ -4,9 +4,7 @@ import acr.appcradle.shoppinglist.ui.AppViewModel
 import acr.appcradle.shoppinglist.ui.screens.list_creation.ListCreationScreen
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
-import androidx.navigation.navOptions
 import kotlinx.serialization.Serializable
 
 
@@ -20,5 +18,10 @@ fun NavController.navigateToListCreation() =
 fun NavGraphBuilder.creationScreen(
     onClick: () -> Unit
 ) {
-    composable<ListCreationRoute> { ListCreationScreen(onBackClick = onClick, viewModel = AppViewModel()) }
+    composable<ListCreationRoute> {
+        ListCreationScreen(
+            onBackClick = onClick,
+//            viewModel = AppViewModel()
+        )
+    }
 }

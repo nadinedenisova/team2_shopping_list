@@ -1,6 +1,7 @@
 package acr.appcradle.shoppinglist.ui.screens.lists_all
 
 import acr.appcradle.shoppinglist.R
+import acr.appcradle.shoppinglist.data.Repository
 import acr.appcradle.shoppinglist.ui.AppViewModel
 import acr.appcradle.shoppinglist.ui.components.AppLargeButton
 import acr.appcradle.shoppinglist.ui.components.AppNavTopBar
@@ -10,7 +11,6 @@ import acr.appcradle.shoppinglist.utils.ThemePreviews
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -24,28 +24,30 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 
 
 @Composable
 fun ListsAll(
     modifier: Modifier = Modifier,
-    viewModel: AppViewModel
+    viewModel: AppViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsState()
 
     Scaffold(
         topBar = {
             AppNavTopBar(
-            title = "Мои списки",
-            onMenuIconClick = {},
-            isMenuIconEnabled = true,
-            onBackIconClick = {}
-        )
+                title = "Мои списки",
+                onMenuIconClick = {},
+                isMenuIconEnabled = true,
+                onBackIconClick = {}
+            )
         }
     ) { innerPaddings ->
         Column(
             modifier = Modifier.padding(innerPaddings),
-            horizontalAlignment = Alignment.CenterHorizontally) {
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
 
             Spacer(
                 modifier.height(104.dp)
@@ -88,7 +90,7 @@ fun GreetingPreview() {
     ShoppingListTheme {
         Surface {
             ListsAll(
-                viewModel = AppViewModel()
+                viewModel = AppViewModel(Repository())
             )
         }
     }

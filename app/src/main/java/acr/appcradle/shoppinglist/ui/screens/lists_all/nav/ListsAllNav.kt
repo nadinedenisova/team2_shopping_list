@@ -15,11 +15,11 @@ data object ListsAllRoute
 fun NavController.navigateListsAll() = navigate(route = ListsAllRoute)
 
 fun NavGraphBuilder.listsAll(
-    viewModel: AppViewModel
+//    viewModel: AppViewModel
 ) {
     composable<ListsAllRoute> {
         ListsAll(
-            viewModel = viewModel
+//            viewModel = viewModel
         )
     }
 }
