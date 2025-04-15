@@ -1,5 +1,6 @@
 package acr.appcradle.shoppinglist.ui.screens.list_creation
 
+import acr.appcradle.shoppinglist.data.Repository
 import acr.appcradle.shoppinglist.model.IconsIntent
 import acr.appcradle.shoppinglist.model.NewListData
 import acr.appcradle.shoppinglist.ui.AppViewModel
@@ -23,11 +24,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 @Composable
 fun ListCreationScreen(
-    viewModel: AppViewModel,
+    viewModel: AppViewModel = hiltViewModel(),
     onBackClick: () -> Unit
 ) {
     val iconState by viewModel.iconState.collectAsStateWithLifecycle()
@@ -86,7 +88,7 @@ fun GreetingPreview() {
     ShoppingListTheme {
         Surface {
             ListCreationScreen(
-                viewModel = AppViewModel(),
+                viewModel = AppViewModel(Repository()),
                 onBackClick = {}
             )
         }

@@ -11,9 +11,11 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
+import dagger.hilt.android.AndroidEntryPoint
 
 @Composable
 fun AppNavHost(
@@ -21,7 +23,7 @@ fun AppNavHost(
     modifier: Modifier = Modifier
 ) {
     val navController = rememberNavController()
-    val viewModel = AppViewModel()
+//    val viewModel = AppViewModel()
 
     NavHost(
         navController = navController,
@@ -29,7 +31,9 @@ fun AppNavHost(
         modifier = modifier.padding(scaffoldPaddings),
     ) {
         greeting { navController.navigateToListCreation() }
-        listsAll(viewModel = viewModel)
+        listsAll(
+//            viewModel = viewModel
+        )
         creationScreen { }
     }
 }
