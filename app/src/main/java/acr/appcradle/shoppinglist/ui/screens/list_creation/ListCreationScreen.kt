@@ -11,7 +11,10 @@ import acr.appcradle.shoppinglist.ui.theme.ShoppingListTheme
 import acr.appcradle.shoppinglist.utils.ThemePreviews
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -50,6 +53,7 @@ fun ListCreationScreenUi(
     onIconClick: (Int) -> Unit,
     onColorClick: (Color) -> Unit
 ) {
+    val scroll = rememberScrollState()
     var inputText by remember { mutableStateOf("") }
 
     Scaffold(
@@ -62,7 +66,9 @@ fun ListCreationScreenUi(
     ) { innerPaddings ->
         Column(
             modifier = Modifier
-                .padding(innerPaddings),
+                .fillMaxSize()
+                .padding(innerPaddings)
+                .verticalScroll(scroll),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             inputText = appInputField(placeholderText = "Введите название списка")
