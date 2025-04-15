@@ -39,7 +39,9 @@ fun ListShoppingScreen() {
         }
     ) { innerPaddings ->
         Column(
-            modifier = Modifier.padding(innerPaddings).fillMaxSize(),
+            modifier = Modifier
+                .padding(innerPaddings)
+                .fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
