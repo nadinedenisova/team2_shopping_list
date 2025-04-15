@@ -29,6 +29,7 @@ fun AppNavTopBar(
     onBackIconClick: () -> Unit,
     onMenuIconClick: () -> Unit = {},
     onSearchIconClick: () -> Unit = {},
+    isBackIconEnable: Boolean = false,
     isSearchIconEnabled: Boolean = false,
     isMenuIconEnabled: Boolean = false,
 ) {
@@ -41,21 +42,24 @@ fun AppNavTopBar(
             .height(64.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Box(
-            modifier = Modifier
-                .padding(horizontal = 4.dp, vertical = 8.dp)
-                .size(48.dp)
-                .clickable(enabled = true) { onBackIconClick() },
-            contentAlignment = Alignment.Center,
-        ) {
-            Icon(
-                modifier = Modifier.size(iconsInnerSize),
-                imageVector = Icons.Default.ArrowBack,
-                contentDescription = null
-            )
+        if(isBackIconEnable) {
+            Box(
+                modifier = Modifier
+                    .padding(horizontal = 4.dp, vertical = 8.dp)
+                    .size(48.dp)
+                    .clickable(enabled = true) { onBackIconClick() },
+                contentAlignment = Alignment.Center,
+            ) {
+                Icon(
+                    modifier = Modifier.size(iconsInnerSize),
+                    imageVector = Icons.Default.ArrowBack,
+                    contentDescription = null
+                )
+            }
         }
         Text(
-            modifier = Modifier.weight(1f),
+            modifier = Modifier
+                .weight(1f).padding(start = 20.dp),
             text = title,
             style = Typography.titleLarge,
             overflow = TextOverflow.Ellipsis
