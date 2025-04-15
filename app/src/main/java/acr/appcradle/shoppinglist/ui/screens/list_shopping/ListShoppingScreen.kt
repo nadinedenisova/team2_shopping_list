@@ -1,95 +1,85 @@
-package acr.appcradle.shoppinglist.ui.screens.lists_all
+package acr.appcradle.shoppinglist.ui.screens.list_shopping
 
 import acr.appcradle.shoppinglist.R
-import acr.appcradle.shoppinglist.ui.AppViewModel
 import acr.appcradle.shoppinglist.ui.components.AppLargeButton
 import acr.appcradle.shoppinglist.ui.components.AppNavTopBar
 import acr.appcradle.shoppinglist.ui.theme.ShoppingListTheme
 import acr.appcradle.shoppinglist.ui.theme.Typography
-import acr.appcradle.shoppinglist.utils.ThemePreviews
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
-
 @Composable
-fun ListsAll(
-    modifier: Modifier = Modifier,
-    viewModel: AppViewModel
-) {
-    val state by viewModel.state.collectAsState()
-
+fun ListShoppingScreen() {
     Scaffold(
         topBar = {
             AppNavTopBar(
-            title = "Мои списки",
-            onMenuIconClick = {},
-            isMenuIconEnabled = true,
-            onBackIconClick = {}
-        )
+                title = "Новый год",
+                onMenuIconClick = {},
+                onBackIconClick = {},
+                onSearchIconClick = {},
+                isBackIconEnable = true,
+                isSearchIconEnabled = true,
+                isMenuIconEnabled = true
+            )
         }
     ) { innerPaddings ->
         Column(
-            modifier = Modifier.padding(innerPaddings),
-            horizontalAlignment = Alignment.CenterHorizontally) {
+            modifier = Modifier.padding(innerPaddings).fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
 
-            Spacer(
-                modifier.height(104.dp)
-            )
+            Spacer(Modifier.height(64.dp))
 
             Image(
-                painterResource(R.drawable.empty_list_image),
+                modifier = Modifier.fillMaxWidth(),
+                painter = painterResource(R.drawable.empty_shopping_image),
                 contentDescription = null
             )
 
-            Spacer(
-                modifier.height(52.dp)
-            )
-
             Text(
+                modifier = Modifier.padding(top = 52.dp),
                 text = "Давайте спланируем покупки!",
-                style = Typography.titleLarge.copy(textAlign = TextAlign.Center),
+                style = Typography.headlineSmall.copy(textAlign = TextAlign.Center)
             )
 
             Text(
-                modifier = modifier.padding(top = 12.dp),
-                text = "Создайте свой первый список",
+                modifier = Modifier.padding(top = 12.dp),
+                text = "Начните добавлять товары",
                 style = Typography.bodyLarge.copy(textAlign = TextAlign.Center)
+
             )
 
-            Spacer(modifier.weight(1f))
+            Spacer(Modifier.weight(1f))
 
             AppLargeButton(
-                text = "Создать список",
+                text = "Добавить товар",
                 onClick = {}
             )
         }
     }
-
 }
 
-@ThemePreviews
+@Preview
 @Composable
-fun GreetingPreview() {
+private fun ListShoppingPreview() {
     ShoppingListTheme {
         Surface {
-            ListsAll(
-                viewModel = AppViewModel()
-            )
+            ListShoppingScreen()
         }
     }
 }
