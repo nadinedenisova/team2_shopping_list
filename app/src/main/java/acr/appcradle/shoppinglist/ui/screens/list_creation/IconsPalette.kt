@@ -37,6 +37,8 @@ fun IconsPalette(
     modifier: Modifier = Modifier,
     onIconClick: (Int) -> Unit
 ) {
+    val deleteThis = 0
+
     val listOfIcons = listOf<Int>(
         R.drawable.icon_snowflake,
         R.drawable.airplane_outline,
