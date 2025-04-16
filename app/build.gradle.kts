@@ -9,6 +9,7 @@ plugins {
     id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
     id ("kotlinx-serialization")
+    id("app.cash.sqldelight")
     id ("io.gitlab.arturbosch.detekt") version "1.23.8"
 }
 
@@ -91,8 +92,8 @@ dependencies {
 
     //Hilt
     implementation(libs.hilt.android)
+    implementation("androidx.hilt:hilt-navigation-compose:1.1.0")
     kapt(libs.hilt.android.compiler)
-    implementation(libs.androidx.hilt.navigation.compose)
 
     //Navigation
     implementation(libs.androidx.navigation.compose)
@@ -100,12 +101,25 @@ dependencies {
     //Serialize JSON
     implementation(libs.kotlinx.serialization.json)
 
+    //SqlDelight
+    implementation("app.cash.sqldelight:android-driver:2.0.2")
+    implementation("app.cash.sqldelight:coroutines-extensions:2.0.2")
+
+
     //detekt
     detektPlugins(libs.detekt.formatting)
     detektPlugins(libs.detekt.rules.libraries)
     detektPlugins(libs.detekt.rules.ruleauthors)
 }
 
+sqldelight {
+    databases {
+        create("ShoppingDatabase") {
+            packageName.set("acr.appcradle.shoppinglist")
+            schemaOutputDirectory.set(file("src/main/sqldelight/databases"))
+        }
+    }
+}
 
 kapt {
     correctErrorTypes = true

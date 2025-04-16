@@ -28,7 +28,7 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun EmptyListUi(
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     var addItemBottomSheetVisibility by remember { mutableStateOf(true) }
 
