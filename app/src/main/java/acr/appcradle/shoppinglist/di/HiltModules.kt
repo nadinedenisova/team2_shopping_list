@@ -1,17 +1,5 @@
 package acr.appcradle.shoppinglist.di
 
-import acr.appcradle.shoppinglist.data.Repository
-import acr.appcradle.shoppinglist.model.RepositoryInterface
-import android.content.Context
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
-import dagger.hilt.components.SingletonComponent
-import javax.inject.Inject
-import javax.inject.Singleton
-
-
 
 //region HILT TUTORIAL
 

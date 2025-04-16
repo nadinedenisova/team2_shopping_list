@@ -1,8 +1,9 @@
 package acr.appcradle.shoppinglist.ui
 
-import acr.appcradle.shoppinglist.data.Repository
+import acr.appcradle.shoppinglist.data.ListRepositoryImpl
 import acr.appcradle.shoppinglist.model.AppIntents
 import acr.appcradle.shoppinglist.model.IconsIntent
+import acr.appcradle.shoppinglist.model.ListRepository
 import acr.appcradle.shoppinglist.model.ListsScreenState
 import acr.appcradle.shoppinglist.model.NewListData
 import android.util.Log
@@ -15,7 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AppViewModel @Inject constructor(
-    private val repository: Repository
+    private val repository: ListRepository
 ) : ViewModel() {
 
     private val _listsAllState = MutableStateFlow(ListsScreenState())
@@ -28,8 +29,8 @@ class AppViewModel @Inject constructor(
         when (intent) {
             is IconsIntent.ChangeIcon -> {
                 _iconState.value = _iconState.value.copy(icon = intent.icon)
-                Log.e("database", "${repository.getValue()}")
-                repository.setValue()
+                Log.e("database", "${repository.getAllItems()}")
+                repository.getAllItems()
             }
 
             is IconsIntent.ChangeColor -> {

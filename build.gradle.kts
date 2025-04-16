@@ -6,6 +6,7 @@ plugins {
     id("com.google.dagger.hilt.android") version "2.51.1" apply false
     kotlin("jvm") version "2.1.20"
     kotlin("plugin.serialization") version "2.1.20"
+    id("app.cash.sqldelight") version "2.0.2"
 
     id("io.gitlab.arturbosch.detekt") version "1.23.8"
 }
