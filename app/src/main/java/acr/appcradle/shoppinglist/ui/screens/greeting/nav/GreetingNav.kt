@@ -15,9 +15,9 @@ fun NavController.navigateToGreeting(navOptions: NavOptions) =
 
 
 fun NavGraphBuilder.greeting(
-    onClick: () -> Unit
+    onNextClick: () -> Unit
 ) {
     composable<GreetingRoute> {
-        GreetingScreen(onClick = onClick)
+        GreetingScreen(onNextClick = onNextClick)
     }
 }

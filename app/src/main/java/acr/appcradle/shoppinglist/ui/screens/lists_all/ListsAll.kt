@@ -1,6 +1,7 @@
 package acr.appcradle.shoppinglist.ui.screens.lists_all
 
 import acr.appcradle.shoppinglist.R
+import acr.appcradle.shoppinglist.RoutesList
 import acr.appcradle.shoppinglist.data.Repository
 import acr.appcradle.shoppinglist.ui.AppViewModel
 import acr.appcradle.shoppinglist.ui.components.AppLargeButton
@@ -30,9 +31,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 @Composable
 fun ListsAll(
     modifier: Modifier = Modifier,
-    viewModel: AppViewModel = hiltViewModel()
+    viewModel: AppViewModel = hiltViewModel(),
+    onNextClick: () -> Unit
 ) {
-    val state by viewModel.state.collectAsState()
+    val state by viewModel.listsAllState.collectAsState()
 
     Scaffold(
         topBar = {
@@ -40,7 +42,8 @@ fun ListsAll(
                 title = "Мои списки",
                 onMenuIconClick = {},
                 isMenuIconEnabled = true,
-                onBackIconClick = {}
+                onBackIconClick = {},
+                screenRoute = RoutesList.ListsAllRoute
             )
         }
     ) { innerPaddings ->
@@ -48,7 +51,6 @@ fun ListsAll(
             modifier = Modifier.padding(innerPaddings),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-
             Spacer(
                 modifier.height(104.dp)
             )
@@ -77,7 +79,7 @@ fun ListsAll(
 
             AppLargeButton(
                 text = "Создать список",
-                onClick = {}
+                onClick = { onNextClick() }
             )
         }
     }
@@ -90,7 +92,8 @@ fun GreetingPreview() {
     ShoppingListTheme {
         Surface {
             ListsAll(
-                viewModel = AppViewModel(Repository())
+                viewModel = AppViewModel(Repository()),
+                onNextClick = {}
             )
         }
     }

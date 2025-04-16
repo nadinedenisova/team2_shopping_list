@@ -1,8 +1,7 @@
 package acr.appcradle.shoppinglist.ui.screens.list_shopping
 
 import acr.appcradle.shoppinglist.R
-import acr.appcradle.shoppinglist.data.Repository
-import acr.appcradle.shoppinglist.ui.AppViewModel
+import acr.appcradle.shoppinglist.ui.components.AddItemDialog
 import acr.appcradle.shoppinglist.ui.components.AppLargeButton
 import acr.appcradle.shoppinglist.ui.theme.ShoppingListTheme
 import acr.appcradle.shoppinglist.ui.theme.Typography
@@ -17,6 +16,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -25,8 +28,10 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun EmptyListUi(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
+    var addItemBottomSheetVisibility by remember { mutableStateOf(true) }
+
     Column(
         modifier = modifier
             .fillMaxSize(),
@@ -57,8 +62,10 @@ fun EmptyListUi(
 
         AppLargeButton(
             text = "Добавить товар",
-            onClick = {}
+            onClick = { addItemBottomSheetVisibility = true }
         )
+        if (addItemBottomSheetVisibility)
+            AddItemDialog { addItemBottomSheetVisibility = false }
     }
 }
 

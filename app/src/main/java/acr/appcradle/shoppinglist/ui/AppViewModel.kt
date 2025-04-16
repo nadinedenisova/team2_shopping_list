@@ -18,8 +18,8 @@ class AppViewModel @Inject constructor(
     private val repository: Repository
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow(ListsScreenState())
-    val state: StateFlow<ListsScreenState> = _state.asStateFlow()
+    private val _listsAllState = MutableStateFlow(ListsScreenState())
+    val listsAllState: StateFlow<ListsScreenState> = _listsAllState.asStateFlow()
 
     private val _iconState = MutableStateFlow(NewListData())
     val iconState: StateFlow<NewListData> = _iconState.asStateFlow()

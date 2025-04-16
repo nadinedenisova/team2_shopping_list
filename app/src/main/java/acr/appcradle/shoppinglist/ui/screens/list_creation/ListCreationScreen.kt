@@ -1,5 +1,6 @@
 package acr.appcradle.shoppinglist.ui.screens.list_creation
 
+import acr.appcradle.shoppinglist.RoutesList
 import acr.appcradle.shoppinglist.data.Repository
 import acr.appcradle.shoppinglist.model.IconsIntent
 import acr.appcradle.shoppinglist.model.NewListData
@@ -12,6 +13,7 @@ import acr.appcradle.shoppinglist.utils.ThemePreviews
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -33,7 +35,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 @Composable
 fun ListCreationScreen(
     viewModel: AppViewModel = hiltViewModel(),
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
+    onNextClick: () -> Unit
 ) {
     val iconState by viewModel.iconState.collectAsStateWithLifecycle()
 
@@ -41,7 +44,8 @@ fun ListCreationScreen(
         iconsState = iconState,
         onBackClick = onBackClick,
         onIconClick = { viewModel.iconsIntent(IconsIntent.ChangeIcon(it)) },
-        onColorClick = { viewModel.iconsIntent(IconsIntent.ChangeColor(it)) }
+        onColorClick = { viewModel.iconsIntent(IconsIntent.ChangeColor(it)) },
+        onNextClick = onNextClick
     )
 }
 
@@ -51,7 +55,8 @@ fun ListCreationScreenUi(
     iconsState: NewListData,
     onBackClick: () -> Unit,
     onIconClick: (Int) -> Unit,
-    onColorClick: (Color) -> Unit
+    onColorClick: (Color) -> Unit,
+    onNextClick: () -> Unit
 ) {
     val scroll = rememberScrollState()
     var inputText by remember { mutableStateOf("") }
@@ -59,8 +64,10 @@ fun ListCreationScreenUi(
     Scaffold(
         topBar = {
             AppNavTopBar(
+                isBackIconEnable = true,
                 title = "Создать список",
-                onBackIconClick = { onBackClick() }
+                onBackIconClick = { onBackClick() },
+                screenRoute = RoutesList.ListCreationRoute
             )
         }
     ) { innerPaddings ->
@@ -71,7 +78,12 @@ fun ListCreationScreenUi(
                 .verticalScroll(scroll),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            inputText = appInputField(placeholderText = "Введите название списка")
+            inputText = appInputField(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp),
+                placeholderText = "Введите название списка"
+            )
             ColorPalette(
                 modifier = Modifier.padding(vertical = 16.dp),
                 onColorClick = onColorClick,
@@ -82,7 +94,7 @@ fun ListCreationScreenUi(
                 onIconClick = onIconClick
             )
             Spacer(Modifier.weight(1f))
-            AppLargeButton(onClick = {}, text = "Создать")
+            AppLargeButton(onClick = { onNextClick() }, text = "Создать")
         }
     }
 }
@@ -95,7 +107,8 @@ fun GreetingPreview() {
         Surface {
             ListCreationScreen(
                 viewModel = AppViewModel(Repository()),
-                onBackClick = {}
+                onBackClick = {},
+                onNextClick = {}
             )
         }
     }

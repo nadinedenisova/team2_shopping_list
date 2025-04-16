@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.dp
 
 
 @Composable
-fun GreetingScreen(onClick: () -> Unit) {
+fun GreetingScreen(onNextClick: () -> Unit) {
     val scroll = rememberScrollState()
     Column(
         modifier = Modifier
@@ -57,7 +57,7 @@ fun GreetingScreen(onClick: () -> Unit) {
         Spacer(Modifier.weight(1f))
         AppLargeButton(
             text = "Начать",
-            onClick = { onClick() }
+            onClick = { onNextClick() }
         )
     }
 }
@@ -67,7 +67,7 @@ fun GreetingScreen(onClick: () -> Unit) {
 fun GreetingPreview() {
     ShoppingListTheme {
         Surface {
-            GreetingScreen(onClick = { })
+            GreetingScreen(onNextClick = { })
         }
     }
 }

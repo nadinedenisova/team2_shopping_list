@@ -3,8 +3,6 @@ package acr.appcradle.shoppinglist.ui.components
 import acr.appcradle.shoppinglist.ui.theme.ShoppingListTheme
 import acr.appcradle.shoppinglist.utils.ThemePreviews
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -27,14 +25,13 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun appInputField(
+    modifier: Modifier = Modifier,
     placeholderText: String,
     isSearchIconNeeded: Boolean = false
 ): String {
     var inputText by remember { mutableStateOf("") }
     TextField(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp),
+        modifier = modifier,
         value = inputText,
         placeholder = { Text(text = placeholderText) },
         onValueChange = { inputText = it },

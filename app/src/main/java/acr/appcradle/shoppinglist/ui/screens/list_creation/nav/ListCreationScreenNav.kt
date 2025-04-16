@@ -1,6 +1,5 @@
 package acr.appcradle.shoppinglist.ui.screens.list_creation.nav
 
-import acr.appcradle.shoppinglist.ui.AppViewModel
 import acr.appcradle.shoppinglist.ui.screens.list_creation.ListCreationScreen
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
@@ -16,12 +15,13 @@ fun NavController.navigateToListCreation() =
 
 
 fun NavGraphBuilder.creationScreen(
-    onClick: () -> Unit
+    onBackClick: () -> Unit,
+    onNextClick:()-> Unit
 ) {
     composable<ListCreationRoute> {
         ListCreationScreen(
-            onBackClick = onClick,
-//            viewModel = AppViewModel()
+            onNextClick = onNextClick,
+            onBackClick = onBackClick,
         )
     }
 }
