@@ -15,7 +15,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 
 @Composable
 fun ListShoppingScreen(
-    viewModel: AppViewModel = hiltViewModel()
+    viewModel: AppViewModel = hiltViewModel(),
+    onBackClick: () -> Unit
 ) {
     val list = listOf<ShoppingElement>()  //todo подписаться на вьюмодель
 
@@ -24,7 +25,7 @@ fun ListShoppingScreen(
             AppNavTopBar(
                 title = "Новый год",
                 onMenuIconClick = {},
-                onBackIconClick = {},
+                onBackIconClick = { onBackClick() },
                 onSearchIconClick = {},
                 isBackIconEnable = true,
                 isSearchIconEnabled = true,
@@ -45,7 +46,7 @@ fun ListShoppingScreen(
 private fun ListShoppingPreview() {
     ShoppingListTheme {
         Surface {
-            ListShoppingScreen(viewModel = AppViewModel(Repository()))
+            ListShoppingScreen(viewModel = AppViewModel(Repository()), onBackClick = {})
         }
     }
 }

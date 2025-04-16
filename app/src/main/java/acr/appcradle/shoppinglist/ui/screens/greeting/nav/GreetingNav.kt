@@ -18,6 +18,6 @@ fun NavGraphBuilder.greeting(
     onClick: () -> Unit
 ) {
     composable<GreetingRoute> {
-        GreetingScreen(onClick = onClick)
+        GreetingScreen(onNextClick = onClick)
     }
 }
