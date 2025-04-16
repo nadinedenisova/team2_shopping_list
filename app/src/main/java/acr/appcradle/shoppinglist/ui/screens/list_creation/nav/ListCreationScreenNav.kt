@@ -15,10 +15,12 @@ fun NavController.navigateToListCreation() =
 
 
 fun NavGraphBuilder.creationScreen(
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
+    onNextClick:()-> Unit
 ) {
     composable<ListCreationRoute> {
         ListCreationScreen(
+            onNextClick = onNextClick,
             onBackClick = onBackClick,
         )
     }

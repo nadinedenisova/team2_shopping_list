@@ -15,11 +15,9 @@ data object ListsAllRoute
 fun NavController.navigateListsAll() = navigate(route = ListsAllRoute)
 
 fun NavGraphBuilder.listsAll(
-//    viewModel: AppViewModel
+    onNextClick:()-> Unit
 ) {
     composable<ListsAllRoute> {
-        ListsAll(
-//            viewModel = viewModel
-        )
+        ListsAll(onNextClick = onNextClick)
     }
 }

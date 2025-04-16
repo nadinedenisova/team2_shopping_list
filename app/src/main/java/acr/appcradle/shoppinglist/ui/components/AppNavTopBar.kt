@@ -1,5 +1,6 @@
 package acr.appcradle.shoppinglist.ui.components
 
+import acr.appcradle.shoppinglist.RoutesList
 import acr.appcradle.shoppinglist.ui.theme.ShoppingListTheme
 import acr.appcradle.shoppinglist.ui.theme.Typography
 import acr.appcradle.shoppinglist.utils.ThemePreviews
@@ -12,7 +13,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
@@ -32,6 +32,7 @@ fun AppNavTopBar(
     isBackIconEnable: Boolean = false,
     isSearchIconEnabled: Boolean = false,
     isMenuIconEnabled: Boolean = false,
+    screenRoute: RoutesList
 ) {
 
     val iconsInnerSize = 22.dp
@@ -42,7 +43,7 @@ fun AppNavTopBar(
             .height(64.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        if(isBackIconEnable) {
+        if (isBackIconEnable) {
             Box(
                 modifier = Modifier
                     .padding(horizontal = 4.dp, vertical = 8.dp)
@@ -59,7 +60,8 @@ fun AppNavTopBar(
         }
         Text(
             modifier = Modifier
-                .weight(1f).padding(start = 20.dp),
+                .weight(1f)
+                .padding(start = 20.dp),
             text = title,
             style = Typography.titleLarge,
             overflow = TextOverflow.Ellipsis
@@ -79,21 +81,7 @@ fun AppNavTopBar(
                 )
             }
         }
-        if (isMenuIconEnabled) {
-            Box(
-                modifier = Modifier
-                    .padding(horizontal = 4.dp, vertical = 8.dp)
-                    .size(48.dp)
-                    .clickable(enabled = true) { onMenuIconClick() },
-                contentAlignment = Alignment.Center,
-            ) {
-                Icon(
-                    modifier = Modifier.size(iconsInnerSize),
-                    imageVector = Icons.Default.MoreVert,
-                    contentDescription = null
-                )
-            }
-        }
+        AppDropdownMenu(screenRoute = screenRoute)
     }
 }
 
@@ -105,8 +93,9 @@ fun GreetingPreview() {
             AppNavTopBar(
                 title = "Создать список",
                 onBackIconClick = {},
-                isMenuIconEnabled = true,
-                isSearchIconEnabled = true
+//                isMenuIconEnabled = true,
+                isSearchIconEnabled = true,
+                screenRoute = RoutesList.ListsAllRoute
             )
         }
     }

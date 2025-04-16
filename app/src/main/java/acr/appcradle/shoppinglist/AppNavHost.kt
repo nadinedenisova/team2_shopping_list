@@ -6,6 +6,7 @@ import acr.appcradle.shoppinglist.ui.screens.list_creation.nav.creationScreen
 import acr.appcradle.shoppinglist.ui.screens.list_creation.nav.navigateToListCreation
 import acr.appcradle.shoppinglist.ui.screens.list_shopping.nav.shoppingScreen
 import acr.appcradle.shoppinglist.ui.screens.lists_all.nav.listsAll
+import acr.appcradle.shoppinglist.ui.screens.lists_all.nav.navigateListsAll
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
@@ -25,9 +26,21 @@ fun AppNavHost(
         startDestination = GreetingRoute,
         modifier = modifier.padding(scaffoldPaddings),
     ) {
-        greeting(onClick = { navController.navigateToListCreation() })
-        listsAll()
-        creationScreen(onBackClick = { navController.popBackStack() })
-        shoppingScreen(onBackClick = { navController.popBackStack() })
+        greeting(onNextClick = { navController.navigateListsAll() })
+        listsAll(onNextClick = { navController.navigateToListCreation() })
+        creationScreen(
+            onBackClick = { navController.popBackStack() },
+//            onNextClick = { navController.navigateToShoppingList() })
+            onNextClick = { navController.navigateListsAll() })
+        shoppingScreen(
+            onBackClick = { navController.popBackStack() },
+        )
     }
+}
+
+enum class RoutesList {
+    GreetingRoute,
+    ListsAllRoute,
+    ListShoppingRoute,
+    ListCreationRoute
 }

@@ -14,9 +14,11 @@ fun NavController.navigateToShoppingList() =
 
 
 fun NavGraphBuilder.shoppingScreen(
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
 ) {
     composable<ListShoppingRoute> {
-        ListShoppingScreen(onBackClick = onBackClick)
+        ListShoppingScreen(
+            onBackClick = onBackClick,
+        )
     }
 }

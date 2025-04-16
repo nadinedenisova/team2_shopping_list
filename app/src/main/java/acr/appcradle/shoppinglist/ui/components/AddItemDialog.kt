@@ -1,0 +1,99 @@
+package acr.appcradle.shoppinglist.ui.components
+
+import acr.appcradle.shoppinglist.ui.theme.ShoppingListTheme
+import acr.appcradle.shoppinglist.ui.theme.Typography
+import acr.appcradle.shoppinglist.ui.theme.gray
+import acr.appcradle.shoppinglist.utils.ThemePreviews
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.material3.rememberModalBottomSheetState
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun AddItemDialog(
+    modifier: Modifier = Modifier,
+    onDismissCallback: () -> Unit
+) {
+    val sheetState = rememberModalBottomSheetState()
+
+    ModalBottomSheet(
+        modifier = modifier.fillMaxWidth().height(548.dp),
+        sheetState = sheetState,
+        onDismissRequest = { onDismissCallback() }
+    ) {
+        Column() {
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    modifier = Modifier
+                        .padding(vertical = 18.dp, horizontal = 16.dp)
+                        .height(48.dp)
+                        .weight(1f),
+                    text = "Добавление товара",
+                    style = Typography.titleLarge
+                )
+                Box(
+                    modifier = Modifier
+                        .padding(vertical = 8.dp, horizontal = 16.dp)
+                        .size(48.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Check,
+                        contentDescription = null,
+                        tint = gray
+                    )
+                }
+            }
+        }
+        appInputField(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp),
+            placeholderText = "Введите название товара"
+        )
+        Row(
+            modifier = Modifier.fillMaxWidth().padding(vertical = 10.dp)
+        ) {
+            appInputField(
+                modifier = Modifier
+                    .padding(start = 16.dp, end = 6.dp)
+                    .weight(0.5f),
+                placeholderText = "1"
+            )
+            appInputField(
+                modifier = Modifier
+                    .padding(end = 16.dp)
+                    .weight(0.5f),
+                placeholderText = "шт"
+            )
+        }
+    }
+}
+
+
+@ThemePreviews
+@Composable
+private fun Preview3() {
+    ShoppingListTheme {
+        Surface {
+            AddItemDialog() {}
+        }
+    }
+}
