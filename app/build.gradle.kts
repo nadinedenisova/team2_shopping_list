@@ -110,6 +110,9 @@ dependencies {
     detektPlugins(libs.detekt.formatting)
     detektPlugins(libs.detekt.rules.libraries)
     detektPlugins(libs.detekt.rules.ruleauthors)
+
+    //Saket swipe
+    implementation("me.saket.swipe:swipe:1.3.0")
 }
 
 sqldelight {

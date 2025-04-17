@@ -3,11 +3,8 @@ package acr.appcradle.shoppinglist.di
 import acr.appcradle.shoppinglist.ShoppingDatabase
 import acr.appcradle.shoppinglist.ShoppingItemsQueries
 import acr.appcradle.shoppinglist.ShoppingListQueries
-import acr.appcradle.shoppinglist.data.ListRepositoryImpl
-import acr.appcradle.shoppinglist.model.ListRepository
 import acr.appcradle.shoppinglist.utils.DbFactory
 import android.content.Context
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -84,11 +81,10 @@ object DatabaseModule {
     fun provideShoppingQueries(
         database: ShoppingDatabase
     ): ShoppingListQueries = database.shoppingListQueries
+
+    @Provides
+    fun provideShoppingItemsQueries(
+        database: ShoppingDatabase
+    ): ShoppingItemsQueries = database.shoppingItemsQueries
 }
 
-@Module
-@InstallIn(SingletonComponent::class)
-interface RepositoryModule {
-    @Binds
-    fun bindListRepository(impl: ListRepositoryImpl): ListRepository
-}
