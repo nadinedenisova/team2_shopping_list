@@ -18,7 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun EmptyListAllUi() {
+fun EmptyListAllUi(onNextClick: () -> Unit) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Spacer(
             Modifier.height(104.dp)
@@ -48,7 +48,9 @@ fun EmptyListAllUi() {
 
         AppLargeButton(
             text = "Создать список",
-            onClick = {}
+            onClick = {
+                onNextClick()
+            }
         )
     }
 }
@@ -56,5 +58,5 @@ fun EmptyListAllUi() {
 @Preview
 @Composable
 private fun EmptyListPreview() {
-    EmptyListAllUi()
+    EmptyListAllUi() {}
 }

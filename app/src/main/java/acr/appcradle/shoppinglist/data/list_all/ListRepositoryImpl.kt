@@ -1,9 +1,9 @@
-package acr.appcradle.shoppinglist.data
+package acr.appcradle.shoppinglist.data.list_all
 
 import acr.appcradle.shoppinglist.ShoppingListQueries
+import acr.appcradle.shoppinglist.data.converters.ListDbConvertor
 import acr.appcradle.shoppinglist.model.ListElement
 import acr.appcradle.shoppinglist.model.ListRepository
-import acr.appcradle.shoppinglist.model.toListElement
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.ui.graphics.Color
@@ -16,14 +16,17 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton  //аннотация класса в единственном экземпляре
-class ListRepositoryImpl @Inject constructor(private val queries: ShoppingListQueries) : ListRepository {
+class ListRepositoryImpl @Inject constructor(
+    private val queries: ShoppingListQueries,
+    private val converter: ListDbConvertor
+) : ListRepository {
 
     override fun getAllItems(): Flow<List<ListElement>> =
         queries.selectAll()
             .asFlow()
             .mapToList(Dispatchers.IO)
-            .map { list ->
-                list.map { it.toListElement() }
+            .map { dbList ->
+                dbList.map { converter.map(it) }
             }
 
     override suspend fun addItem(item: ListElement) {

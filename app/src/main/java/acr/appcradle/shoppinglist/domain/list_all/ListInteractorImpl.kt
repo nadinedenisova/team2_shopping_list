@@ -1,4 +1,4 @@
-package acr.appcradle.shoppinglist.domain
+package acr.appcradle.shoppinglist.domain.list_all
 
 import acr.appcradle.shoppinglist.model.ListElement
 import acr.appcradle.shoppinglist.model.ListInteractor
@@ -8,8 +8,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class ListInteractorImpl @Inject constructor(private val repository: ListRepository) :
-    ListInteractor {
+class ListInteractorImpl @Inject constructor(private val repository: ListRepository) : ListInteractor {
 
     override fun getAllItems(): Flow<List<ListElement>> {
         return repository.getAllItems()
