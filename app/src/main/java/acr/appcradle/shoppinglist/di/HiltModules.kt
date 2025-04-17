@@ -1,5 +1,20 @@
 package acr.appcradle.shoppinglist.di
 
+import acr.appcradle.shoppinglist.ShoppingDatabase
+import acr.appcradle.shoppinglist.ShoppingItemsQueries
+import acr.appcradle.shoppinglist.ShoppingListQueries
+import acr.appcradle.shoppinglist.data.ListRepositoryImpl
+import acr.appcradle.shoppinglist.model.ListRepository
+import acr.appcradle.shoppinglist.utils.DbFactory
+import android.content.Context
+import dagger.Binds
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
+
 
 //region HILT TUTORIAL
 
@@ -47,3 +62,33 @@ package acr.appcradle.shoppinglist.di
 //}
 
 //endregion
+
+
+@Module
+@InstallIn(SingletonComponent::class)
+object DatabaseModule {
+
+    @Provides
+    @Singleton
+    fun provideDbFactory(
+        @ApplicationContext context: Context
+    ): DbFactory = DbFactory(context)
+
+    @Provides
+    @Singleton
+    fun provideShoppingDatabase(
+        dbFactory: DbFactory
+    ): ShoppingDatabase = dbFactory.createDatabase()
+
+    @Provides
+    fun provideShoppingQueries(
+        database: ShoppingDatabase
+    ): ShoppingListQueries = database.shoppingListQueries
+}
+
+@Module
+@InstallIn(SingletonComponent::class)
+interface RepositoryModule {
+    @Binds
+    fun bindListRepository(impl: ListRepositoryImpl): ListRepository
+}

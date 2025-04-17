@@ -1,8 +1,8 @@
 package acr.appcradle.shoppinglist.ui.screens.list_creation
 
 import acr.appcradle.shoppinglist.RoutesList
-import acr.appcradle.shoppinglist.data.Repository
 import acr.appcradle.shoppinglist.model.IconsIntent
+import acr.appcradle.shoppinglist.model.ListRepository
 import acr.appcradle.shoppinglist.model.NewListData
 import acr.appcradle.shoppinglist.ui.AppViewModel
 import acr.appcradle.shoppinglist.ui.components.AppLargeButton
@@ -100,16 +100,16 @@ fun ListCreationScreenUi(
 }
 
 
-@ThemePreviews
-@Composable
-fun GreetingPreview() {
-    ShoppingListTheme {
-        Surface {
-            ListCreationScreen(
-                viewModel = AppViewModel(Repository()),
-                onBackClick = {},
-                onNextClick = {}
-            )
-        }
-    }
-}
+//@ThemePreviews
+//@Composable
+//fun GreetingPreview() {
+//    ShoppingListTheme {
+//        Surface {
+//            ListCreationScreen(
+//                viewModel = AppViewModel(ListRepository()),
+//                onBackClick = {},
+//                onNextClick = {}
+//            )
+//        }
+//    }
+//}

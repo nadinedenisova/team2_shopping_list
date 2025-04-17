@@ -1,6 +1,5 @@
 package acr.appcradle.shoppinglist.ui
 
-import acr.appcradle.shoppinglist.data.ListRepositoryImpl
 import acr.appcradle.shoppinglist.model.AppIntents
 import acr.appcradle.shoppinglist.model.IconsIntent
 import acr.appcradle.shoppinglist.model.ListRepository
