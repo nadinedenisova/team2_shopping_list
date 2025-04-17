@@ -1,6 +1,6 @@
 package acr.appcradle.shoppinglist.data
 
-import acr.appcradle.shoppinglist.ShoppingDatabase
+import acr.appcradle.shoppinglist.ShoppingListQueries
 import acr.appcradle.shoppinglist.model.ListElement
 import acr.appcradle.shoppinglist.model.ListRepository
 import acr.appcradle.shoppinglist.model.toListElement
@@ -16,9 +16,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton  //аннотация класса в единственном экземпляре
-class ListRepositoryImpl @Inject constructor(private val db: ShoppingDatabase) : ListRepository {
-
-    private val queries = db.shoppingListQueries
+class ListRepositoryImpl @Inject constructor(private val queries: ShoppingListQueries) : ListRepository {
 
     override fun getAllItems(): Flow<List<ListElement>> =
         queries.selectAll()
