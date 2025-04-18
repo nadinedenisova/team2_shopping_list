@@ -60,6 +60,7 @@ fun ListCreationScreenUi(
 ) {
     val scroll = rememberScrollState()
     var inputText by remember { mutableStateOf("") }
+    val viewModel: AppViewModel = hiltViewModel()
 
     Scaffold(
         topBar = {
@@ -94,7 +95,13 @@ fun ListCreationScreenUi(
                 onIconClick = onIconClick
             )
             Spacer(Modifier.weight(1f))
-            AppLargeButton(onClick = { onNextClick() }, text = "Создать")
+            AppLargeButton(onClick = {
+                if (inputText.isNotBlank()) {
+                    viewModel.createNewList(inputText.trim()) {
+                        onNextClick()
+                    }
+                }
+            }, text = "Создать")
         }
     }
 }

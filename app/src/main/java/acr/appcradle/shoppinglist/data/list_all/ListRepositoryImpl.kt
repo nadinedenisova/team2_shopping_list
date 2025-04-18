@@ -7,6 +7,7 @@ import acr.appcradle.shoppinglist.model.ListRepository
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
 import kotlinx.coroutines.Dispatchers
@@ -32,7 +33,7 @@ class ListRepositoryImpl @Inject constructor(
     override suspend fun addItem(item: ListElement) {
         queries.insertElement(
             icon = item.icon.toLong(),
-            iconBackground = item.iconBackground.toString(),
+            iconBackground = item.iconBackground.toArgb().toLong(),
             listName = item.listName,
             boughtCount = item.boughtCount.toLong(),
             totalCount = item.totalCount.toLong()
