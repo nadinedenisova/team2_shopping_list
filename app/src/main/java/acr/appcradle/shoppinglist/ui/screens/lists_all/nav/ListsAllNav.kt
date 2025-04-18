@@ -12,9 +12,13 @@ data object ListsAllRoute
 fun NavController.navigateListsAll() = navigate(route = ListsAllRoute)
 
 fun NavGraphBuilder.listsAll(
-    onNextClick:()-> Unit
+    createNewListClick: () -> Unit,
+    onListClick: () -> Unit
 ) {
     composable<ListsAllRoute> {
-        ListsAll(onNextClick = onNextClick)
+        ListsAll(
+            createNewListClick = createNewListClick,
+            onListClick = onListClick
+        )
     }
 }

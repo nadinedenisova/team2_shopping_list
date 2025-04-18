@@ -27,14 +27,18 @@ import androidx.compose.ui.unit.dp
 fun appInputField(
     modifier: Modifier = Modifier,
     placeholderText: String,
-    isSearchIconNeeded: Boolean = false
+    isSearchIconNeeded: Boolean = false,
+    onValueChange: (String) -> Unit = {}
 ): String {
     var inputText by remember { mutableStateOf("") }
     TextField(
         modifier = modifier,
         value = inputText,
         placeholder = { Text(text = placeholderText) },
-        onValueChange = { inputText = it },
+        onValueChange = {
+            inputText = it
+            onValueChange(inputText)
+        },
         colors = TextFieldDefaults.colors(
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent

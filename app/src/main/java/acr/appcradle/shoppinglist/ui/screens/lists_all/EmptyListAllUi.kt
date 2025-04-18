@@ -20,18 +20,14 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun EmptyListAllUi(onNextClick: () -> Unit) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        Spacer(
-            Modifier.height(104.dp)
-        )
+        Spacer(Modifier.height(104.dp))
 
         Image(
             painterResource(R.drawable.empty_list_image),
             contentDescription = null
         )
 
-        Spacer(
-            Modifier.height(52.dp)
-        )
+        Spacer(Modifier.height(52.dp))
 
         Text(
             text = "Давайте спланируем покупки!",

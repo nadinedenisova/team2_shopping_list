@@ -92,7 +92,7 @@ dependencies {
 
     //Hilt
     implementation(libs.hilt.android)
-    implementation("androidx.hilt:hilt-navigation-compose:1.1.0")
+    implementation(libs.androidx.hilt.navigation.compose)
     kapt(libs.hilt.android.compiler)
 
     //Navigation
@@ -102,9 +102,8 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
 
     //SqlDelight
-    implementation("app.cash.sqldelight:android-driver:2.0.2")
-    implementation("app.cash.sqldelight:coroutines-extensions:2.0.2")
-
+    implementation(libs.android.driver)
+    implementation(libs.coroutines.extensions)
 
     //detekt
     detektPlugins(libs.detekt.formatting)
@@ -112,7 +111,7 @@ dependencies {
     detektPlugins(libs.detekt.rules.ruleauthors)
 
     //Saket swipe
-    implementation("me.saket.swipe:swipe:1.3.0")
+    implementation(libs.swipe)
 }
 
 sqldelight {

@@ -1,5 +1,6 @@
 package acr.appcradle.shoppinglist.ui.screens.lists_all
 
+import acr.appcradle.shoppinglist.R
 import acr.appcradle.shoppinglist.ui.theme.ShoppingListTheme
 import acr.appcradle.shoppinglist.ui.theme.Typography
 import acr.appcradle.shoppinglist.utils.ThemePreviews
@@ -13,8 +14,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -40,7 +39,8 @@ fun ListsItem(
             .background(
                 color = Color.White,
                 shape = RoundedCornerShape(12.dp)
-            ).padding(start = 16.dp),
+            )
+            .padding(start = 16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Box(
@@ -72,18 +72,18 @@ fun ListsItem(
     }
 }
 
-//@ThemePreviews
-//@Composable
-//private fun ListItemPreview() {
-//    ShoppingListTheme {
-//        Surface {
-//            ListsItem(
-//                icon = Icons.Default.Star,
-//                iconBackground = Color(0xFFB3E5FC),
-//                title = "Новый год",
-//                boughtCount = 2,
-//                totalCount = 30
-//            )
-//        }
-//    }
-//}
+@ThemePreviews
+@Composable
+private fun ListItemPreview() {
+    ShoppingListTheme {
+        Surface {
+            ListsItem(
+                icon = R.drawable.alert_outline,
+                iconBackground = Color(0xFFB3E5FC),
+                title = "Новый год",
+                boughtCount = 2,
+                totalCount = 30
+            )
+        }
+    }
+}

@@ -2,10 +2,12 @@ package acr.appcradle.shoppinglist.ui
 
 import acr.appcradle.shoppinglist.model.AppIntents
 import acr.appcradle.shoppinglist.model.IconsIntent
+import acr.appcradle.shoppinglist.model.ItemsRepository
 import acr.appcradle.shoppinglist.model.ListElement
 import acr.appcradle.shoppinglist.model.ListRepository
 import acr.appcradle.shoppinglist.model.ListsScreenState
 import acr.appcradle.shoppinglist.model.NewListData
+import acr.appcradle.shoppinglist.model.ShoppingElement
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -19,7 +21,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AppViewModel @Inject constructor(
-    private val repository: ListRepository
+    private val repository: ListRepository,
+    private val itemsInteractor: ItemsRepository
+//    private val itemsInteractor: ItemsInteractor
 ) : ViewModel() {
 
     private val _listsAllState = MutableStateFlow(ListsScreenState())
@@ -27,6 +31,9 @@ class AppViewModel @Inject constructor(
 
     private val _iconState = MutableStateFlow(NewListData())
     val iconState: StateFlow<NewListData> = _iconState.asStateFlow()
+
+    private val _itemsList = MutableStateFlow(emptyList<ShoppingElement>())
+    val itemsList: StateFlow<List<ShoppingElement>> = _itemsList.asStateFlow()
 
     fun iconsIntent(intent: IconsIntent) {
         when (intent) {
@@ -45,6 +52,7 @@ class AppViewModel @Inject constructor(
             }
         }
     }
+
     fun actionIntent(intent: AppIntents) {
         when (intent) {
 
@@ -54,11 +62,27 @@ class AppViewModel @Inject constructor(
                     loadLists()
                 }
             }
+
             is AppIntents.LoadList -> {
                 loadLists()
+                Log.i("database", "Загружаются списки")
+
+            }
+
+            is AppIntents.LoadItems -> {
+                loadItems()
+                Log.i("database", "Загружаются элементы списка")
+            }
+
+            is AppIntents.AddItem -> {
+                viewModelScope.launch {
+                    itemsInteractor.addItem(item = intent.item)
+                }
+                Log.i("database", "Новый элемент добавлен: ${intent.item}")
             }
         }
     }
+
     private fun loadLists() {
         viewModelScope.launch {
             _listsAllState.value = _listsAllState.value.copy(isLoading = true)
@@ -70,6 +94,15 @@ class AppViewModel @Inject constructor(
             )
         }
     }
+
+    private fun loadItems() {
+        viewModelScope.launch {
+            itemsInteractor.getAllItems().collect { it ->
+                _itemsList.value = it
+            }
+        }
+    }
+
     fun createNewList(title: String, onComplete: () -> Unit) {
         viewModelScope.launch {
             val data = iconState.value
