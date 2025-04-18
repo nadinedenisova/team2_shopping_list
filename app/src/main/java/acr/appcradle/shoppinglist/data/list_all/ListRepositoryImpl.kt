@@ -31,8 +31,8 @@ class ListRepositoryImpl @Inject constructor(
 
     override suspend fun addItem(item: ListElement) {
         queries.insertElement(
-            iconId = Icons.Default.ShoppingCart.toString(),
-            iconColorHex = Color(0xFF64B5F6).toString(),
+            icon = item.icon.toLong(),
+            iconBackground = item.iconBackground.toString(),
             listName = item.listName,
             boughtCount = item.boughtCount.toLong(),
             totalCount = item.totalCount.toLong()

@@ -2,15 +2,19 @@ package acr.appcradle.shoppinglist.ui
 
 import acr.appcradle.shoppinglist.model.AppIntents
 import acr.appcradle.shoppinglist.model.IconsIntent
+import acr.appcradle.shoppinglist.model.ListElement
 import acr.appcradle.shoppinglist.model.ListRepository
 import acr.appcradle.shoppinglist.model.ListsScreenState
 import acr.appcradle.shoppinglist.model.NewListData
 import android.util.Log
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -44,10 +48,29 @@ class AppViewModel @Inject constructor(
 
     fun actionIntent(intent: AppIntents) {
         when (intent) {
-            AppIntents.AddItem -> TODO()
-            AppIntents.CheckItem -> TODO()
-            AppIntents.DeleteItem -> TODO()
-            AppIntents.LoadList -> TODO()
+
+            is AppIntents.DeleteItem -> {
+                viewModelScope.launch {
+                    repository.deleteItem(intent.id)
+                    loadLists()
+                }
+            }
+            is AppIntents.LoadList -> {
+                loadLists()
+            }
         }
     }
+
+    private fun loadLists() {
+        viewModelScope.launch {
+            _listsAllState.value = _listsAllState.value.copy(isLoading = true)
+            val items = repository.getAllItems().first()
+            _listsAllState.value = ListsScreenState(
+                isLoading = false,
+                list = items,
+                isEmpty = items.isEmpty()
+            )
+        }
+    }
+
 }
