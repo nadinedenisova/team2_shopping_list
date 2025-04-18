@@ -3,6 +3,7 @@ package acr.appcradle.shoppinglist.ui.screens.lists_all
 import acr.appcradle.shoppinglist.ui.theme.ShoppingListTheme
 import acr.appcradle.shoppinglist.ui.theme.Typography
 import acr.appcradle.shoppinglist.utils.ThemePreviews
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -21,12 +22,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 
 @Composable
 fun ListsItem(
-    icon: ImageVector,
+    @DrawableRes icon: Int,
     title: String,
     iconBackground: Color,
     boughtCount: Int,
@@ -49,7 +50,7 @@ fun ListsItem(
             contentAlignment = Alignment.Center
         ) {
             Icon(
-                imageVector = icon,
+                painter = painterResource(icon),
                 contentDescription = null,
                 tint = Color.Black,
                 modifier = Modifier.size(20.dp)
@@ -71,18 +72,18 @@ fun ListsItem(
     }
 }
 
-@ThemePreviews
-@Composable
-private fun ListItemPreview() {
-    ShoppingListTheme {
-        Surface {
-            ListsItem(
-                icon = Icons.Default.Star,
-                iconBackground = Color(0xFFB3E5FC),
-                title = "Новый год",
-                boughtCount = 2,
-                totalCount = 30
-            )
-        }
-    }
-}
+//@ThemePreviews
+//@Composable
+//private fun ListItemPreview() {
+//    ShoppingListTheme {
+//        Surface {
+//            ListsItem(
+//                icon = Icons.Default.Star,
+//                iconBackground = Color(0xFFB3E5FC),
+//                title = "Новый год",
+//                boughtCount = 2,
+//                totalCount = 30
+//            )
+//        }
+//    }
+//}

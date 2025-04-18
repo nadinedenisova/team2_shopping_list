@@ -7,14 +7,13 @@ import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import me.saket.swipe.SwipeAction
 import me.saket.swipe.SwipeableActionsBox
 
 @Composable
 fun SwipeableListsItem(
-    icon: ImageVector,
+    icon: Int,
     title: String,
     iconBackground: Color,
     boughtCount: Int,
