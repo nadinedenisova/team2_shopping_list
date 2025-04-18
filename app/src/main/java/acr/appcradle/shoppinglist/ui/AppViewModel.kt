@@ -45,7 +45,6 @@ class AppViewModel @Inject constructor(
             }
         }
     }
-
     fun actionIntent(intent: AppIntents) {
         when (intent) {
 
@@ -60,7 +59,6 @@ class AppViewModel @Inject constructor(
             }
         }
     }
-
     private fun loadLists() {
         viewModelScope.launch {
             _listsAllState.value = _listsAllState.value.copy(isLoading = true)
@@ -70,6 +68,21 @@ class AppViewModel @Inject constructor(
                 list = items,
                 isEmpty = items.isEmpty()
             )
+        }
+    }
+    fun createNewList(title: String, onComplete: () -> Unit) {
+        viewModelScope.launch {
+            val data = iconState.value
+            val newItem = ListElement(
+                id = 0L,
+                icon = data.icon!!.toInt(),
+                iconBackground = data.iconColor!!,
+                listName = title,
+                boughtCount = 0,
+                totalCount = 0
+            )
+            repository.addItem(newItem)
+            onComplete()
         }
     }
 
