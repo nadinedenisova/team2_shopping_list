@@ -1,11 +1,11 @@
 package acr.appcradle.shoppinglist.ui.screens.list_shopping
 
 import acr.appcradle.shoppinglist.R
+import acr.appcradle.shoppinglist.model.AppIntents
+import acr.appcradle.shoppinglist.ui.AppViewModel
 import acr.appcradle.shoppinglist.ui.components.AddItemDialog
 import acr.appcradle.shoppinglist.ui.components.AppLargeButton
-import acr.appcradle.shoppinglist.ui.theme.ShoppingListTheme
 import acr.appcradle.shoppinglist.ui.theme.Typography
-import acr.appcradle.shoppinglist.utils.ThemePreviews
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -28,9 +27,10 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun EmptyListUi(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    viewModel: AppViewModel,
 ) {
-    var addItemBottomSheetVisibility by remember { mutableStateOf(true) }
+    var addItemBottomSheetVisibility by remember { mutableStateOf(false) }
 
     Column(
         modifier = modifier
@@ -65,17 +65,20 @@ fun EmptyListUi(
             onClick = { addItemBottomSheetVisibility = true }
         )
         if (addItemBottomSheetVisibility)
-            AddItemDialog { addItemBottomSheetVisibility = false }
+            AddItemDialog(
+                onDismissCallback = { addItemBottomSheetVisibility = false },
+                onConfirmClick = { viewModel.actionIntent(AppIntents.AddItem(item = it)) }
+            )
     }
 }
 
 
-@ThemePreviews
-@Composable
-private fun ListShoppingPreview() {
-    ShoppingListTheme {
-        Surface {
-            EmptyListUi()
-        }
-    }
-}
+//@ThemePreviews
+//@Composable
+//private fun ListShoppingPreview() {
+//    ShoppingListTheme {
+//        Surface {
+//            EmptyListUi(viewModel = AppViewModel())
+//        }
+//    }
+//}

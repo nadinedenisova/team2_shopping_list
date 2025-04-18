@@ -8,7 +8,9 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class ListInteractorImpl @Inject constructor(private val repository: ListRepository) : ListInteractor {
+class ListInteractorImpl @Inject constructor(
+    private val repository: ListRepository
+) : ListInteractor {
 
     override fun getAllItems(): Flow<List<ListElement>> {
         return repository.getAllItems()

@@ -30,7 +30,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 fun ListsAll(
     modifier: Modifier = Modifier,
     viewModel: AppViewModel = hiltViewModel(),
-    onNextClick: () -> Unit
+    createNewListClick: () -> Unit,
+    onListClick: () -> Unit
 ) {
     val state by viewModel.listsAllState.collectAsState()
 
@@ -55,15 +56,13 @@ fun ListsAll(
         floatingActionButton = {
             if (!state.isEmpty) {
                 FloatingActionButton(
-                    onClick = { onNextClick() }
+                    onClick = { createNewListClick() }
                 ) {
                     Icon(imageVector = Icons.Default.Add, contentDescription = "Добавить список")
                 }
             }
         },
         floatingActionButtonPosition = FabPosition.End
-
-
     ) { innerPaddings ->
         Column(
             modifier = Modifier.padding(innerPaddings),
@@ -71,13 +70,12 @@ fun ListsAll(
         ) {
 
             when {
-
                 state.isLoading -> {
                     CircularProgressIndicator()
                 }
 
                 state.isEmpty -> {
-                    EmptyListAllUi { onNextClick() }
+                    EmptyListAllUi { createNewListClick() }
                 }
 
                 else -> {
@@ -100,7 +98,8 @@ fun ListsAll(
                                 },
                                 onDelete = {
                                     viewModel.actionIntent(AppIntents.DeleteItem(item.id))
-                                }
+                                },
+                                onListClick = { onListClick() }
                             )
                         }
                     }

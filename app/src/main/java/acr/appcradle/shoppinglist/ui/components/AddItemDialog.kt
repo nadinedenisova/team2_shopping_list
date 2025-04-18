@@ -1,9 +1,9 @@
 package acr.appcradle.shoppinglist.ui.components
 
-import acr.appcradle.shoppinglist.ui.theme.ShoppingListTheme
+import acr.appcradle.shoppinglist.model.ShoppingElement
 import acr.appcradle.shoppinglist.ui.theme.Typography
 import acr.appcradle.shoppinglist.ui.theme.gray
-import acr.appcradle.shoppinglist.utils.ThemePreviews
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -16,7 +16,6 @@ import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
@@ -28,12 +27,21 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun AddItemDialog(
     modifier: Modifier = Modifier,
-    onDismissCallback: () -> Unit
+    onDismissCallback: () -> Unit,
+    onConfirmClick: (ShoppingElement) -> Unit
 ) {
     val sheetState = rememberModalBottomSheetState()
 
+    var newItem = ShoppingElement(
+        name = "",
+        amount = "",
+        unit = "шт",
+        checked = false
+    )
     ModalBottomSheet(
-        modifier = modifier.fillMaxWidth().height(548.dp),
+        modifier = modifier
+            .fillMaxWidth()
+            .height(548.dp),
         sheetState = sheetState,
         onDismissRequest = { onDismissCallback() }
     ) {
@@ -53,6 +61,12 @@ fun AddItemDialog(
                     modifier = Modifier
                         .padding(vertical = 8.dp, horizontal = 16.dp)
                         .size(48.dp)
+                        .clickable {
+                            if (newItem.name != "" && newItem.amount != "") {
+                                onConfirmClick(newItem)
+                                onDismissCallback()
+                            }
+                        }
                 ) {
                     Icon(
                         imageVector = Icons.Default.Check,
@@ -66,34 +80,39 @@ fun AddItemDialog(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp),
-            placeholderText = "Введите название товара"
+            placeholderText = "Введите название товара",
+            onValueChange = { newItem = newItem.copy(name = it) }
         )
         Row(
-            modifier = Modifier.fillMaxWidth().padding(vertical = 10.dp)
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 10.dp)
         ) {
             appInputField(
                 modifier = Modifier
                     .padding(start = 16.dp, end = 6.dp)
                     .weight(0.5f),
-                placeholderText = "1"
+                placeholderText = "1",
+                onValueChange = { newItem = newItem.copy(amount = it) }
             )
             appInputField(
                 modifier = Modifier
                     .padding(end = 16.dp)
                     .weight(0.5f),
-                placeholderText = "шт"
+                placeholderText = "шт",
+                onValueChange = { newItem = newItem.copy(unit = it) }
             )
         }
     }
 }
 
 
-@ThemePreviews
-@Composable
-private fun Preview3() {
-    ShoppingListTheme {
-        Surface {
-            AddItemDialog() {}
-        }
-    }
-}
+//@ThemePreviews
+//@Composable
+//private fun Preview3() {
+//    ShoppingListTheme {
+//        Surface {
+//            AddItemDialog() {}
+//        }
+//    }
+//}

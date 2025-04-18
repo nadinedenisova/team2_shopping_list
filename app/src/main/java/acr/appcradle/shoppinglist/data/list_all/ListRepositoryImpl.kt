@@ -4,9 +4,6 @@ import acr.appcradle.shoppinglist.ShoppingListQueries
 import acr.appcradle.shoppinglist.data.converters.ListDbConvertor
 import acr.appcradle.shoppinglist.model.ListElement
 import acr.appcradle.shoppinglist.model.ListRepository
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ShoppingCart
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList

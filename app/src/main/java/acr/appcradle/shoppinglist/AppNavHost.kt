@@ -4,6 +4,7 @@ import acr.appcradle.shoppinglist.ui.screens.greeting.nav.GreetingRoute
 import acr.appcradle.shoppinglist.ui.screens.greeting.nav.greeting
 import acr.appcradle.shoppinglist.ui.screens.list_creation.nav.creationScreen
 import acr.appcradle.shoppinglist.ui.screens.list_creation.nav.navigateToListCreation
+import acr.appcradle.shoppinglist.ui.screens.list_shopping.nav.navigateToShoppingList
 import acr.appcradle.shoppinglist.ui.screens.list_shopping.nav.shoppingScreen
 import acr.appcradle.shoppinglist.ui.screens.lists_all.nav.listsAll
 import acr.appcradle.shoppinglist.ui.screens.lists_all.nav.navigateListsAll
@@ -26,11 +27,15 @@ fun AppNavHost(
         startDestination = GreetingRoute,
         modifier = modifier.padding(scaffoldPaddings),
     ) {
-        greeting(onNextClick = { navController.navigateListsAll() })
-        listsAll(onNextClick = { navController.navigateToListCreation() })
+        greeting(
+            onNextClick = { navController.navigateListsAll() }
+        )
+        listsAll(
+            createNewListClick = { navController.navigateToListCreation() },
+            onListClick = { navController.navigateToShoppingList() }
+        )
         creationScreen(
             onBackClick = { navController.popBackStack() },
-//            onNextClick = { navController.navigateToShoppingList() })
             onNextClick = { navController.navigateListsAll() })
         shoppingScreen(
             onBackClick = { navController.popBackStack() },

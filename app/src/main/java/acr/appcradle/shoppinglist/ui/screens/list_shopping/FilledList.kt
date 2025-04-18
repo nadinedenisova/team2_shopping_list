@@ -1,9 +1,9 @@
 package acr.appcradle.shoppinglist.ui.screens.list_shopping
 
+import acr.appcradle.shoppinglist.model.AppIntents
 import acr.appcradle.shoppinglist.model.ShoppingElement
+import acr.appcradle.shoppinglist.ui.AppViewModel
 import acr.appcradle.shoppinglist.ui.components.AddItemDialog
-import acr.appcradle.shoppinglist.ui.theme.ShoppingListTheme
-import acr.appcradle.shoppinglist.utils.ThemePreviews
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,7 +13,6 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -27,9 +26,10 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun FilledListUi(
     modifier: Modifier = Modifier,
-    listOfItems: List<ShoppingElement>
+    listOfItems: List<ShoppingElement>,
+    viewModel: AppViewModel
 ) {
-    var addItemBottomSheetVisibility by remember { mutableStateOf(true) }
+    var addItemBottomSheetVisibility by remember { mutableStateOf(false) }
     Box(
         modifier = modifier.fillMaxSize(),
         contentAlignment = Alignment.BottomEnd
@@ -49,39 +49,41 @@ fun FilledListUi(
         }
         if (addItemBottomSheetVisibility)
             AddItemDialog(
-                onDismissCallback = { addItemBottomSheetVisibility = false }
+                onDismissCallback = { addItemBottomSheetVisibility = false },
+                onConfirmClick = { viewModel.actionIntent(AppIntents.AddItem(item = it)) }
             )
     }
 }
 
 
-@ThemePreviews
-@Composable
-private fun Preview() {
-    ShoppingListTheme {
-        Surface {
-            FilledListUi(
-                listOfItems = listOf(
-                    ShoppingElement(
-                        name = "Яблоко",
-                        amount = "31",
-                        unit = "кг",
-                        checked = false
-                    ),
-                    ShoppingElement(
-                        name = "Груша",
-                        amount = "3",
-                        unit = "шт",
-                        checked = true
-                    ),
-                    ShoppingElement(
-                        name = "Апельсины",
-                        amount = "3",
-                        unit = "шт",
-                        checked = false
-                    ),
-                )
-            )
-        }
-    }
-}
+//@ThemePreviews
+//@Composable
+//private fun Preview() {
+//    ShoppingListTheme {
+//        Surface {
+//            FilledListUi(
+//                listOfItems = listOf(
+//                    ShoppingElement(
+//                        name = "Яблоко",
+//                        amount = "31",
+//                        unit = "кг",
+//                        checked = false
+//                    ),
+//                    ShoppingElement(
+//                        name = "Груша",
+//                        amount = "3",
+//                        unit = "шт",
+//                        checked = true
+//                    ),
+//                    ShoppingElement(
+//                        name = "Апельсины",
+//                        amount = "3",
+//                        unit = "шт",
+//                        checked = false
+//                    ),
+//                ),
+//                viewModel = viewModel
+//            )
+//        }
+//    }
+//}
