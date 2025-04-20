@@ -9,19 +9,21 @@ class ItemsDbConvertor @Inject constructor() {
     fun map (shoppingElement: ShoppingElement) : ShoppingItems {
         return ShoppingItems(
            id = null!!,
+           listId = shoppingElement.listId,
            name = shoppingElement.name,
            amount = shoppingElement.amount,
            unit = shoppingElement.unit,
-           checked = 1
+           checked = if (shoppingElement.checked) 1 else 0
         )
     }
 
     fun map (shoppingItems: ShoppingItems) : ShoppingElement {
         return ShoppingElement(
             name = shoppingItems.name,
+            listId = shoppingItems.listId,
             amount = shoppingItems.amount,
             unit = shoppingItems.unit,
-            checked = true
+            checked = shoppingItems.checked.toInt() == 1
         )
     }
 }

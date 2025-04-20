@@ -70,7 +70,7 @@ class AppViewModel @Inject constructor(
             }
 
             is AppIntents.LoadItems -> {
-                loadItems()
+                loadItems(intent.listId)
                 Log.i("database", "Загружаются элементы списка")
             }
 
@@ -95,9 +95,9 @@ class AppViewModel @Inject constructor(
         }
     }
 
-    private fun loadItems() {
+    private fun loadItems(listId: Long) {
         viewModelScope.launch {
-            itemsInteractor.getAllItems().collect { it ->
+            itemsInteractor.getAllItems(listId).collect { it ->
                 _itemsList.value = it
             }
         }

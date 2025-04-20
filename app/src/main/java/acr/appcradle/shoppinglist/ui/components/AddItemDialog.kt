@@ -30,12 +30,14 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun AddItemDialog(
     modifier: Modifier = Modifier,
+    listId: Long,
     onDismissCallback: () -> Unit,
     onConfirmClick: (ShoppingElement) -> Unit
 ) {
     val sheetState = rememberModalBottomSheetState()
 
     var newItem = ShoppingElement(
+        listId = listId,
         name = "",
         amount = "",
         unit = "шт",

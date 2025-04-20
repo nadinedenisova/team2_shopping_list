@@ -14,7 +14,7 @@ fun NavController.navigateListsAll() = navigate(route = ListsAllRoute)
 
 fun NavGraphBuilder.listsAll(
     createNewListClick: () -> Unit,
-    onListClick: () -> Unit,
+    onListClick: (Long) -> Unit,
     onThemeChange: (ThemeOption) -> Unit
 ) {
     composable<ListsAllRoute> {

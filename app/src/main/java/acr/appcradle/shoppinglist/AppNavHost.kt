@@ -34,7 +34,7 @@ fun AppNavHost(
         )
         listsAll(
             createNewListClick = { navController.navigateToListCreation() },
-            onListClick = { navController.navigateToShoppingList() },
+            onListClick = { listId -> navController.navigateToShoppingList(listId) },
             onThemeChange = onThemeChange
         )
         creationScreen(

@@ -19,8 +19,8 @@ class ItemsRepositoryImpl @Inject constructor(
     private val converter: ItemsDbConvertor
 ) : ItemsRepository {
 
-    override fun getAllItems(): Flow<List<ShoppingElement>> =
-        queries.selectAllItems()
+    override fun getAllItems(listId: Long): Flow<List<ShoppingElement>> =
+        queries.selectItemsByListId(listId)
             .asFlow()
             .mapToList(Dispatchers.IO)
             .map { dbList ->
@@ -29,6 +29,7 @@ class ItemsRepositoryImpl @Inject constructor(
 
     override suspend fun addItem(item: ShoppingElement) {
         queries.insertItems(
+            listId = item.listId,
             name = item.name,
             amount = item.amount,
             unit = item.unit,

@@ -32,7 +32,7 @@ fun ListsAll(
     modifier: Modifier = Modifier,
     viewModel: AppViewModel = hiltViewModel(),
     createNewListClick: () -> Unit,
-    onListClick: () -> Unit,
+    onListClick: (Long) -> Unit,
     onThemeChange: (ThemeOption) -> Unit
 ) {
     val state by viewModel.listsAllState.collectAsState()
@@ -97,7 +97,7 @@ fun ListsAll(
                                 onDelete = {
                                     viewModel.actionIntent(AppIntents.DeleteItem(item.id))
                                 },
-                                onListClick = { onListClick() }
+                                onListClick = { onListClick(item.id) }
                             )
                         }
                     }
