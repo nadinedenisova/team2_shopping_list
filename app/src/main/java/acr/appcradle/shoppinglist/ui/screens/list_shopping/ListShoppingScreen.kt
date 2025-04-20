@@ -27,13 +27,11 @@ fun ListShoppingScreen(
         topBar = {
             AppNavTopBar(
                 title = "$list.",
-                onMenuIconClick = {},
                 onBackIconClick = { onBackClick() },
                 onSearchIconClick = {},
                 isBackIconEnable = true,
                 isSearchIconEnabled = true,
-                isMenuIconEnabled = true,
-                screenRoute = RoutesList.ListShoppingRoute
+                screenRoute = RoutesList.ListShoppingRoute,
             )
         }
     ) { innerPaddings ->

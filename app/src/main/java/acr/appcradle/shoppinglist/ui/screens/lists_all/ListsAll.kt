@@ -4,6 +4,7 @@ import acr.appcradle.shoppinglist.RoutesList
 import acr.appcradle.shoppinglist.model.AppIntents
 import acr.appcradle.shoppinglist.ui.AppViewModel
 import acr.appcradle.shoppinglist.ui.components.AppNavTopBar
+import acr.appcradle.shoppinglist.utils.ThemeOption
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -31,7 +32,8 @@ fun ListsAll(
     modifier: Modifier = Modifier,
     viewModel: AppViewModel = hiltViewModel(),
     createNewListClick: () -> Unit,
-    onListClick: () -> Unit
+    onListClick: () -> Unit,
+    onThemeChange: (ThemeOption) -> Unit
 ) {
     val state by viewModel.listsAllState.collectAsState()
 
@@ -40,17 +42,13 @@ fun ListsAll(
     }
 
     Scaffold(
+        modifier = modifier,
         topBar = {
             AppNavTopBar(
                 title = "Мои списки",
-                onMenuIconClick = {
-
-                },
-                isMenuIconEnabled = true,
-                onBackIconClick = {
-
-                },
-                screenRoute = RoutesList.ListsAllRoute
+                onBackIconClick = {},
+                screenRoute = RoutesList.ListsAllRoute,
+                onThemeChange = onThemeChange
             )
         },
         floatingActionButton = {
