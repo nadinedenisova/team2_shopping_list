@@ -18,6 +18,7 @@ data class CustomTypography(
     val headlineSmall: TextStyle,
     val titleLarge: TextStyle,
     val bodyLarge: TextStyle,
+    val bodyMedium: TextStyle,
 )
 
 val Typography = CustomTypography(
@@ -48,6 +49,13 @@ val Typography = CustomTypography(
         fontSize = 16.sp,
         lineHeight = 24.sp,
         letterSpacing = 0.5.sp
+    ),
+    bodyMedium = TextStyle(
+        fontFamily = RubikFontFamily,
+        fontWeight = FontWeight.W400,
+        fontSize = 14.sp,
+        lineHeight = 20.sp,
+        letterSpacing = 0.25.sp
     ),
 )
 

@@ -7,6 +7,7 @@ import acr.appcradle.shoppinglist.ui.AppViewModel
 import acr.appcradle.shoppinglist.ui.components.AppInputField
 import acr.appcradle.shoppinglist.ui.components.AppLargeButton
 import acr.appcradle.shoppinglist.ui.components.AppNavTopBar
+import acr.appcradle.shoppinglist.utils.ThemeOption
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -32,7 +33,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 fun ListCreationScreen(
     viewModel: AppViewModel = hiltViewModel(),
     onBackClick: () -> Unit,
-    onNextClick: () -> Unit
+    onNextClick: () -> Unit,
+    onThemeChange: (ThemeOption) -> Unit
 ) {
     val iconState by viewModel.iconState.collectAsStateWithLifecycle()
 
@@ -41,7 +43,8 @@ fun ListCreationScreen(
         onBackClick = onBackClick,
         onIconClick = { viewModel.iconsIntent(IconsIntent.ChangeIcon(it)) },
         onColorClick = { viewModel.iconsIntent(IconsIntent.ChangeColor(it)) },
-        onNextClick = onNextClick
+        onNextClick = onNextClick,
+        onThemeChange = onThemeChange
     )
 }
 
@@ -52,7 +55,8 @@ fun ListCreationScreenUi(
     onBackClick: () -> Unit,
     onIconClick: (Int) -> Unit,
     onColorClick: (Color) -> Unit,
-    onNextClick: () -> Unit
+    onNextClick: () -> Unit,
+    onThemeChange: (ThemeOption) -> Unit
 ) {
     val scroll = rememberScrollState()
     var inputText by remember { mutableStateOf("") }
@@ -64,7 +68,8 @@ fun ListCreationScreenUi(
                 isBackIconEnable = true,
                 title = "Создать список",
                 onBackIconClick = { onBackClick() },
-                screenRoute = RoutesList.ListCreationRoute
+                screenRoute = RoutesList.ListCreationRoute,
+                onThemeChange = onThemeChange
             )
         }
     ) { innerPaddings ->
