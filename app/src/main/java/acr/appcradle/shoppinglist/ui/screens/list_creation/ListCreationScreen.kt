@@ -2,14 +2,11 @@ package acr.appcradle.shoppinglist.ui.screens.list_creation
 
 import acr.appcradle.shoppinglist.RoutesList
 import acr.appcradle.shoppinglist.model.IconsIntent
-import acr.appcradle.shoppinglist.model.ListRepository
 import acr.appcradle.shoppinglist.model.NewListData
 import acr.appcradle.shoppinglist.ui.AppViewModel
+import acr.appcradle.shoppinglist.ui.components.AppInputField
 import acr.appcradle.shoppinglist.ui.components.AppLargeButton
 import acr.appcradle.shoppinglist.ui.components.AppNavTopBar
-import acr.appcradle.shoppinglist.ui.components.appInputField
-import acr.appcradle.shoppinglist.ui.theme.ShoppingListTheme
-import acr.appcradle.shoppinglist.utils.ThemePreviews
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,7 +16,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -79,11 +75,12 @@ fun ListCreationScreenUi(
                 .verticalScroll(scroll),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            inputText = appInputField(
+            AppInputField(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp),
-                placeholderText = "Введите название списка"
+                placeholderText = "Введите название списка",
+                onValueChange = { inputText = it }
             )
             ColorPalette(
                 modifier = Modifier.padding(vertical = 16.dp),
@@ -95,13 +92,16 @@ fun ListCreationScreenUi(
                 onIconClick = onIconClick
             )
             Spacer(Modifier.weight(1f))
-            AppLargeButton(onClick = {
-                if (inputText.isNotBlank()) {
-                    viewModel.createNewList(inputText.trim()) {
-                        onNextClick()
+            AppLargeButton(
+                onClick = {
+                    if (inputText.isNotBlank()) {
+                        viewModel.createNewList(inputText.trim()) {
+                            onNextClick()
+                        }
                     }
-                }
-            }, text = "Создать")
+                },
+                text = "Создать"
+            )
         }
     }
 }
