@@ -24,12 +24,12 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun appInputField(
+fun AppInputField(
     modifier: Modifier = Modifier,
     placeholderText: String,
     isSearchIconNeeded: Boolean = false,
     onValueChange: (String) -> Unit = {}
-): String {
+){
     var inputText by remember { mutableStateOf("") }
     TextField(
         modifier = modifier,
@@ -60,7 +60,6 @@ fun appInputField(
                 )
         }
     )
-    return inputText
 }
 
 
@@ -69,7 +68,7 @@ fun appInputField(
 fun Preview() {
     ShoppingListTheme {
         Surface {
-            appInputField(
+            AppInputField(
                 placeholderText = "Введите название списка",
                 isSearchIconNeeded = false
             )
