@@ -1,19 +1,22 @@
 CREATE TABLE ShoppingItems(
     id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    listId INTEGER NOT NULL,
     name TEXT NOT NULL,
     amount TEXT NOT NULL,
     unit TEXT NOT NULL,
-    checked INTEGER NOT NULL
+    checked INTEGER NOT NULL,
+    FOREIGN KEY (listId) REFERENCES ShoppingList(id) ON DELETE CASCADE
 );
 
 
-selectAllItems:
+selectItemsByListId:
 SELECT *
-FROM ShoppingItems;
+FROM ShoppingItems
+WHERE listId = ?;
 
 insertItems:
-INSERT INTO ShoppingItems(name, amount, unit, checked)
-VALUES (?, ?, ?, ?);
+INSERT INTO ShoppingItems(listId, name, amount, unit, checked)
+VALUES (?, ?, ?, ?, ?);
 
 deleteItems:
 DELETE

@@ -1,8 +1,10 @@
 package acr.appcradle.shoppinglist.ui.components
 
 import acr.appcradle.shoppinglist.model.ShoppingElement
+import acr.appcradle.shoppinglist.ui.theme.ShoppingListTheme
 import acr.appcradle.shoppinglist.ui.theme.Typography
 import acr.appcradle.shoppinglist.ui.theme.gray
+import acr.appcradle.shoppinglist.utils.ThemePreviews
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,6 +18,7 @@ import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
@@ -27,12 +30,14 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun AddItemDialog(
     modifier: Modifier = Modifier,
+    listId: Long,
     onDismissCallback: () -> Unit,
     onConfirmClick: (ShoppingElement) -> Unit
 ) {
     val sheetState = rememberModalBottomSheetState()
 
     var newItem = ShoppingElement(
+        listId = listId,
         name = "",
         amount = "",
         unit = "шт",
@@ -45,7 +50,7 @@ fun AddItemDialog(
         sheetState = sheetState,
         onDismissRequest = { onDismissCallback() }
     ) {
-        Column() {
+        Column {
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -76,7 +81,7 @@ fun AddItemDialog(
                 }
             }
         }
-        appInputField(
+        AppInputField(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp),
@@ -88,14 +93,14 @@ fun AddItemDialog(
                 .fillMaxWidth()
                 .padding(vertical = 10.dp)
         ) {
-            appInputField(
+            AppInputField(
                 modifier = Modifier
                     .padding(start = 16.dp, end = 6.dp)
                     .weight(0.5f),
                 placeholderText = "1",
                 onValueChange = { newItem = newItem.copy(amount = it) }
             )
-            appInputField(
+            AppInputField(
                 modifier = Modifier
                     .padding(end = 16.dp)
                     .weight(0.5f),
@@ -107,12 +112,12 @@ fun AddItemDialog(
 }
 
 
-//@ThemePreviews
-//@Composable
-//private fun Preview3() {
-//    ShoppingListTheme {
-//        Surface {
+@ThemePreviews
+@Composable
+private fun Preview3() {
+    ShoppingListTheme {
+        Surface {
 //            AddItemDialog() {}
-//        }
-//    }
-//}
+        }
+    }
+}

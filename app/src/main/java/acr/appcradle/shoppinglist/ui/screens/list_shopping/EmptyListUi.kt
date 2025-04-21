@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun EmptyListUi(
+    listId: Long,
     modifier: Modifier = Modifier,
     viewModel: AppViewModel,
 ) {
@@ -67,7 +68,8 @@ fun EmptyListUi(
         if (addItemBottomSheetVisibility)
             AddItemDialog(
                 onDismissCallback = { addItemBottomSheetVisibility = false },
-                onConfirmClick = { viewModel.actionIntent(AppIntents.AddItem(item = it)) }
+                onConfirmClick = { viewModel.actionIntent(AppIntents.AddItem(item = it)) },
+                listId = listId
             )
     }
 }

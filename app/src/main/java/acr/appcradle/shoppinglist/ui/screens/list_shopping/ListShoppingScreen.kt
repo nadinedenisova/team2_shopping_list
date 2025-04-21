@@ -15,11 +15,12 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 @Composable
 fun ListShoppingScreen(
+    listId: Long,
     viewModel: AppViewModel = hiltViewModel(),
     onBackClick: () -> Unit,
 ) {
-    LaunchedEffect(Unit) {
-        viewModel.actionIntent(AppIntents.LoadItems)
+    LaunchedEffect(listId) {
+        viewModel.actionIntent(AppIntents.LoadItems(listId))
     }
     val list = viewModel.itemsList.collectAsStateWithLifecycle().value
 
@@ -27,21 +28,19 @@ fun ListShoppingScreen(
         topBar = {
             AppNavTopBar(
                 title = "$list.",
-                onMenuIconClick = {},
                 onBackIconClick = { onBackClick() },
                 onSearchIconClick = {},
                 isBackIconEnable = true,
                 isSearchIconEnabled = true,
-                isMenuIconEnabled = true,
-                screenRoute = RoutesList.ListShoppingRoute
+                screenRoute = RoutesList.ListShoppingRoute,
             )
         }
     ) { innerPaddings ->
         Box(modifier = Modifier.padding(innerPaddings)) {
             if (list.isEmpty())
-                EmptyListUi(viewModel = viewModel)
+                EmptyListUi(viewModel = viewModel, listId = listId)
             else
-                FilledListUi(listOfItems = list, viewModel = viewModel)
+                FilledListUi(listOfItems = list, viewModel = viewModel, listId = listId)
         }
     }
 }

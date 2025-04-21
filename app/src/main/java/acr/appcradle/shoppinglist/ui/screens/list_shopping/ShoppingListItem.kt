@@ -17,7 +17,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun ShoppingListItem(items: ShoppingElement, onCheckedChange: () -> Unit) {
+fun ShoppingListItem(
+    items: ShoppingElement,
+    onCheckedChange: () -> Unit
+) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
@@ -45,19 +48,19 @@ fun ShoppingListItem(items: ShoppingElement, onCheckedChange: () -> Unit) {
     }
 }
 
-@Preview
-@Composable
-private fun ShoppingListItemPreview() {
-    ShoppingListTheme {
-        Surface {
-            ShoppingListItem(
-                items = ShoppingElement(
-                    name = "Груша",
-                    amount = "3",
-                    unit = "шт",
-                    checked = false
-                )
-            ) { }
-        }
-    }
-}
+//@Preview
+//@Composable
+//private fun ShoppingListItemPreview() {
+//    ShoppingListTheme {
+//        Surface {
+//            ShoppingListItem(
+//                items = ShoppingElement(
+//                    name = "Груша",
+//                    amount = "3",
+//                    unit = "шт",
+//                    checked = false
+//                )
+//            ) { }
+//        }
+//    }
+//}

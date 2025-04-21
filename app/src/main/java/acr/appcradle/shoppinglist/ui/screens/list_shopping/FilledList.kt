@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun FilledListUi(
     modifier: Modifier = Modifier,
+    listId: Long,
     listOfItems: List<ShoppingElement>,
     viewModel: AppViewModel
 ) {
@@ -50,7 +51,8 @@ fun FilledListUi(
         if (addItemBottomSheetVisibility)
             AddItemDialog(
                 onDismissCallback = { addItemBottomSheetVisibility = false },
-                onConfirmClick = { viewModel.actionIntent(AppIntents.AddItem(item = it)) }
+                onConfirmClick = { viewModel.actionIntent(AppIntents.AddItem(item = it)) },
+                listId = listId
             )
     }
 }

@@ -9,15 +9,18 @@ import kotlinx.serialization.Serializable
 @Serializable
 data object ListShoppingRoute
 
-fun NavController.navigateToShoppingList() =
-    navigate(route = ListShoppingRoute)
-
+fun NavController.navigateToShoppingList(listId: Long) {
+    navigate("listShopping/$listId")
+}
 
 fun NavGraphBuilder.shoppingScreen(
     onBackClick: () -> Unit,
 ) {
-    composable<ListShoppingRoute> {
+    composable("listShopping/{listId}") { backStackEntry ->
+        val listId =
+            backStackEntry.arguments?.getString("listId")?.toLongOrNull() ?: return@composable
         ListShoppingScreen(
+            listId = listId,
             onBackClick = onBackClick,
         )
     }
