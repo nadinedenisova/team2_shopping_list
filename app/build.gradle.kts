@@ -1,4 +1,3 @@
-import com.android.tools.r8.internal.md
 import io.gitlab.arturbosch.detekt.Detekt
 import io.gitlab.arturbosch.detekt.DetektCreateBaselineTask
 
@@ -8,17 +7,16 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
-    id ("kotlinx-serialization")
+    id("kotlinx-serialization")
     id("app.cash.sqldelight")
-    id ("io.gitlab.arturbosch.detekt") version "1.23.8"
+    id("io.gitlab.arturbosch.detekt") version "1.23.8"
 }
 
 //region detekt
 detekt {
     buildUponDefaultConfig = true // preconfigure defaults
     allRules = false // activate all available (even unstable) rules.
-    config.setFrom("$projectDir/config/detekt.yml") // point to your custom config defining rules to run, overwriting default behavior
-    baseline = file("$projectDir/config/baseline.xml") // a way of suppressing issues before introducing detekt
+    config.setFrom("${rootProject.rootDir}/config/detekt/detekt.yml")
 }
 
 tasks.withType<Detekt>().configureEach {

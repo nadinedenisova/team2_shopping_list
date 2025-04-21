@@ -16,6 +16,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -38,13 +39,13 @@ class AppViewModel @Inject constructor(
     fun iconsIntent(intent: IconsIntent) {
         when (intent) {
             is IconsIntent.ChangeIcon -> {
-                _iconState.value = _iconState.value.copy(icon = intent.icon)
+                _iconState.update { it.copy(icon = intent.icon) }
                 Log.e("database", "${repository.getAllItems()}")
                 repository.getAllItems()
             }
 
             is IconsIntent.ChangeColor -> {
-                _iconState.value = _iconState.value.copy(iconColor = intent.color)
+                _iconState.update { it.copy(iconColor = intent.color) }
             }
 
             is IconsIntent.ChangeTitle -> {
@@ -85,20 +86,22 @@ class AppViewModel @Inject constructor(
 
     private fun loadLists() {
         viewModelScope.launch {
-            _listsAllState.value = _listsAllState.value.copy(isLoading = true)
+            _listsAllState.update { it.copy(isLoading = true) }
             val items = repository.getAllItems().first()
-            _listsAllState.value = ListsScreenState(
-                isLoading = false,
-                list = items,
-                isEmpty = items.isEmpty()
-            )
+            _listsAllState.update {
+                ListsScreenState(
+                    isLoading = false,
+                    list = items,
+                    isEmpty = items.isEmpty()
+                )
+            }
         }
     }
 
     private fun loadItems() {
         viewModelScope.launch {
-            itemsInteractor.getAllItems().collect { it ->
-                _itemsList.value = it
+            itemsInteractor.getAllItems().collect { items ->
+                _itemsList.update { items }
             }
         }
     }
