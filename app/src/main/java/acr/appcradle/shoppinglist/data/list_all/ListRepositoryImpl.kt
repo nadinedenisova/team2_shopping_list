@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
 
-@Singleton  //аннотация класса в единственном экземпляре
+@Singleton
 class ListRepositoryImpl @Inject constructor(
     private val queries: ShoppingListQueries,
     private val converter: ListDbConvertor

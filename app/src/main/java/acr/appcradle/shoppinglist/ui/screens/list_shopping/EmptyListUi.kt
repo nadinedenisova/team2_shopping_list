@@ -3,8 +3,8 @@ package acr.appcradle.shoppinglist.ui.screens.list_shopping
 import acr.appcradle.shoppinglist.R
 import acr.appcradle.shoppinglist.model.AppIntents
 import acr.appcradle.shoppinglist.ui.AppViewModel
-import acr.appcradle.shoppinglist.ui.components.AddItemDialog
-import acr.appcradle.shoppinglist.ui.components.AppLargeButton
+import acr.appcradle.shoppinglist.ui.components.AppBottomSheets
+import acr.appcradle.shoppinglist.ui.components.ShoppingListButtons
 import acr.appcradle.shoppinglist.ui.theme.Typography
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
@@ -17,7 +17,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -30,7 +30,7 @@ fun EmptyListUi(
     modifier: Modifier = Modifier,
     viewModel: AppViewModel,
 ) {
-    var addItemBottomSheetVisibility by remember { mutableStateOf(false) }
+    var addItemBottomSheetVisibility by rememberSaveable { mutableStateOf(false) }
 
     Column(
         modifier = modifier
@@ -60,25 +60,14 @@ fun EmptyListUi(
 
         Spacer(Modifier.weight(1f))
 
-        AppLargeButton(
+        ShoppingListButtons.AppLargeButton(
             text = "Добавить товар",
             onClick = { addItemBottomSheetVisibility = true }
         )
         if (addItemBottomSheetVisibility)
-            AddItemDialog(
+            AppBottomSheets.AddItemDialog(
                 onDismissCallback = { addItemBottomSheetVisibility = false },
                 onConfirmClick = { viewModel.actionIntent(AppIntents.AddItem(item = it)) }
             )
     }
 }
-
-
-//@ThemePreviews
-//@Composable
-//private fun ListShoppingPreview() {
-//    ShoppingListTheme {
-//        Surface {
-//            EmptyListUi(viewModel = AppViewModel())
-//        }
-//    }
-//}

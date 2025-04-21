@@ -2,13 +2,8 @@ package acr.appcradle.shoppinglist.ui.screens.list_creation
 
 import acr.appcradle.shoppinglist.model.NewListData
 import acr.appcradle.shoppinglist.ui.theme.ShoppingListTheme
+import acr.appcradle.shoppinglist.ui.theme.Team2Colors
 import acr.appcradle.shoppinglist.ui.theme.Typography
-import acr.appcradle.shoppinglist.ui.theme.additionalColorBlue
-import acr.appcradle.shoppinglist.ui.theme.additionalColorGreen
-import acr.appcradle.shoppinglist.ui.theme.additionalColorPurple
-import acr.appcradle.shoppinglist.ui.theme.additionalColorRed
-import acr.appcradle.shoppinglist.ui.theme.additionalColorYellow
-import acr.appcradle.shoppinglist.ui.theme.tortoise
 import acr.appcradle.shoppinglist.utils.ThemePreviews
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -20,7 +15,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.Surface
@@ -38,14 +32,6 @@ fun ColorPalette(
     modifier: Modifier = Modifier,
     onColorClick: (Color) -> Unit
 ) {
-    val listOfColors = listOf<Color>(
-        additionalColorGreen,
-        additionalColorPurple,
-        additionalColorBlue,
-        additionalColorRed,
-        additionalColorYellow
-    )
-
     Card(
         modifier = modifier
             .fillMaxWidth()
@@ -80,7 +66,7 @@ fun ColorPalette(
                                     val circleRadius = size.minDimension / 2 + strokeWidth * 2
 
                                     drawCircle(
-                                        color = tortoise,
+                                        color = Team2Colors.tortoise,
                                         radius = circleRadius,
                                         center = center,
                                         style = Stroke(width = strokeWidth)
@@ -105,7 +91,7 @@ private fun Preview() {
                 iconsState = NewListData(
                     title = "sdf",
                     icon = null,
-                    iconColor = additionalColorBlue
+                    iconColor = Team2Colors.additionalColorBlue
                 )
             )
         }

@@ -1,7 +1,7 @@
 package acr.appcradle.shoppinglist.ui.screens.greeting
 
 import acr.appcradle.shoppinglist.R
-import acr.appcradle.shoppinglist.ui.components.AppLargeButton
+import acr.appcradle.shoppinglist.ui.components.ShoppingListButtons
 import acr.appcradle.shoppinglist.ui.theme.ShoppingListTheme
 import acr.appcradle.shoppinglist.ui.theme.Typography
 import acr.appcradle.shoppinglist.utils.ThemePreviews
@@ -18,9 +18,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-
 
 @Composable
 fun GreetingScreen(onNextClick: () -> Unit) {
@@ -33,7 +33,7 @@ fun GreetingScreen(onNextClick: () -> Unit) {
     ) {
         Text(
             modifier = Modifier.padding(vertical = 40.dp),
-            text = "Добро пожаловать!",
+            text = stringResource(R.string.greeting),
             style = Typography.headlineLarge.copy(textAlign = TextAlign.Center)
         )
         Image(
@@ -44,19 +44,19 @@ fun GreetingScreen(onNextClick: () -> Unit) {
             modifier = Modifier
                 .padding(top = 28.dp)
                 .padding(horizontal = 16.dp),
-            text = "Никогда не забывайте, что нужно купить",
+            text = stringResource(R.string.under_greets_advise),
             style = Typography.headlineSmall.copy(textAlign = TextAlign.Center)
         )
         Text(
             modifier = Modifier
                 .padding(top = 12.dp)
                 .padding(horizontal = 16.dp),
-            text = "Создавайте списки и не переживайте о покупках",
+            text = stringResource(R.string.under_greets_advise_2),
             style = Typography.bodyLarge.copy(textAlign = TextAlign.Center)
         )
         Spacer(Modifier.weight(1f))
-        AppLargeButton(
-            text = "Начать",
+        ShoppingListButtons.AppLargeButton(
+            text = stringResource(R.string.greeting_button_text),
             onClick = { onNextClick() }
         )
     }

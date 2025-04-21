@@ -1,9 +1,9 @@
 package acr.appcradle.shoppinglist.ui.screens.lists_all
 
-import acr.appcradle.shoppinglist.RoutesList
 import acr.appcradle.shoppinglist.model.AppIntents
 import acr.appcradle.shoppinglist.ui.AppViewModel
 import acr.appcradle.shoppinglist.ui.components.AppNavTopBar
+import acr.appcradle.shoppinglist.ui.components.DropDownMenus
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -43,14 +43,10 @@ fun ListsAll(
         topBar = {
             AppNavTopBar(
                 title = "Мои списки",
-                onMenuIconClick = {
-
-                },
-                isMenuIconEnabled = true,
                 onBackIconClick = {
 
                 },
-                screenRoute = RoutesList.ListsAllRoute
+                dropDownMenu = { DropDownMenus.AllListsMenu() }
             )
         },
         floatingActionButton = {

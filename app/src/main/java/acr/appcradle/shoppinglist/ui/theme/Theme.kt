@@ -1,5 +1,6 @@
 package acr.appcradle.shoppinglist.ui.theme
 
+import acr.appcradle.shoppinglist.ui.theme.Team2Colors.tortoise
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
@@ -17,7 +18,6 @@ private val DarkColorScheme = darkColorScheme(
     secondary = PurpleGrey80,
     tertiary = Pink80,
     surfaceContainerLow = tortoise
-
 )
 
 private val LightColorScheme = lightColorScheme(

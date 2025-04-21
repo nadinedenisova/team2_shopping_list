@@ -1,6 +1,5 @@
 package acr.appcradle.shoppinglist.ui.components
 
-import acr.appcradle.shoppinglist.RoutesList
 import acr.appcradle.shoppinglist.ui.theme.ShoppingListTheme
 import acr.appcradle.shoppinglist.ui.theme.Typography
 import acr.appcradle.shoppinglist.utils.ThemePreviews
@@ -27,16 +26,12 @@ import androidx.compose.ui.unit.dp
 fun AppNavTopBar(
     title: String,
     onBackIconClick: () -> Unit,
-    onMenuIconClick: () -> Unit = {},
-    onSearchIconClick: () -> Unit = {},
     isBackIconEnable: Boolean = false,
     isSearchIconEnabled: Boolean = false,
-    isMenuIconEnabled: Boolean = false,
-    screenRoute: RoutesList
+    onSearchIconClick: () -> Unit = {},
+    dropDownMenu: @Composable () -> Unit = {}
 ) {
-
     val iconsInnerSize = 22.dp
-
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -81,7 +76,7 @@ fun AppNavTopBar(
                 )
             }
         }
-        AppDropdownMenu(screenRoute = screenRoute)
+        dropDownMenu()
     }
 }
 
@@ -93,9 +88,9 @@ fun GreetingPreview() {
             AppNavTopBar(
                 title = "Создать список",
                 onBackIconClick = {},
-//                isMenuIconEnabled = true,
                 isSearchIconEnabled = true,
-                screenRoute = RoutesList.ListsAllRoute
+                dropDownMenu = { Text("2333") }
+//                screenRoute = RoutesList.ListsAllRoute
             )
         }
     }

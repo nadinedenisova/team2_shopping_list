@@ -4,6 +4,7 @@ import acr.appcradle.shoppinglist.RoutesList
 import acr.appcradle.shoppinglist.model.AppIntents
 import acr.appcradle.shoppinglist.ui.AppViewModel
 import acr.appcradle.shoppinglist.ui.components.AppNavTopBar
+import acr.appcradle.shoppinglist.ui.components.DropDownMenus
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -27,13 +28,11 @@ fun ListShoppingScreen(
         topBar = {
             AppNavTopBar(
                 title = "$list.",
-                onMenuIconClick = {},
                 onBackIconClick = { onBackClick() },
                 onSearchIconClick = {},
                 isBackIconEnable = true,
                 isSearchIconEnabled = true,
-                isMenuIconEnabled = true,
-                screenRoute = RoutesList.ListShoppingRoute
+                dropDownMenu = { DropDownMenus.ShoppingListMenu() }
             )
         }
     ) { innerPaddings ->
