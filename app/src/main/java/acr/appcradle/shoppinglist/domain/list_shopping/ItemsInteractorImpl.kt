@@ -14,6 +14,7 @@ class ItemsInteractorImpl @Inject constructor(
 
     override fun getAllItems(listId: Long): Flow<List<ShoppingElement>> {
         return repository.getAllItems(listId)
+
     }
 
     override suspend fun addItem(item: ShoppingElement) {

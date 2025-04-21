@@ -2,13 +2,14 @@ package acr.appcradle.shoppinglist.data.list_shopping
 
 import acr.appcradle.shoppinglist.ShoppingItemsQueries
 import acr.appcradle.shoppinglist.data.converters.ItemsDbConvertor
-import acr.appcradle.shoppinglist.data.converters.ListDbConvertor
 import acr.appcradle.shoppinglist.model.ItemsRepository
 import acr.appcradle.shoppinglist.model.ShoppingElement
+import android.util.Log
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -25,6 +26,9 @@ class ItemsRepositoryImpl @Inject constructor(
             .mapToList(Dispatchers.IO)
             .map { dbList ->
                 dbList.map { converter.map(it) }
+            }.catch { throwable ->
+                Log.e("ShoppingRepo", "Ошибка при чтении списка", throwable)
+                emit(emptyList())
             }
 
     override suspend fun addItem(item: ShoppingElement) {
