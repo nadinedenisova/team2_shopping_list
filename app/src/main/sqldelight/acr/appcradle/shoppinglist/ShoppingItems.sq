@@ -8,7 +8,7 @@ CREATE TABLE ShoppingItems(
 
 
 selectAllItems:
-SELECT *
+SELECT id, name, amount, unit, checked
 FROM ShoppingItems;
 
 insertItems:

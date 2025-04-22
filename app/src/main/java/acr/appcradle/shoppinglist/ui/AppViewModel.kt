@@ -40,8 +40,8 @@ class AppViewModel @Inject constructor(
         when (intent) {
             is IconsIntent.ChangeIcon -> {
                 _iconState.update { it.copy(icon = intent.icon) }
-                Log.e("database", "${repository.getAllItems()}")
-                repository.getAllItems()
+                Log.e("database", "${repository.getAllLists()}")
+                repository.getAllLists()
             }
 
             is IconsIntent.ChangeColor -> {
@@ -87,7 +87,7 @@ class AppViewModel @Inject constructor(
     private fun loadLists() {
         viewModelScope.launch {
             _listsAllState.update { it.copy(isLoading = true) }
-            val items = repository.getAllItems().first()
+            val items = repository.getAllLists().first()
             _listsAllState.update {
                 ListsScreenState(
                     isLoading = false,

@@ -5,6 +5,7 @@ import acr.appcradle.shoppinglist.data.converters.ItemsDbConvertor
 import acr.appcradle.shoppinglist.data.converters.ListDbConvertor
 import acr.appcradle.shoppinglist.model.ItemsRepository
 import acr.appcradle.shoppinglist.model.ShoppingElement
+import acr.appcradle.shoppinglist.model.ShoppingLocalDataSource
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
 import kotlinx.coroutines.Dispatchers
@@ -15,28 +16,17 @@ import javax.inject.Singleton
 
 @Singleton
 class ItemsRepositoryImpl @Inject constructor(
-    private val queries: ShoppingItemsQueries,
-    private val converter: ItemsDbConvertor
+    private val localDataSource: ShoppingLocalDataSource
 ) : ItemsRepository {
 
     override fun getAllItems(): Flow<List<ShoppingElement>> =
-        queries.selectAllItems()
-            .asFlow()
-            .mapToList(Dispatchers.IO)
-            .map { dbList ->
-                dbList.map { converter.map(it) }
-            }
+        localDataSource.getAllItems()
 
     override suspend fun addItem(item: ShoppingElement) {
-        queries.insertItems(
-            name = item.name,
-            amount = item.amount,
-            unit = item.unit,
-            checked = 1
-        )
+       localDataSource.insertItem(item)
     }
 
     override suspend fun deleteItem(id: Long) {
-        queries.deleteItems(id)
+        localDataSource.deleteItem(id)
     }
 }

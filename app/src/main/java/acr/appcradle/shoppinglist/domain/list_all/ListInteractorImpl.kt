@@ -13,7 +13,7 @@ class ListInteractorImpl @Inject constructor(
 ) : ListInteractor {
 
     override fun getAllItems(): Flow<List<ListElement>> {
-        return repository.getAllItems()
+        return repository.getAllLists()
     }
 
     override suspend fun addItem(item: ListElement) {

@@ -4,7 +4,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface ListRepository {
 
-     fun getAllItems() : Flow<List<ListElement>>
+     fun getAllLists() : Flow<List<ListElement>>
      suspend fun addItem(item: ListElement)
      suspend fun deleteItem(id: Long)
 }

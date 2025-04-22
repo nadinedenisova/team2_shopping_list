@@ -8,7 +8,7 @@ class ItemsDbConvertor @Inject constructor() {
 
     fun map (shoppingElement: ShoppingElement) : ShoppingItems {
         return ShoppingItems(
-           id = null!!,
+           id = 0L,
            name = shoppingElement.name,
            amount = shoppingElement.amount,
            unit = shoppingElement.unit,
