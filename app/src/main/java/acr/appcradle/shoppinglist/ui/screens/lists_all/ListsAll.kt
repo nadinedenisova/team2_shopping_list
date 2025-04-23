@@ -1,10 +1,9 @@
 package acr.appcradle.shoppinglist.ui.screens.lists_all
 
-import acr.appcradle.shoppinglist.RoutesList
 import acr.appcradle.shoppinglist.model.AppIntents
 import acr.appcradle.shoppinglist.ui.AppViewModel
 import acr.appcradle.shoppinglist.ui.components.AppNavTopBar
-import acr.appcradle.shoppinglist.utils.ThemeOption
+import acr.appcradle.shoppinglist.ui.components.DropDownMenus
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -42,10 +41,13 @@ fun ListsAll(
     }
 
     Scaffold(
-        modifier = modifier,
         topBar = {
             AppNavTopBar(
                 title = "Мои списки",
+                onBackIconClick = {
+
+                },
+                dropDownMenu = { DropDownMenus.AllListsMenu() }
                 onBackIconClick = {},
                 screenRoute = RoutesList.ListsAllRoute,
                 onThemeChange = onThemeChange
@@ -97,7 +99,7 @@ fun ListsAll(
                                 onDelete = {
                                     viewModel.actionIntent(AppIntents.DeleteItem(item.id))
                                 },
-                                onListClick = { onListClick(item.id) }
+                                onListClick = { onListClick() }
                             )
                         }
                     }

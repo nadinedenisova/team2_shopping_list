@@ -1,9 +1,11 @@
 package acr.appcradle.shoppinglist.di
 
+import acr.appcradle.shoppinglist.data.db.SqlDelightLocalDataSource
 import acr.appcradle.shoppinglist.data.list_all.ListRepositoryImpl
 import acr.appcradle.shoppinglist.data.list_shopping.ItemsRepositoryImpl
 import acr.appcradle.shoppinglist.model.ItemsRepository
 import acr.appcradle.shoppinglist.model.ListRepository
+import acr.appcradle.shoppinglist.model.ShoppingLocalDataSource
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -17,5 +19,8 @@ interface RepositoryModule {
 
     @Binds
     fun bindItemsRepository(impl: ItemsRepositoryImpl) : ItemsRepository
+
+    @Binds
+     fun bindShoppingLocalDataSource(impl: SqlDelightLocalDataSource): ShoppingLocalDataSource
 }
 

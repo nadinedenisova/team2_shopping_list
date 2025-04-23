@@ -15,29 +15,17 @@ import javax.inject.Singleton
 
 @Singleton
 class ItemsRepositoryImpl @Inject constructor(
-    private val queries: ShoppingItemsQueries,
-    private val converter: ItemsDbConvertor
+    private val localDataSource: ShoppingLocalDataSource
 ) : ItemsRepository {
 
-    override fun getAllItems(listId: Long): Flow<List<ShoppingElement>> =
-        queries.selectItemsByListId(listId)
-            .asFlow()
-            .mapToList(Dispatchers.IO)
-            .map { dbList ->
-                dbList.map { converter.map(it) }
-            }
+    override fun getAllItems(): Flow<List<ShoppingElement>> =
+        localDataSource.getAllItems()
 
     override suspend fun addItem(item: ShoppingElement) {
-        queries.insertItems(
-            listId = item.listId,
-            name = item.name,
-            amount = item.amount,
-            unit = item.unit,
-            checked = 1
-        )
+       localDataSource.insertItem(item)
     }
 
     override suspend fun deleteItem(id: Long) {
-        queries.deleteItems(id)
+        localDataSource.deleteItem(id)
     }
 }

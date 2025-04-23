@@ -1,13 +1,11 @@
 package acr.appcradle.shoppinglist.ui.screens.list_creation
 
-import acr.appcradle.shoppinglist.RoutesList
 import acr.appcradle.shoppinglist.model.IconsIntent
 import acr.appcradle.shoppinglist.model.NewListData
 import acr.appcradle.shoppinglist.ui.AppViewModel
-import acr.appcradle.shoppinglist.ui.components.AppInputField
-import acr.appcradle.shoppinglist.ui.components.AppLargeButton
+import acr.appcradle.shoppinglist.ui.components.AppInputFields
 import acr.appcradle.shoppinglist.ui.components.AppNavTopBar
-import acr.appcradle.shoppinglist.utils.ThemeOption
+import acr.appcradle.shoppinglist.ui.components.ShoppingListButtons
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -20,7 +18,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -97,7 +95,7 @@ fun ListCreationScreenUi(
                 onIconClick = onIconClick
             )
             Spacer(Modifier.weight(1f))
-            AppLargeButton(
+            ShoppingListButtons.AppLargeButton(
                 onClick = {
                     if (inputText.isNotBlank()) {
                         viewModel.createNewList(inputText.trim()) {

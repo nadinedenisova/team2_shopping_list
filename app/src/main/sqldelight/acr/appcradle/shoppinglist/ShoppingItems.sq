@@ -9,10 +9,9 @@ CREATE TABLE ShoppingItems(
 );
 
 
-selectItemsByListId:
-SELECT *
-FROM ShoppingItems
-WHERE listId = ?;
+selectAllItems:
+SELECT id, name, amount, unit, checked
+FROM ShoppingItems;
 
 insertItems:
 INSERT INTO ShoppingItems(listId, name, amount, unit, checked)
