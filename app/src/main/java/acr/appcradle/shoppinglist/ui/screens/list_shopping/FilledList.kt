@@ -39,7 +39,9 @@ fun FilledListUi(
             modifier = modifier.fillMaxSize()
         ) {
             listOfItems.forEach { item ->
-                ShoppingListItem(item) { }
+                ShoppingListItem(item) {
+                    viewModel.actionIntent(AppIntents.AddItem(item = item.copy(checked = it)))
+                }
             }
         }
         FloatingActionButton(

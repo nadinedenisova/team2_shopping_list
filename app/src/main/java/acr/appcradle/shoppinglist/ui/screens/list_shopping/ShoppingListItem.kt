@@ -18,8 +18,8 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun ShoppingListItem(
-    items: ShoppingElement,
-    onCheckedChange: () -> Unit
+    item: ShoppingElement,
+    onCheckedChange: (Boolean) -> Unit
 ) {
     Row(
         modifier = Modifier.fillMaxWidth(),
@@ -32,18 +32,18 @@ fun ShoppingListItem(
             contentAlignment = Alignment.Center
         ) {
             Checkbox(
-                checked = items.checked,
-                onCheckedChange = { onCheckedChange() },
+                checked = item.checked,
+                onCheckedChange = { onCheckedChange(!item.checked) },
             )
         }
         Text(
             modifier = Modifier.weight(1f),
-            text = items.name,
+            text = item.name,
         )
         Text(
             modifier = Modifier
                 .padding(horizontal = 16.dp),
-            text = "${items.amount} ${items.unit}"
+            text = "${item.amount} ${item.unit}"
         )
     }
 }
@@ -54,7 +54,7 @@ private fun ShoppingListItemPreview() {
     ShoppingListTheme {
         Surface {
             ShoppingListItem(
-                items = ShoppingElement(
+                item = ShoppingElement(
                     listId = 2,
                     name = "Груша",
                     amount = "3",
