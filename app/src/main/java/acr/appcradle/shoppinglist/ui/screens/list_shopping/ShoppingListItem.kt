@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun ShoppingListItem(
     item: ShoppingElement,
-    onCheckedChange: (Boolean) -> Unit
+    onCheckedChange: () -> Unit
 ) {
     Row(
         modifier = Modifier.fillMaxWidth(),
@@ -33,7 +33,7 @@ fun ShoppingListItem(
         ) {
             Checkbox(
                 checked = item.checked,
-                onCheckedChange = { onCheckedChange(!item.checked) },
+                onCheckedChange = { onCheckedChange() },
             )
         }
         Text(
@@ -59,7 +59,8 @@ private fun ShoppingListItemPreview() {
                     name = "Груша",
                     amount = "3",
                     unit = "шт",
-                    checked = false
+                    checked = false,
+                    id = 2L
                 )
             ) { }
         }

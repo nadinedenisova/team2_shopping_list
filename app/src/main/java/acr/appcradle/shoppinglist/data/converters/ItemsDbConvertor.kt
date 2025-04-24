@@ -7,19 +7,20 @@ import javax.inject.Inject
 
 class ItemsDbConvertor @Inject constructor() {
 
-    fun map (shoppingElement: ShoppingElement) : ShoppingItems {
+    fun map(shoppingElement: ShoppingElement): ShoppingItems {
         return ShoppingItems(
-           id = 0L,
-           listId = shoppingElement.listId,
-           name = shoppingElement.name,
-           amount = shoppingElement.amount,
-           unit = shoppingElement.unit,
-           checked = DbAdapters.booleanToLong.encode(shoppingElement.checked)
+            id = 0L,
+            listId = shoppingElement.listId,
+            name = shoppingElement.name,
+            amount = shoppingElement.amount,
+            unit = shoppingElement.unit,
+            checked = DbAdapters.booleanToLong.encode(shoppingElement.checked)
         )
     }
 
-    fun map (shoppingItems: ShoppingItems) : ShoppingElement {
+    fun map(shoppingItems: ShoppingItems): ShoppingElement {
         return ShoppingElement(
+            id = shoppingItems.id,
             name = shoppingItems.name,
             listId = shoppingItems.listId,
             amount = shoppingItems.amount,

@@ -114,6 +114,11 @@ class SqlDelightLocalDataSource @Inject constructor(
         )
     }
 
+    override suspend fun updateItem(item: ShoppingElement) {
+        deleteItem(item.id)
+        insertItem(item.copy(checked = !item.checked))
+    }
+
     override suspend fun deleteItem(id: Long) {
         itemsQueries.deleteItems(id)
     }

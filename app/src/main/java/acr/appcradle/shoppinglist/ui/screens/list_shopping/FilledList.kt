@@ -40,7 +40,7 @@ fun FilledListUi(
         ) {
             listOfItems.forEach { item ->
                 ShoppingListItem(item) {
-                    viewModel.actionIntent(AppIntents.AddItem(item = item.copy(checked = it)))
+                    viewModel.actionIntent(AppIntents.UpdateItem(item = item))
                 }
             }
         }
