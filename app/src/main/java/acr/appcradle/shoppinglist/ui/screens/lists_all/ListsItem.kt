@@ -15,6 +15,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -37,7 +39,7 @@ fun ListsItem(
             .fillMaxWidth()
             .height(72.dp)
             .background(
-                color = Color.White,
+                color = colorScheme.surfaceContainer,
                 shape = RoundedCornerShape(12.dp)
             )
             .padding(start = 16.dp),

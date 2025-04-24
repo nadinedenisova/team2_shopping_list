@@ -2,6 +2,7 @@ package acr.appcradle.shoppinglist.ui.screens.list_shopping
 
 import acr.appcradle.shoppinglist.model.ShoppingElement
 import acr.appcradle.shoppinglist.ui.theme.ShoppingListTheme
+import acr.appcradle.shoppinglist.utils.ThemePreviews
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,7 +14,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -48,19 +48,20 @@ fun ShoppingListItem(
     }
 }
 
-//@Preview
-//@Composable
-//private fun ShoppingListItemPreview() {
-//    ShoppingListTheme {
-//        Surface {
-//            ShoppingListItem(
-//                items = ShoppingElement(
-//                    name = "Груша",
-//                    amount = "3",
-//                    unit = "шт",
-//                    checked = false
-//                )
-//            ) { }
-//        }
-//    }
-//}
+@ThemePreviews
+@Composable
+private fun ShoppingListItemPreview() {
+    ShoppingListTheme {
+        Surface {
+            ShoppingListItem(
+                items = ShoppingElement(
+                    listId = 2,
+                    name = "Груша",
+                    amount = "3",
+                    unit = "шт",
+                    checked = false
+                )
+            ) { }
+        }
+    }
+}
