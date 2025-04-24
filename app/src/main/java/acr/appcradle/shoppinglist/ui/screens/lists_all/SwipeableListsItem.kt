@@ -46,9 +46,6 @@ fun SwipeableListsItem(
     val maxSwipeOffset = 216.dp
 
     SwipeToDismissBox(
-        modifier = Modifier.clickable {
-            onListClick()
-        },
         state = dismissState,
         backgroundContent = {
             Row(
@@ -116,13 +113,13 @@ fun SwipeableListsItem(
         }
     ) {
         ListsItem(
+            modifier = Modifier.clickable { onListClick() },
             icon = icon,
             title = title,
             iconBackground = iconBackground,
             boughtCount = boughtCount,
             totalCount = totalCount,
-
-            )
+        )
     }
 }
 
