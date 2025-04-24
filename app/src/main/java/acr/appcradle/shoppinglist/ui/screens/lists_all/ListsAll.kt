@@ -47,8 +47,7 @@ fun ListsAll(
             AppNavTopBar(
                 title = "Мои списки",
                 onBackIconClick = {},
-                dropDownMenu = { DropDownMenus.AllListsMenu() },
-
+                dropDownMenu = { DropDownMenus.AllListsMenu(onThemeChange = onThemeChange) },
             )
         },
         floatingActionButton = {
