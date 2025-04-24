@@ -38,7 +38,19 @@ class SqlDelightLocalDataSource @Inject constructor(
                 emit(emptyList())
             }
 
-    override suspend fun insertList(item: ListElement) {
+    override fun getSortedLists(): Flow<List<ListElement>> =
+        listQueries.selectAllSortedByName()
+            .asFlow()
+            .mapToList(Dispatchers.IO)
+            .map { dbList -> dbList.map { converterList.map(it) } }
+            .retry(3)
+            .catch { e ->
+                Log.e("ListRepository", "Ошибка при чтении списка из БД: ${e.message}", e)
+                emit(emptyList())
+            }
+
+
+    override suspend fun insertList(item: ListElement): Long {
         listQueries.insertElement(
             icon = item.icon.toLong(),
             iconBackground = item.iconBackground.toArgb().toLong(),
@@ -46,14 +58,30 @@ class SqlDelightLocalDataSource @Inject constructor(
             boughtCount = item.boughtCount.toLong(),
             totalCount = item.totalCount.toLong()
         )
+
+        return listQueries.lastInsertedId().executeAsOne()
     }
 
     override suspend fun deleteList(id: Long) {
         listQueries.deleteElement(id)
     }
 
-    override fun getAllItems(): Flow<List<ShoppingElement>> =
-        itemsQueries.selectAllItems()
+    override suspend fun updateList(item: ListElement) {
+        listQueries.updateListById(
+            id = item.id,
+            icon = item.icon.toLong(),
+            iconBackground = item.iconBackground.toArgb().toLong(),
+            listName = item.listName
+        )
+    }
+
+    override suspend fun getListById(id: Long): ListElement {
+        val list = listQueries.getListByListId(id).executeAsOne()
+        return converterList.map(list)
+    }
+
+    override fun getAllItems(listId: Long): Flow<List<ShoppingElement>> =
+        itemsQueries.selectItemsById(listId)
             .asFlow()
             .mapToList(Dispatchers.IO)
             .map { dbList -> dbList.map { converterItem.map(it) } }
@@ -63,8 +91,21 @@ class SqlDelightLocalDataSource @Inject constructor(
                 emit(emptyList())
             }
 
+    override fun getSortedItems(listId: Long): Flow<List<ShoppingElement>> =
+        itemsQueries.selectAllSortedByName()
+            .asFlow()
+            .mapToList(Dispatchers.IO)
+            .map { dbList -> dbList.map { converterItem.map(it) } }
+            .retry(3)
+            .catch { e ->
+                Log.e("ItemRepository", "Ошибка при чтении списка из БД: ${e.message}", e)
+                emit(emptyList())
+            }
+
+
     override suspend fun insertItem(item: ShoppingElement) {
         itemsQueries.insertItems(
+            listId = item.listId,
             name = item.name,
             amount = item.amount,
             unit = item.unit,

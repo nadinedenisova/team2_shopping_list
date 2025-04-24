@@ -4,14 +4,20 @@ CREATE TABLE ShoppingItems(
     name TEXT NOT NULL,
     amount TEXT NOT NULL,
     unit TEXT NOT NULL,
-    checked INTEGER NOT NULL,
+    checked INTEGER NOT NULL DEFAULT 0,
     FOREIGN KEY (listId) REFERENCES ShoppingList(id) ON DELETE CASCADE
 );
 
 
-selectAllItems:
-SELECT id, name, amount, unit, checked
-FROM ShoppingItems;
+selectItemsById:
+SELECT id, listId, name, amount, unit, checked
+FROM ShoppingItems
+WHERE listId = ?;
+
+selectAllSortedByName:
+SELECT id, listId, name, amount, unit, checked
+FROM ShoppingItems
+ORDER BY name COLLATE NOCASE ASC;
 
 insertItems:
 INSERT INTO ShoppingItems(listId, name, amount, unit, checked)

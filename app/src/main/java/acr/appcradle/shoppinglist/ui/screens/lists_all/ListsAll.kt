@@ -4,6 +4,7 @@ import acr.appcradle.shoppinglist.model.AppIntents
 import acr.appcradle.shoppinglist.ui.AppViewModel
 import acr.appcradle.shoppinglist.ui.components.AppNavTopBar
 import acr.appcradle.shoppinglist.ui.components.DropDownMenus
+import acr.appcradle.shoppinglist.utils.ThemeOption
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -31,6 +32,7 @@ fun ListsAll(
     modifier: Modifier = Modifier,
     viewModel: AppViewModel = hiltViewModel(),
     createNewListClick: () -> Unit,
+    editListClick: (Long) -> Unit,
     onListClick: (Long) -> Unit,
     onThemeChange: (ThemeOption) -> Unit
 ) {
@@ -44,13 +46,9 @@ fun ListsAll(
         topBar = {
             AppNavTopBar(
                 title = "Мои списки",
-                onBackIconClick = {
-
-                },
-                dropDownMenu = { DropDownMenus.AllListsMenu() }
                 onBackIconClick = {},
-                screenRoute = RoutesList.ListsAllRoute,
-                onThemeChange = onThemeChange
+                dropDownMenu = { DropDownMenus.AllListsMenu() },
+
             )
         },
         floatingActionButton = {
@@ -91,15 +89,15 @@ fun ListsAll(
                                 totalCount = item.totalCount,
                                 boughtCount = item.boughtCount,
                                 onEdit = {
-
+                                    editListClick(item.id)
                                 },
                                 onDuplicate = {
-
+                                    viewModel.actionIntent(AppIntents.DuplicateList(item.id))
                                 },
                                 onDelete = {
                                     viewModel.actionIntent(AppIntents.DeleteItem(item.id))
                                 },
-                                onListClick = { onListClick() }
+                                onListClick = { onListClick(item.id) }
                             )
                         }
                     }

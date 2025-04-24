@@ -17,6 +17,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 @Composable
 fun ListShoppingScreen(
     viewModel: AppViewModel = hiltViewModel(),
+    listId: Long,
     onBackClick: () -> Unit,
 ) {
     LaunchedEffect(listId) {
@@ -32,7 +33,7 @@ fun ListShoppingScreen(
                 onSearchIconClick = {},
                 isBackIconEnable = true,
                 isSearchIconEnabled = true,
-                dropDownMenu = { DropDownMenus.ShoppingListMenu() }
+                dropDownMenu = { DropDownMenus.ShoppingListMenu(listId) }
             )
         }
     ) { innerPaddings ->

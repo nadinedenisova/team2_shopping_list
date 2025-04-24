@@ -29,11 +29,12 @@ object AppBottomSheets {
     @Composable
     fun AddItemDialog(
         modifier: Modifier = Modifier,
+        listId: Long,
         onDismissCallback: () -> Unit,
         onConfirmClick: (ShoppingElement) -> Unit
     ) {
         val sheetState = rememberModalBottomSheetState()
-        var newItem = ShoppingElement(name = "", amount = "", unit = "шт", checked = false)
+        var newItem = ShoppingElement(name = "", amount = "", unit = "шт", checked = false, listId = listId)
 
         ModalBottomSheet(
             modifier = modifier

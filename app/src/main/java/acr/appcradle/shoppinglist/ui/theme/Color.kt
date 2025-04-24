@@ -16,6 +16,9 @@ object Team2Colors {
     val tortoise = Color(0xFF147A85)
     val iconsBg = Color(0xFFCBCCCC)
     val team2colors_gray = Color(0xFF74797E)
+    val team2colors_lightGray = Color(0xFFBDBDBD)
+    val team2color_orange = Color(0xFFF89C08)
+    val team2color_red = Color(0xFFFF593A)
 
     val additionalColorGreen = Color(0xFFB4D8CC)
     val additionalColorPurple = Color(0xFFBDBAD8)

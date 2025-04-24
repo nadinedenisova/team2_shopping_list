@@ -35,7 +35,8 @@ fun AppNavHost(
         listsAll(
             createNewListClick = { navController.navigateToListCreation() },
             onListClick = { listId -> navController.navigateToShoppingList(listId) },
-            onThemeChange = onThemeChange
+            onThemeChange = onThemeChange,
+            editListClick = {}
         )
         creationScreen(
             onBackClick = { navController.popBackStack() },

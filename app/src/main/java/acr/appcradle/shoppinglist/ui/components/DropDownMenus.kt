@@ -1,5 +1,7 @@
 package acr.appcradle.shoppinglist.ui.components
 
+import acr.appcradle.shoppinglist.model.AppIntents
+import acr.appcradle.shoppinglist.ui.AppViewModel
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
@@ -19,11 +21,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 
 object DropDownMenus {
 
     @Composable
     fun ShoppingListMenu(
+        listId: Long,
+        viewModel: AppViewModel = hiltViewModel()
     ) {
         var expanded by remember { mutableStateOf(false) }
 
@@ -43,7 +48,7 @@ object DropDownMenus {
             ) {
                 DropdownMenuItem(
                     text = { Text("Сортировать по алфавиту") },
-                    onClick = { /* Do something... */ }
+                    onClick = { viewModel.actionIntent(AppIntents.LoadSortedItems(listId)) }
                 )
                 DropdownMenuItem(
                     text = { Text("Поделиться") },
@@ -63,6 +68,7 @@ object DropDownMenus {
 
     @Composable
     fun AllListsMenu(
+        viewModel: AppViewModel = hiltViewModel()
     ) {
         var expanded by remember { mutableStateOf(false) }
 
@@ -82,7 +88,7 @@ object DropDownMenus {
             ) {
                 DropdownMenuItem(
                     text = { Text("Сортировать по алфавиту") },
-                    onClick = { /* Do something... */ }
+                    onClick = { viewModel.actionIntent(AppIntents.LoadSortedLists)}
                 )
                 DropdownMenuItem(
                     text = { Text("Установить тему") },

@@ -6,6 +6,7 @@ import acr.appcradle.shoppinglist.ui.AppViewModel
 import acr.appcradle.shoppinglist.ui.components.AppInputFields
 import acr.appcradle.shoppinglist.ui.components.AppNavTopBar
 import acr.appcradle.shoppinglist.ui.components.ShoppingListButtons
+import acr.appcradle.shoppinglist.utils.ThemeOption
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,6 +19,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -32,7 +34,7 @@ fun ListCreationScreen(
     viewModel: AppViewModel = hiltViewModel(),
     onBackClick: () -> Unit,
     onNextClick: () -> Unit,
-    onThemeChange: (ThemeOption) -> Unit
+    onThemeChange: (ThemeOption) -> Unit,
 ) {
     val iconState by viewModel.iconState.collectAsStateWithLifecycle()
 
@@ -55,6 +57,7 @@ fun ListCreationScreenUi(
     onColorClick: (Color) -> Unit,
     onNextClick: () -> Unit,
     onThemeChange: (ThemeOption) -> Unit
+
 ) {
     val scroll = rememberScrollState()
     var inputText by remember { mutableStateOf("") }
@@ -66,8 +69,6 @@ fun ListCreationScreenUi(
                 isBackIconEnable = true,
                 title = "Создать список",
                 onBackIconClick = { onBackClick() },
-                screenRoute = RoutesList.ListCreationRoute,
-                onThemeChange = onThemeChange
             )
         }
     ) { innerPaddings ->
@@ -78,7 +79,7 @@ fun ListCreationScreenUi(
                 .verticalScroll(scroll),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            AppInputField(
+            AppInputFields.MainInputField(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp),

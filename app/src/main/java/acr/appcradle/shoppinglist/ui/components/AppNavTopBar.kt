@@ -26,12 +26,10 @@ import androidx.compose.ui.unit.dp
 fun AppNavTopBar(
     title: String,
     onBackIconClick: () -> Unit,
-    onMenuIconClick: () -> Unit = {},
-    onSearchIconClick: () -> Unit = {},
     isBackIconEnable: Boolean = false,
     isSearchIconEnabled: Boolean = false,
     onSearchIconClick: () -> Unit = {},
-    dropDownMenu: @Composable () -> Unit = {}
+    dropDownMenu: @Composable () -> Unit = {},
 ) {
 
     val iconsInnerSize = 22.dp
