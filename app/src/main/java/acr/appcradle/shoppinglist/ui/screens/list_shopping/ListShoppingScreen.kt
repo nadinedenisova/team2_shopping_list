@@ -4,6 +4,7 @@ import acr.appcradle.shoppinglist.RoutesList
 import acr.appcradle.shoppinglist.model.AppIntents
 import acr.appcradle.shoppinglist.ui.AppViewModel
 import acr.appcradle.shoppinglist.ui.components.AppNavTopBar
+import acr.appcradle.shoppinglist.ui.components.DropDownMenus
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -16,10 +17,11 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 @Composable
 fun ListShoppingScreen(
     viewModel: AppViewModel = hiltViewModel(),
+    listId: Long,
     onBackClick: () -> Unit,
 ) {
-    LaunchedEffect(Unit) {
-        viewModel.actionIntent(AppIntents.LoadItems)
+    LaunchedEffect(listId) {
+        viewModel.actionIntent(AppIntents.LoadItems(listId))
     }
     val list = viewModel.itemsList.collectAsStateWithLifecycle().value
 
@@ -31,15 +33,15 @@ fun ListShoppingScreen(
                 onSearchIconClick = {},
                 isBackIconEnable = true,
                 isSearchIconEnabled = true,
-                screenRoute = RoutesList.ListShoppingRoute,
+                dropDownMenu = { DropDownMenus.ShoppingListMenu(listId) }
             )
         }
     ) { innerPaddings ->
         Box(modifier = Modifier.padding(innerPaddings)) {
             if (list.isEmpty())
-                EmptyListUi(viewModel = viewModel)
+                EmptyListUi(viewModel = viewModel, listId = listId)
             else
-                FilledListUi(listOfItems = list, viewModel = viewModel)
+                FilledListUi(listOfItems = list, viewModel = viewModel, listId = listId)
         }
     }
 }

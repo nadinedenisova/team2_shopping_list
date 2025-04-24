@@ -30,7 +30,7 @@ fun ListsItem(
     title: String,
     iconBackground: Color,
     boughtCount: Int,
-    totalCount: Int
+    totalCount: Int,
 ) {
     Row(
         modifier = Modifier

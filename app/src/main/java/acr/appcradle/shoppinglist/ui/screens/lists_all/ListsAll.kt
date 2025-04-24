@@ -1,9 +1,9 @@
 package acr.appcradle.shoppinglist.ui.screens.lists_all
 
-import acr.appcradle.shoppinglist.RoutesList
 import acr.appcradle.shoppinglist.model.AppIntents
 import acr.appcradle.shoppinglist.ui.AppViewModel
 import acr.appcradle.shoppinglist.ui.components.AppNavTopBar
+import acr.appcradle.shoppinglist.ui.components.DropDownMenus
 import acr.appcradle.shoppinglist.utils.ThemeOption
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -32,7 +32,8 @@ fun ListsAll(
     modifier: Modifier = Modifier,
     viewModel: AppViewModel = hiltViewModel(),
     createNewListClick: () -> Unit,
-    onListClick: () -> Unit,
+    editListClick: (Long) -> Unit,
+    onListClick: (Long) -> Unit,
     onThemeChange: (ThemeOption) -> Unit
 ) {
     val state by viewModel.listsAllState.collectAsState()
@@ -42,13 +43,12 @@ fun ListsAll(
     }
 
     Scaffold(
-        modifier = modifier,
         topBar = {
             AppNavTopBar(
                 title = "Мои списки",
                 onBackIconClick = {},
-                screenRoute = RoutesList.ListsAllRoute,
-                onThemeChange = onThemeChange
+                dropDownMenu = { DropDownMenus.AllListsMenu() },
+
             )
         },
         floatingActionButton = {
@@ -89,15 +89,15 @@ fun ListsAll(
                                 totalCount = item.totalCount,
                                 boughtCount = item.boughtCount,
                                 onEdit = {
-
+                                    editListClick(item.id)
                                 },
                                 onDuplicate = {
-
+                                    viewModel.actionIntent(AppIntents.DuplicateList(item.id))
                                 },
                                 onDelete = {
                                     viewModel.actionIntent(AppIntents.DeleteItem(item.id))
                                 },
-                                onListClick = { onListClick() }
+                                onListClick = { onListClick(item.id) }
                             )
                         }
                     }

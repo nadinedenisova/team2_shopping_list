@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">ShoppingList</string>
+    <string name="greeting">Добро пожаловать!</string>
+    <string name="under_greets_advise">Никогда не забывайте, что нужно купить!</string>
+    <string name="under_greets_advise_2">Создавайте списки и не переживайте о покупках</string>
+    <string name="greeting_button_text">Начать!</string>
 </resources>

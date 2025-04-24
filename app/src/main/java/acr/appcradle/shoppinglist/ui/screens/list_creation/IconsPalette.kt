@@ -3,9 +3,8 @@ package acr.appcradle.shoppinglist.ui.screens.list_creation
 import acr.appcradle.shoppinglist.R
 import acr.appcradle.shoppinglist.model.NewListData
 import acr.appcradle.shoppinglist.ui.theme.ShoppingListTheme
+import acr.appcradle.shoppinglist.ui.theme.Team2Colors
 import acr.appcradle.shoppinglist.ui.theme.Typography
-import acr.appcradle.shoppinglist.ui.theme.iconsBg
-import acr.appcradle.shoppinglist.ui.theme.tortoise
 import acr.appcradle.shoppinglist.utils.ThemePreviews
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -18,7 +17,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -39,30 +37,6 @@ fun IconsPalette(
     modifier: Modifier = Modifier,
     onIconClick: (Int) -> Unit
 ) {
-
-    val listOfIcons = listOf<Int>(
-        R.drawable.icon_snowflake,
-        R.drawable.airplane_outline,
-        R.drawable.alert_outline,
-        R.drawable.balloon_outline,
-        R.drawable.bandage_outline,
-        R.drawable.barbell_outline,
-        R.drawable.fast_food_outline,
-        R.drawable.home_outline,
-        R.drawable.library_outline,
-        R.drawable.wine_outline,
-        R.drawable.bed_outline,
-        R.drawable.briefcase_outline,
-        R.drawable.build_outline,
-        R.drawable.business_outline,
-        R.drawable.calendar_number_outline,
-        R.drawable.color_palette_outline,
-        R.drawable.cart_outline,
-        R.drawable.car_outline,
-        R.drawable.gift_outline,
-        R.drawable.paw_outline,
-    )
-
     Card(
         modifier = modifier
             .fillMaxWidth()
@@ -92,7 +66,7 @@ fun IconsPalette(
                                 .clickable { onIconClick(listOfIcons[index]) }
                                 .background(
                                     color = if (listOfIcons[index] == iconsState.icon) iconsState.iconColor
-                                        ?: iconsBg else iconsBg,
+                                        ?: Team2Colors.iconsBg else Team2Colors.iconsBg,
                                     shape = RoundedCornerShape(24.dp)
                                 ),
                             contentAlignment = Alignment.Center
@@ -120,7 +94,7 @@ private fun Preview2() {
                 iconsState = NewListData(
                     title = null,
                     icon = R.drawable.airplane_outline,
-                    iconColor = tortoise
+                    iconColor = Team2Colors.tortoise
                 )
             ) {}
         }

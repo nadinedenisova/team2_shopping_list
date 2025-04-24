@@ -8,7 +8,21 @@ CREATE TABLE ShoppingList (
 );
 
 selectAll:
-SELECT * FROM ShoppingList;
+SELECT id, icon, iconBackground, listName, boughtCount, totalCount
+FROM ShoppingList;
+
+getListByListId:
+SELECT id, icon, iconBackground, listName, boughtCount, totalCount
+FROM ShoppingList
+WHERE id = ?;
+
+lastInsertedId:
+SELECT last_insert_rowid();
+
+selectAllSortedByName:
+SELECT id, icon, iconBackground, listName, boughtCount, totalCount
+FROM ShoppingList
+ORDER BY listName COLLATE NOCASE ASC;
 
 insertElement:
 INSERT INTO ShoppingList(icon, iconBackground, listName, boughtCount, totalCount)
@@ -16,4 +30,9 @@ VALUES (?, ?, ?, ?, ?);
 
 deleteElement:
 DELETE FROM ShoppingList
+WHERE id = ?;
+
+updateListById:
+UPDATE ShoppingList
+SET icon = ?, iconBackground = ?, listName = ?
 WHERE id = ?;

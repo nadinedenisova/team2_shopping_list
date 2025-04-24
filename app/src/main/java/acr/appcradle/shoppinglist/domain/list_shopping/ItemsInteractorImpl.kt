@@ -12,8 +12,12 @@ class ItemsInteractorImpl @Inject constructor(
     private val repository: ItemsRepository
 ) : ItemsInteractor {
 
-    override fun getAllItems(): Flow<List<ShoppingElement>> {
-        return repository.getAllItems()
+    override fun getAllItems(listId: Long): Flow<List<ShoppingElement>> {
+        return repository.getAllItems(listId)
+    }
+
+    override fun getSortedItems(listId: Long): Flow<List<ShoppingElement>> {
+        return repository.getSortedItems(listId)
     }
 
     override suspend fun addItem(item: ShoppingElement) {

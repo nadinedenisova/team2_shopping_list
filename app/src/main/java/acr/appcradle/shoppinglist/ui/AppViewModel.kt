@@ -16,6 +16,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -38,13 +39,13 @@ class AppViewModel @Inject constructor(
     fun iconsIntent(intent: IconsIntent) {
         when (intent) {
             is IconsIntent.ChangeIcon -> {
-                _iconState.value = _iconState.value.copy(icon = intent.icon)
-                Log.e("database", "${repository.getAllItems()}")
-                repository.getAllItems()
+                _iconState.update { it.copy(icon = intent.icon) }
+                Log.e("database", "${repository.getAllLists()}")
+                repository.getAllLists()
             }
 
             is IconsIntent.ChangeColor -> {
-                _iconState.value = _iconState.value.copy(iconColor = intent.color)
+                _iconState.update { it.copy(iconColor = intent.color) }
             }
 
             is IconsIntent.ChangeTitle -> {
@@ -55,7 +56,6 @@ class AppViewModel @Inject constructor(
 
     fun actionIntent(intent: AppIntents) {
         when (intent) {
-
             is AppIntents.DeleteItem -> {
                 viewModelScope.launch {
                     repository.deleteItem(intent.id)
@@ -64,41 +64,58 @@ class AppViewModel @Inject constructor(
             }
 
             is AppIntents.LoadList -> {
-                loadLists()
+                loadLists(sorted = false)
                 Log.i("database", "Загружаются списки")
 
             }
-
+            is AppIntents.LoadSortedLists -> {
+                loadLists(sorted = true)
+            }
             is AppIntents.LoadItems -> {
-                loadItems()
+                loadItems(intent.listId, sorted = false)
                 Log.i("database", "Загружаются элементы списка")
             }
-
+            is AppIntents.LoadSortedItems -> {
+                loadItems(intent.listId, sorted = true)
+            }
             is AppIntents.AddItem -> {
                 viewModelScope.launch {
                     itemsInteractor.addItem(item = intent.item)
                 }
                 Log.i("database", "Новый элемент добавлен: ${intent.item}")
             }
+
+            is AppIntents.DuplicateList -> {
+                duplicateList(intent.listId)
+            }
+
         }
     }
 
-    private fun loadLists() {
+    private fun loadLists(sorted: Boolean = false) {
         viewModelScope.launch {
-            _listsAllState.value = _listsAllState.value.copy(isLoading = true)
-            val items = repository.getAllItems().first()
-            _listsAllState.value = ListsScreenState(
-                isLoading = false,
-                list = items,
-                isEmpty = items.isEmpty()
-            )
+            _listsAllState.update { it.copy(isLoading = true) }
+            val flow = if (sorted) repository.getSortedLists() else repository.getAllLists()
+            val items = flow.first()
+            _listsAllState.update {
+                ListsScreenState(
+                    isLoading = false,
+                    list = items,
+                    isEmpty = items.isEmpty()
+                )
+            }
         }
     }
 
-    private fun loadItems() {
+    private fun loadItems(listId: Long, sorted: Boolean = false) {
         viewModelScope.launch {
-            itemsInteractor.getAllItems().collect { it ->
-                _itemsList.value = it
+            val flow = if (sorted)
+                itemsInteractor.getSortedItems(listId)
+            else
+                itemsInteractor.getAllItems(listId)
+
+            flow.collect { items ->
+                _itemsList.update { items }
             }
         }
     }
@@ -118,5 +135,26 @@ class AppViewModel @Inject constructor(
             onComplete()
         }
     }
+
+    private fun duplicateList(listId: Long) {
+        viewModelScope.launch {
+            val originalList = repository.getListById(listId)
+            val items = itemsInteractor.getAllItems(listId).first()
+            if (originalList != null) {
+                val newList = originalList.copy(
+                    id = 0L,
+                    listName = "${originalList.listName} копия"
+                )
+                val newListId = repository.addItem(newList)
+                items.forEach { item ->
+                    val newItem = item.copy(listId = newListId)
+                    itemsInteractor.addItem(newItem)
+                }
+                loadLists()
+            }
+
+        }
+    }
+
 
 }

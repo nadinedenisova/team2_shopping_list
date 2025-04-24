@@ -3,7 +3,7 @@ package acr.appcradle.shoppinglist.ui.screens.list_shopping
 import acr.appcradle.shoppinglist.model.AppIntents
 import acr.appcradle.shoppinglist.model.ShoppingElement
 import acr.appcradle.shoppinglist.ui.AppViewModel
-import acr.appcradle.shoppinglist.ui.components.AddItemDialog
+import acr.appcradle.shoppinglist.ui.components.AppBottomSheets
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun FilledListUi(
     modifier: Modifier = Modifier,
+    listId: Long,
     listOfItems: List<ShoppingElement>,
     viewModel: AppViewModel
 ) {
@@ -48,9 +49,10 @@ fun FilledListUi(
             Icon(imageVector = Icons.Default.Add, contentDescription = null)
         }
         if (addItemBottomSheetVisibility)
-            AddItemDialog(
+            AppBottomSheets.AddItemDialog(
                 onDismissCallback = { addItemBottomSheetVisibility = false },
-                onConfirmClick = { viewModel.actionIntent(AppIntents.AddItem(item = it)) }
+                onConfirmClick = { viewModel.actionIntent(AppIntents.AddItem(item = it)) },
+                listId = listId
             )
     }
 }
