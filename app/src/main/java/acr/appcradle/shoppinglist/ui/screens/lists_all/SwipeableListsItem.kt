@@ -2,6 +2,7 @@ package acr.appcradle.shoppinglist.ui.screens.lists_all
 
 import acr.appcradle.shoppinglist.R
 import acr.appcradle.shoppinglist.model.ListElement
+import acr.appcradle.shoppinglist.ui.components.DeleteDialog
 import acr.appcradle.shoppinglist.ui.theme.Team2Colors
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.background
@@ -62,8 +63,14 @@ fun SwipeableListsItem(
 ) {
     val dismissState = rememberSwipeToDismissBoxState()
     val scope = rememberCoroutineScope()
+    val shouldShowDialog = remember { mutableStateOf(false) }
 
-    val maxSwipeOffset = 216.dp
+    DeleteDialog(
+        visibility = shouldShowDialog.value,
+        onDismissRequest = { shouldShowDialog.value = false}
+    ) {
+        onDelete()
+    }
 
     SwipeToDismissBox(
         modifier = Modifier.clickable{
@@ -119,7 +126,7 @@ fun SwipeableListsItem(
                         .background(Team2Colors.team2color_red)
                         .size(72.dp),
                     onClick = {
-                        onDelete()
+                        shouldShowDialog.value = true
                         scope.launch {
                             dismissState.snapTo(SwipeToDismissBoxValue.Settled)
                         }
