@@ -104,13 +104,19 @@ class SqlDelightLocalDataSource @Inject constructor(
 
 
     override suspend fun insertItem(item: ShoppingElement) {
+        val bdItem = converterItem.map(item)
         itemsQueries.insertItems(
-            listId = item.listId,
-            name = item.name,
-            amount = item.amount,
-            unit = item.unit,
-            checked = 1
+            listId = bdItem.listId,
+            name = bdItem.name,
+            amount = bdItem.amount,
+            unit = bdItem.unit,
+            checked = bdItem.checked
         )
+    }
+
+    override suspend fun updateItem(item: ShoppingElement) {
+        deleteItem(item.id)
+        insertItem(item.copy(checked = !item.checked))
     }
 
     override suspend fun deleteItem(id: Long) {

@@ -1,6 +1,5 @@
 package acr.appcradle.shoppinglist.ui.screens.list_shopping
 
-import acr.appcradle.shoppinglist.RoutesList
 import acr.appcradle.shoppinglist.model.AppIntents
 import acr.appcradle.shoppinglist.ui.AppViewModel
 import acr.appcradle.shoppinglist.ui.components.AppNavTopBar
@@ -19,6 +18,7 @@ fun ListShoppingScreen(
     viewModel: AppViewModel = hiltViewModel(),
     listId: Long,
     onBackClick: () -> Unit,
+    listName: String,
 ) {
     LaunchedEffect(listId) {
         viewModel.actionIntent(AppIntents.LoadItems(listId))
@@ -28,7 +28,7 @@ fun ListShoppingScreen(
     Scaffold(
         topBar = {
             AppNavTopBar(
-                title = "$list.",
+                title = "$listName.",
                 onBackIconClick = { onBackClick() },
                 onSearchIconClick = {},
                 isBackIconEnable = true,

@@ -68,16 +68,20 @@ class AppViewModel @Inject constructor(
                 Log.i("database", "Загружаются списки")
 
             }
+
             is AppIntents.LoadSortedLists -> {
                 loadLists(sorted = true)
             }
+
             is AppIntents.LoadItems -> {
                 loadItems(intent.listId, sorted = false)
                 Log.i("database", "Загружаются элементы списка")
             }
+
             is AppIntents.LoadSortedItems -> {
                 loadItems(intent.listId, sorted = true)
             }
+
             is AppIntents.AddItem -> {
                 viewModelScope.launch {
                     itemsInteractor.addItem(item = intent.item)
@@ -89,6 +93,11 @@ class AppViewModel @Inject constructor(
                 duplicateList(intent.listId)
             }
 
+            is AppIntents.UpdateItem -> {
+                viewModelScope.launch {
+                    itemsInteractor.updatedItem(item = intent.item)
+                }
+            }
         }
     }
 
@@ -140,7 +149,7 @@ class AppViewModel @Inject constructor(
         viewModelScope.launch {
             val originalList = repository.getListById(listId)
             val items = itemsInteractor.getAllItems(listId).first()
-            if (originalList != null) {
+            if (originalList != emptyList<ListElement>()) {
                 val newList = originalList.copy(
                     id = 0L,
                     listName = "${originalList.listName} копия"

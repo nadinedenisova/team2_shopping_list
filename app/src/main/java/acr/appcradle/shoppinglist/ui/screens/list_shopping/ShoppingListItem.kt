@@ -2,6 +2,7 @@ package acr.appcradle.shoppinglist.ui.screens.list_shopping
 
 import acr.appcradle.shoppinglist.model.ShoppingElement
 import acr.appcradle.shoppinglist.ui.theme.ShoppingListTheme
+import acr.appcradle.shoppinglist.utils.ThemePreviews
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,12 +14,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
 fun ShoppingListItem(
-    items: ShoppingElement,
+    item: ShoppingElement,
     onCheckedChange: () -> Unit
 ) {
     Row(
@@ -32,35 +32,37 @@ fun ShoppingListItem(
             contentAlignment = Alignment.Center
         ) {
             Checkbox(
-                checked = items.checked,
+                checked = item.checked,
                 onCheckedChange = { onCheckedChange() },
             )
         }
         Text(
             modifier = Modifier.weight(1f),
-            text = items.name,
+            text = item.name,
         )
         Text(
             modifier = Modifier
                 .padding(horizontal = 16.dp),
-            text = "${items.amount} ${items.unit}"
+            text = "${item.amount} ${item.unit}"
         )
     }
 }
 
-//@Preview
-//@Composable
-//private fun ShoppingListItemPreview() {
-//    ShoppingListTheme {
-//        Surface {
-//            ShoppingListItem(
-//                items = ShoppingElement(
-//                    name = "Груша",
-//                    amount = "3",
-//                    unit = "шт",
-//                    checked = false
-//                )
-//            ) { }
-//        }
-//    }
-//}
+@ThemePreviews
+@Composable
+private fun ShoppingListItemPreview() {
+    ShoppingListTheme {
+        Surface {
+            ShoppingListItem(
+                item = ShoppingElement(
+                    listId = 2,
+                    name = "Груша",
+                    amount = "3",
+                    unit = "шт",
+                    checked = false,
+                    id = 2L
+                )
+            ) { }
+        }
+    }
+}

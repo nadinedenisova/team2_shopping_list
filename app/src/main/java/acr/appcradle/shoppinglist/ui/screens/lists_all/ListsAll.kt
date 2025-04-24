@@ -29,11 +29,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 
 @Composable
 fun ListsAll(
-    modifier: Modifier = Modifier,
     viewModel: AppViewModel = hiltViewModel(),
     createNewListClick: () -> Unit,
     editListClick: (Long) -> Unit,
-    onListClick: (Long) -> Unit,
+    onListClick: (Long, String) -> Unit,
     onThemeChange: (ThemeOption) -> Unit
 ) {
     val state by viewModel.listsAllState.collectAsState()
@@ -47,8 +46,7 @@ fun ListsAll(
             AppNavTopBar(
                 title = "Мои списки",
                 onBackIconClick = {},
-                dropDownMenu = { DropDownMenus.AllListsMenu() },
-
+                dropDownMenu = { DropDownMenus.AllListsMenu(onThemeChange = onThemeChange) },
             )
         },
         floatingActionButton = {
@@ -97,7 +95,7 @@ fun ListsAll(
                                 onDelete = {
                                     viewModel.actionIntent(AppIntents.DeleteItem(item.id))
                                 },
-                                onListClick = { onListClick(item.id) }
+                                onListClick = { onListClick(item.id, item.listName) }
                             )
                         }
                     }

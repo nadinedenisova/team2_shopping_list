@@ -1,5 +1,5 @@
 [versions]
-agp = "8.9.1"
+agp = "8.9.2"
 androidDriver = "2.0.2"
 detektFormatting = "1.23.8"
 hiltAndroid = "2.54"
