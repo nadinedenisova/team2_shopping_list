@@ -34,7 +34,12 @@ fun AppNavHost(
         )
         listsAll(
             createNewListClick = { navController.navigateToListCreation() },
-            onListClick = { listId -> navController.navigateToShoppingList(listId) },
+            onListClick = { listId, listName ->
+                navController.navigateToShoppingList(
+                    listId,
+                    listName
+                )
+            },
             onThemeChange = onThemeChange,
             editListClick = {}
         )
@@ -47,11 +52,4 @@ fun AppNavHost(
             onBackClick = { navController.popBackStack() },
         )
     }
-}
-
-enum class RoutesList {
-    GreetingRoute,
-    ListsAllRoute,
-    ListShoppingRoute,
-    ListCreationRoute
 }
