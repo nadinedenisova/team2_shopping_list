@@ -60,11 +60,11 @@ object DropDownMenus {
                 )
                 DropdownMenuItem(
                     text = { Text("Снять отметки со всех товаров") },
-                    onClick = { /* Do something... */ }
+                    onClick = { viewModel.actionIntent(AppIntents.MakeAllUnChecked(listId)) }
                 )
                 DropdownMenuItem(
                     text = { Text("Удалить купленные товары") },
-                    onClick = { /* Do something... */ }
+                    onClick = { viewModel.actionIntent(AppIntents.DeleteAllChecked(listId)) }
                 )
             }
         }

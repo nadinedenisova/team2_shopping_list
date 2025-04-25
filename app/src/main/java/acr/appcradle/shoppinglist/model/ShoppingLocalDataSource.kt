@@ -14,5 +14,8 @@ interface ShoppingLocalDataSource {
     fun getSortedItems(listId: Long): Flow<List<ShoppingElement>>
     suspend fun insertItem(item: ShoppingElement)
     suspend fun deleteItem(id: Long)
-    suspend fun updateItem(item: ShoppingElement)
+    suspend fun updateItemInfo(item: ShoppingElement)
+    suspend fun updateItemCheck(item: ShoppingElement)
+    suspend fun deleteAllChecked(listId: Long)
+    suspend fun makeAllUnChecked(listId: Long)
 }

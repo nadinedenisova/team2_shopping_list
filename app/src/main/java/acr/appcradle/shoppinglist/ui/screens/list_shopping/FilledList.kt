@@ -40,7 +40,7 @@ fun FilledListUi(
         ) {
             listOfItems.forEach { item ->
                 ShoppingListItem(item) {
-                    viewModel.actionIntent(AppIntents.UpdateItem(item = item))
+                    viewModel.actionIntent(AppIntents.UpdateItemCheck(item = item))
                 }
             }
         }

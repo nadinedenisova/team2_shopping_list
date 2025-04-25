@@ -92,7 +92,6 @@ fun GreetingPreview() {
                 onBackIconClick = {},
                 isSearchIconEnabled = true,
                 dropDownMenu = { Text("2333") }
-//                screenRoute = RoutesList.ListsAllRoute
             )
         }
     }

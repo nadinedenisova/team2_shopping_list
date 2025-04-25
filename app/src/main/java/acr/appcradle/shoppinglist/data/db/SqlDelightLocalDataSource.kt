@@ -114,12 +114,29 @@ class SqlDelightLocalDataSource @Inject constructor(
         )
     }
 
-    override suspend fun updateItem(item: ShoppingElement) {
-        deleteItem(item.id)
-        insertItem(item.copy(checked = !item.checked))
+    override suspend fun updateItemInfo(item: ShoppingElement) {
+        itemsQueries.updateItemsInfo(
+            name = item.name,
+            amount = item.amount,
+            unit = item.unit,
+            id = item.id
+        )
+    }
+
+    override suspend fun updateItemCheck(item: ShoppingElement) {
+        val bdItem = converterItem.map(item.copy(checked = !item.checked))
+        itemsQueries.updateItemsCheck(checked = bdItem.checked, id = item.id)
     }
 
     override suspend fun deleteItem(id: Long) {
         itemsQueries.deleteItems(id)
+    }
+
+    override suspend fun deleteAllChecked(listId: Long) {
+        itemsQueries.deleteAllChecked(listId)
+    }
+
+    override suspend fun makeAllUnChecked(listId: Long) {
+        itemsQueries.makeAllUnchecked(listId)
     }
 }
