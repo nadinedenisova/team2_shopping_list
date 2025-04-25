@@ -8,7 +8,9 @@ import acr.appcradle.shoppinglist.model.ListRepository
 import acr.appcradle.shoppinglist.model.ListsScreenState
 import acr.appcradle.shoppinglist.model.NewListData
 import acr.appcradle.shoppinglist.model.ShoppingElement
+import android.content.Intent
 import android.util.Log
+import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -115,6 +117,24 @@ class AppViewModel @Inject constructor(
                 viewModelScope.launch {
                     itemsInteractor.makeAllUnChecked(intent.listId)
                 }
+            }
+
+            is AppIntents.ShareList -> {
+                val sendingIntent = Intent(Intent.ACTION_SEND)
+                val text = "Название списка: ${intent.name}\n\n" +
+                        "Список товаров:\n" +
+                        intent.list.joinToString("\n") { it.name }
+                            .trimIndent()
+
+                Log.i("log", text)
+                sendingIntent.setType("text/plain")
+                sendingIntent.putExtra(
+                    Intent.EXTRA_TEXT,
+                    text
+                )
+                sendingIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+
+                startActivity(intent.context, sendingIntent, null)
             }
         }
     }
