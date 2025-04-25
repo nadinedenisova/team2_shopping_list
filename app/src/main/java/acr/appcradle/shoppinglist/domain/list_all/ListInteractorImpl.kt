@@ -16,12 +16,22 @@ class ListInteractorImpl @Inject constructor(
         return repository.getAllLists()
     }
 
-    override suspend fun addItem(item: ListElement) {
-        repository.addItem(item)
+    override suspend fun addItem(item: ListElement) : Result<Unit> {
+        return try {
+            repository.addItem(item)
+            Result.success(Unit)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
     }
 
-    override suspend fun deleteItem(id: Long) {
-        repository.deleteItem(id)
+    override suspend fun deleteItem(id: Long) : Result<Unit> {
+        return try {
+            repository.deleteItem(id)
+            Result.success(Unit)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
     }
 
 }
