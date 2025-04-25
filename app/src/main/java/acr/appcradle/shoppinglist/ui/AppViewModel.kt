@@ -98,6 +98,24 @@ class AppViewModel @Inject constructor(
                     itemsInteractor.updatedItem(item = intent.item)
                 }
             }
+
+            is AppIntents.UpdateItemCheck -> {
+                viewModelScope.launch {
+                    itemsInteractor.updatedItemCheck(intent.item)
+                }
+            }
+
+            is AppIntents.DeleteAllChecked -> {
+                viewModelScope.launch {
+                    itemsInteractor.deleteAllChecked(intent.listId)
+                }
+            }
+
+            is AppIntents.MakeAllUnChecked -> {
+                viewModelScope.launch {
+                    itemsInteractor.makeAllUnChecked(intent.listId)
+                }
+            }
         }
     }
 

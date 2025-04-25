@@ -8,5 +8,8 @@ sealed interface AppIntents {
     data class LoadSortedItems(val listId: Long) : AppIntents
     data class AddItem(val item: ShoppingElement) : AppIntents
     data class UpdateItem(val item: ShoppingElement) : AppIntents
+    data class UpdateItemCheck(val item: ShoppingElement) : AppIntents
+    data class DeleteAllChecked(val listId: Long) : AppIntents
+    data class MakeAllUnChecked(val listId: Long) : AppIntents
     data class DuplicateList(val listId: Long) : AppIntents
 }

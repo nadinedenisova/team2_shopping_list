@@ -27,3 +27,26 @@ deleteItems:
 DELETE
 FROM ShoppingItems
 WHERE id = ?;
+
+updateItemsInfo:
+UPDATE ShoppingItems
+SET
+    name = ?,
+    amount = ?,
+    unit = ?
+WHERE id = ?;
+
+updateItemsCheck:
+UPDATE ShoppingItems
+SET checked = ?
+WHERE id = ?;
+
+deleteAllChecked:
+DELETE
+FROM ShoppingItems
+WHERE checked = 1 AND listId = ?;
+
+makeAllUnchecked:
+UPDATE ShoppingItems
+SET checked = 0
+WHERE listId = ?;
