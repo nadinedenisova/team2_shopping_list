@@ -8,6 +8,7 @@ import acr.appcradle.shoppinglist.model.ListRepository
 import acr.appcradle.shoppinglist.model.ListsScreenState
 import acr.appcradle.shoppinglist.model.NewListData
 import acr.appcradle.shoppinglist.model.ShoppingElement
+import android.content.Intent
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -59,14 +60,15 @@ class AppViewModel @Inject constructor(
             is AppIntents.DeleteItem -> {
                 viewModelScope.launch {
                     repository.deleteItem(intent.id)
+                    itemsInteractor.deleteItem(intent.id)
                     loadLists()
+                    Log.i("database", "Пришел запрос на удаление ид = ${intent.id}")
                 }
             }
 
             is AppIntents.LoadList -> {
                 loadLists(sorted = false)
                 Log.i("database", "Загружаются списки")
-
             }
 
             is AppIntents.LoadSortedLists -> {
@@ -115,6 +117,26 @@ class AppViewModel @Inject constructor(
                 viewModelScope.launch {
                     itemsInteractor.makeAllUnChecked(intent.listId)
                 }
+            }
+
+            is AppIntents.ShareList -> {
+                val text = buildString {
+                    appendLine("Название списка: ${intent.name}")
+                    appendLine()
+                    appendLine("Список товаров:")
+                    intent.list.forEach {
+                        appendLine("- ${it.name}")
+                    }
+                }
+
+                val sendIntent = Intent(Intent.ACTION_SEND).apply {
+                    type = "text/plain"
+                    putExtra(Intent.EXTRA_TEXT, text)
+                    flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                }
+
+                val shareIntent = Intent.createChooser(sendIntent, "Поделиться списком")
+                intent.context.startActivity(shareIntent)
             }
         }
     }

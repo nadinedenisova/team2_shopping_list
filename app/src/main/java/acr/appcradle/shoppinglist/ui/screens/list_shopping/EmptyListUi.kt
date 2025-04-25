@@ -68,7 +68,7 @@ fun EmptyListUi(
         if (addItemBottomSheetVisibility)
             AppBottomSheets.AddItemDialog(
                 onDismissCallback = { addItemBottomSheetVisibility = false },
-                onConfirmClick = { viewModel.actionIntent(AppIntents.AddItem(item = it)) },
+                onAddClick = { viewModel.actionIntent(AppIntents.AddItem(item = it)) },
                 listId = listId
             )
     }
