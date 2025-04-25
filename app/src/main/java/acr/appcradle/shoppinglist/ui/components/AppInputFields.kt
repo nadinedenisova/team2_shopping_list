@@ -18,6 +18,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 
 object AppInputFields {
@@ -26,9 +27,11 @@ object AppInputFields {
         modifier: Modifier = Modifier,
         placeholderText: String,
         isSearchIconNeeded: Boolean = false,
-        onValueChange: (String) -> Unit = {}
+        onValueChange: (String) -> Unit = {},
+        editedValue: String? = null,
+        isNumeric: Boolean = false
     ) {
-        var inputText by rememberSaveable { mutableStateOf("") }
+        var inputText by rememberSaveable { mutableStateOf(editedValue ?: "") }
         TextField(
             modifier = modifier,
             value = inputText,
@@ -43,7 +46,10 @@ object AppInputFields {
             ),
             shape = RoundedCornerShape(10.dp),
             singleLine = true,
-            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+            keyboardOptions = KeyboardOptions(
+                keyboardType = if (isNumeric) KeyboardType.Number else KeyboardType.Text,
+                imeAction = ImeAction.Done
+            ),
             trailingIcon = {
                 if (inputText != "")
                     Icon(
@@ -56,7 +62,7 @@ object AppInputFields {
                     Icon(
                         imageVector = Icons.Default.Search, contentDescription = null
                     )
-            }
+            },
         )
     }
 }

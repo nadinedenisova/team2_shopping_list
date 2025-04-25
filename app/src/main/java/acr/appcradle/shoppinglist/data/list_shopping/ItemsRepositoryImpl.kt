@@ -3,6 +3,7 @@ package acr.appcradle.shoppinglist.data.list_shopping
 import acr.appcradle.shoppinglist.model.ItemsRepository
 import acr.appcradle.shoppinglist.model.ShoppingElement
 import acr.appcradle.shoppinglist.model.ShoppingLocalDataSource
+import android.util.Log
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -28,6 +29,8 @@ class ItemsRepositoryImpl @Inject constructor(
 
     override suspend fun deleteItem(id: Long) {
         localDataSource.deleteItem(id)
+        Log.i("database", "удаление в репозитории")
+
     }
 
     override suspend fun updatedItemCheck(item: ShoppingElement) {

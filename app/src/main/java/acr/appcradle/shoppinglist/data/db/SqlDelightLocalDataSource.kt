@@ -130,6 +130,8 @@ class SqlDelightLocalDataSource @Inject constructor(
 
     override suspend fun deleteItem(id: Long) {
         itemsQueries.deleteItems(id)
+        Log.i("database", "удаление в прослойке")
+
     }
 
     override suspend fun deleteAllChecked(listId: Long) {
