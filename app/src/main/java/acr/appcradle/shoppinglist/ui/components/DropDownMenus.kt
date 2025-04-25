@@ -32,9 +32,12 @@ object DropDownMenus {
     @Composable
     fun ShoppingListMenu(
         listId: Long,
-        viewModel: AppViewModel = hiltViewModel()
+        viewModel: AppViewModel = hiltViewModel(),
+        onShareClick: () -> Unit
     ) {
         var expanded by remember { mutableStateOf(false) }
+        var openDeleteAllDialog by remember { mutableStateOf(false) }
+        var openDeleteDialog by remember { mutableStateOf(false) }
 
         Box(
             modifier = Modifier
@@ -52,21 +55,51 @@ object DropDownMenus {
             ) {
                 DropdownMenuItem(
                     text = { Text("Сортировать по алфавиту") },
-                    onClick = { viewModel.actionIntent(AppIntents.LoadSortedItems(listId)) }
+                    onClick = {
+                        viewModel.actionIntent(AppIntents.LoadSortedItems(listId))
+                        expanded = false
+                    }
                 )
                 DropdownMenuItem(
                     text = { Text("Поделиться") },
-                    onClick = { /* Do something... */ }
+                    onClick = {
+                        onShareClick()
+
+                    }
                 )
                 DropdownMenuItem(
                     text = { Text("Снять отметки со всех товаров") },
-                    onClick = { viewModel.actionIntent(AppIntents.MakeAllUnChecked(listId)) }
+                    onClick = {
+                        viewModel.actionIntent(AppIntents.MakeAllUnChecked(listId))
+                        expanded = false
+                    }
                 )
                 DropdownMenuItem(
                     text = { Text("Удалить купленные товары") },
-                    onClick = { viewModel.actionIntent(AppIntents.DeleteAllChecked(listId)) }
+                    onClick = { openDeleteAllDialog = true }
                 )
             }
+            if (openDeleteAllDialog)
+                AppDialogs.MainAppDialog(
+                    dialogTitle = "Удаление купленных товаров",
+                    dialogText = "Вы действительно хотите удалить все купленные товары?",
+                    onDismissRequest = { openDeleteAllDialog = false },
+                    onConfirmation = {
+                        viewModel.actionIntent(AppIntents.DeleteAllChecked(listId))
+                        openDeleteAllDialog = false
+                        expanded = false
+                    }
+                )
+            if (openDeleteDialog)
+                AppDialogs.MainAppDialog(
+                    dialogTitle = "Удаление товара",
+                    dialogText = "Вы действительно хотите удалить товар?",
+                    onDismissRequest = { openDeleteAllDialog = false },
+                    onConfirmation = {
+//                        viewModel.actionIntent(AppIntents.DeleteItem(id = ))
+                        openDeleteDialog = false
+                    }
+                )
         }
     }
 

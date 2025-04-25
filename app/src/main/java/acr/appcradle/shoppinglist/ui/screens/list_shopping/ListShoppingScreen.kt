@@ -10,6 +10,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
@@ -24,7 +25,7 @@ fun ListShoppingScreen(
         viewModel.actionIntent(AppIntents.LoadItems(listId))
     }
     val list = viewModel.itemsList.collectAsStateWithLifecycle().value
-
+    val context = LocalContext.current
     Scaffold(
         topBar = {
             AppNavTopBar(
@@ -33,7 +34,19 @@ fun ListShoppingScreen(
                 onSearchIconClick = {},
                 isBackIconEnable = true,
                 isSearchIconEnabled = true,
-                dropDownMenu = { DropDownMenus.ShoppingListMenu(listId) }
+                dropDownMenu = {
+                    DropDownMenus.ShoppingListMenu(
+                        listId = listId,
+                        onShareClick = {
+                            viewModel.actionIntent(
+                                AppIntents.ShareList(
+                                    name = listName,
+                                    list = list,
+                                    context = context
+                                )
+                            )
+                        })
+                }
             )
         }
     ) { innerPaddings ->
