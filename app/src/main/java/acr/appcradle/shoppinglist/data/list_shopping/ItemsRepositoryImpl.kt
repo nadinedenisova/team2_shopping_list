@@ -23,11 +23,22 @@ class ItemsRepositoryImpl @Inject constructor(
     }
 
     override suspend fun updatedItem(item: ShoppingElement) {
-        localDataSource.updateItem(item)
+        localDataSource.updateItemInfo(item)
     }
 
     override suspend fun deleteItem(id: Long) {
         localDataSource.deleteItem(id)
     }
 
+    override suspend fun updatedItemCheck(item: ShoppingElement) {
+        localDataSource.updateItemCheck(item)
+    }
+
+    override suspend fun deleteAllChecked(listId: Long) {
+        localDataSource.deleteAllChecked(listId)
+    }
+
+    override suspend fun makeAllUnChecked(listId: Long) {
+        localDataSource.makeAllUnChecked(listId)
+    }
 }
