@@ -175,13 +175,21 @@ class AppViewModel @Inject constructor(
             val newItem = ListElement(
                 id = 0L,
                 icon = data.icon!!.toInt(),
-                iconBackground = data.iconColor!!,
+                iconBackground = data.iconColor!!.value.toLong(),
                 listName = title,
                 boughtCount = 0,
                 totalCount = 0
             )
             repository.addItem(newItem)
             onComplete()
+            actionIntent(AppIntents.LoadList)
+        }
+    }
+    fun updateList(item: ListElement, onComplete: () -> Unit) {
+        viewModelScope.launch {
+            repository.updateList(item)
+            onComplete()
+            actionIntent(AppIntents.LoadList)
         }
     }
 

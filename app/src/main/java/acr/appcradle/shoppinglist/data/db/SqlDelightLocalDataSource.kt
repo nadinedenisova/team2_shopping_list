@@ -53,7 +53,7 @@ class SqlDelightLocalDataSource @Inject constructor(
     override suspend fun insertList(item: ListElement): Long {
         listQueries.insertElement(
             icon = item.icon.toLong(),
-            iconBackground = item.iconBackground.toArgb().toLong(),
+            iconBackground = item.iconBackground.toLong(),
             listName = item.listName,
             boughtCount = item.boughtCount.toLong(),
             totalCount = item.totalCount.toLong()
@@ -70,7 +70,7 @@ class SqlDelightLocalDataSource @Inject constructor(
         listQueries.updateListById(
             id = item.id,
             icon = item.icon.toLong(),
-            iconBackground = item.iconBackground.toArgb().toLong(),
+            iconBackground = item.iconBackground.toLong(),
             listName = item.listName
         )
     }
