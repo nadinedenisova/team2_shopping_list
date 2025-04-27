@@ -1,6 +1,7 @@
 package acr.appcradle.shoppinglist.ui.screens.lists_all
 
 import acr.appcradle.shoppinglist.model.AppIntents
+import acr.appcradle.shoppinglist.model.ListElement
 import acr.appcradle.shoppinglist.ui.AppViewModel
 import acr.appcradle.shoppinglist.ui.components.AppNavTopBar
 import acr.appcradle.shoppinglist.ui.components.DropDownMenus
@@ -23,6 +24,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 
@@ -31,8 +33,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 fun ListsAll(
     viewModel: AppViewModel = hiltViewModel(),
     createNewListClick: () -> Unit,
-    editListClick: (Long) -> Unit,
     onListClick: (Long, String) -> Unit,
+    onEdit: (ListElement) -> Unit,
     onThemeChange: (ThemeOption) -> Unit
 ) {
     val state by viewModel.listsAllState.collectAsState()
@@ -83,11 +85,11 @@ fun ListsAll(
                             SwipeableListsItem(
                                 icon = item.icon,
                                 title = item.listName,
-                                iconBackground = item.iconBackground,
+                                iconBackground = Color(item.iconBackground.toULong()),
                                 totalCount = item.totalCount,
                                 boughtCount = item.boughtCount,
                                 onEdit = {
-                                    editListClick(item.id)
+                                    onEdit(item)
                                 },
                                 onDuplicate = {
                                     viewModel.actionIntent(AppIntents.DuplicateList(item.id))

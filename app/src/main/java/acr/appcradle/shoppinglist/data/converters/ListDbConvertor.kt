@@ -12,7 +12,7 @@ class ListDbConvertor @Inject constructor() {
         return ShoppingList(
             id = null!!,
             icon = listElement.icon.toLong(),
-            iconBackground = listElement.iconBackground.toArgb().toLong(),
+            iconBackground = listElement.iconBackground.toLong(),
             listName = listElement.listName,
             boughtCount = listElement.boughtCount.toLong(),
             totalCount = listElement.totalCount.toLong()
@@ -23,7 +23,7 @@ class ListDbConvertor @Inject constructor() {
         return ListElement(
             id = shoppingList.id,
             icon = shoppingList.icon.toInt(),
-            iconBackground = Color(shoppingList.iconBackground.toInt()),
+            iconBackground = shoppingList.iconBackground,
             listName = shoppingList.listName,
             boughtCount = shoppingList.boughtCount.toInt(),
             totalCount = shoppingList.totalCount.toInt()

@@ -1,5 +1,6 @@
 package acr.appcradle.shoppinglist
 
+import acr.appcradle.shoppinglist.model.ListElement
 import acr.appcradle.shoppinglist.ui.screens.greeting.nav.GreetingRoute
 import acr.appcradle.shoppinglist.ui.screens.greeting.nav.greeting
 import acr.appcradle.shoppinglist.ui.screens.list_creation.nav.creationScreen
@@ -41,7 +42,9 @@ fun AppNavHost(
                 )
             },
             onThemeChange = onThemeChange,
-            editListClick = {}
+            onEdit = {list: ListElement ->
+                navController.navigateToListCreation(list)
+            }
         )
         creationScreen(
             onBackClick = { navController.popBackStack() },
