@@ -1,0 +1,21 @@
+CREATE TABLE ShoppingItems(
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    amount TEXT NOT NULL,
+    unit TEXT NOT NULL,
+    checked INTEGER NOT NULL
+);
+
+
+selectAllItems:
+SELECT id, name, amount, unit, checked
+FROM ShoppingItems;
+
+insertItems:
+INSERT INTO ShoppingItems(name, amount, unit, checked)
+VALUES (?, ?, ?, ?);
+
+deleteItems:
+DELETE
+FROM ShoppingItems
+WHERE id = ?;

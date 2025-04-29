@@ -1,0 +1,20 @@
+CREATE TABLE ShoppingList (
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    icon INTEGER NOT NULL,
+    iconBackground INTEGER NOT NULL,
+    listName TEXT NOT NULL,
+    boughtCount INTEGER NOT NULL,
+    totalCount INTEGER NOT NULL
+);
+
+selectAll:
+SELECT id, icon, iconBackground, listName, boughtCount, totalCount
+FROM ShoppingList;
+
+insertElement:
+INSERT INTO ShoppingList(icon, iconBackground, listName, boughtCount, totalCount)
+VALUES (?, ?, ?, ?, ?);
+
+deleteElement:
+DELETE FROM ShoppingList
+WHERE id = ?;
