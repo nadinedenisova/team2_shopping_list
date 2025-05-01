@@ -10,7 +10,7 @@ class ListDbConvertor @Inject constructor() {
 
     fun map(listElement: ListElement): ShoppingList {
         return ShoppingList(
-            id = null!!,
+            id = 0L,
             icon = listElement.icon.toLong(),
             iconBackground = listElement.iconBackground.toArgb().toLong(),
             listName = listElement.listName,
