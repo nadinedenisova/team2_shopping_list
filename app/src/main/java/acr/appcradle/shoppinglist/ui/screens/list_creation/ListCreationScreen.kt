@@ -117,6 +117,7 @@ fun ListCreationScreenUi(
             )
             Spacer(Modifier.weight(1f))
             ShoppingListButtons.AppLargeButton(
+                enabled = inputText.isNotBlank(),
                 onClick = { if (inputText.isNotBlank()) onNextClick(inputText.trim()) },
                 text = if (isEditing) "Сохранить" else "Создать"
             )
