@@ -21,11 +21,21 @@ class ItemsInteractorImpl @Inject constructor(
         return repository.getSortedItems(listId)
     }
 
-    override suspend fun addItem(item: ShoppingElement) {
-        repository.addItem(item)
+    override suspend fun addItem(item: ShoppingElement): Result<Unit> {
+        return try {
+            repository.addItem(item)
+            Result.success(Unit)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
     }
 
-    override suspend fun deleteItem(id: Long) {
-        repository.deleteItem(id)
+    override suspend fun deleteItem(id: Long): Result<Unit> {
+        return try {
+            repository.deleteItem(id)
+            Result.success(Unit)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
     }
 }

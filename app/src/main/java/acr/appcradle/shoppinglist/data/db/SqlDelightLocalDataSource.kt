@@ -16,6 +16,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.retry
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -38,6 +39,20 @@ class SqlDelightLocalDataSource @Inject constructor(
                 emit(emptyList())
             }
 
+    override suspend fun insertList(item: ListElement) {
+        withContext(Dispatchers.IO) {
+            try {
+                listQueries.insertElement(
+                    icon = item.icon.toLong(),
+                    iconBackground = item.iconBackground.toArgb().toLong(),
+                    listName = item.listName,
+                    boughtCount = item.boughtCount.toLong(),
+                    totalCount = item.totalCount.toLong()
+                )
+            } catch (e: Exception) {
+                Log.e("ListRepository", "Ошибка при добавлении списка: ${e.message}", e)
+            }
+        }
     override fun getSortedLists(): Flow<List<ListElement>> =
         listQueries.selectAllSortedByName()
             .asFlow()
@@ -63,7 +78,13 @@ class SqlDelightLocalDataSource @Inject constructor(
     }
 
     override suspend fun deleteList(id: Long) {
-        listQueries.deleteElement(id)
+        withContext(Dispatchers.IO) {
+            try {
+                listQueries.deleteElement(id)
+            } catch (e: Exception) {
+                Log.e("ListRepository", "Ошибка при удалении списка: ${e.message}", e)
+            }
+        }
     }
 
     override suspend fun updateList(item: ListElement) {
@@ -104,23 +125,21 @@ class SqlDelightLocalDataSource @Inject constructor(
 
 
     override suspend fun insertItem(item: ShoppingElement) {
-        val bdItem = converterItem.map(item)
-        itemsQueries.insertItems(
-            listId = bdItem.listId,
-            name = bdItem.name,
-            amount = bdItem.amount,
-            unit = bdItem.unit,
-            checked = bdItem.checked
-        )
-    }
-
-    override suspend fun updateItemInfo(item: ShoppingElement) {
-        itemsQueries.updateItemsInfo(
-            name = item.name,
-            amount = item.amount,
-            unit = item.unit,
-            id = item.id
-        )
+        withContext(Dispatchers.IO) {
+            try {
+                val bdItem = converterItem.map(item)
+                itemsQueries.insertItems(
+                    listId = bdItem.listId,
+                    name = bdItem.name,
+                    amount = bdItem.amount,
+                    unit = bdItem.unit,
+                    checked = bdItem.checked
+                )
+            } catch (e: Exception) {
+                Log.e("ListRepository", "Ошибка при добавлении элемента: ${e.message}", e)
+                // throw e
+            }
+        }
     }
 
     override suspend fun updateItemCheck(item: ShoppingElement) {
@@ -129,7 +148,14 @@ class SqlDelightLocalDataSource @Inject constructor(
     }
 
     override suspend fun deleteItem(id: Long) {
-        itemsQueries.deleteItems(id)
+        withContext(Dispatchers.IO) {
+            try {
+                itemsQueries.deleteItems(id)
+            } catch (e: Exception) {
+                Log.e("ListRepository", "Ошибка при удалении элемента: ${e.message}", e)
+                // throw e
+            }
+        }
         Log.i("database", "удаление в прослойке")
 
     }
