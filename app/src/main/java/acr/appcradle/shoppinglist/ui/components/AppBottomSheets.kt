@@ -101,12 +101,12 @@ object AppBottomSheets {
                         onValueChange = { newItem = newItem.copy(amount = it) },
                         isNumeric = true
                     )
-                    AppInputFields.MainInputField(
+                    AppInputFields.AppDropdownItemChooser(
                         modifier = Modifier
                             .padding(end = 16.dp)
                             .weight(0.5f),
-                        placeholderText = "шт",
-                        onValueChange = { newItem = newItem.copy(unit = it) })
+                        onValueChange = { newItem = newItem.copy(unit = it) }
+                    )
                 }
             }
         } else {
