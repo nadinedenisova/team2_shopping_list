@@ -37,6 +37,9 @@ class AppViewModel @Inject constructor(
     private val _itemsList = MutableStateFlow(emptyList<ShoppingElement>())
     val itemsList: StateFlow<List<ShoppingElement>> = _itemsList.asStateFlow()
 
+    private val _isTitleDuplicate = MutableStateFlow(false)
+    val isTitleDuplicate: StateFlow<Boolean> = _isTitleDuplicate.asStateFlow()
+
     fun iconsIntent(intent: IconsIntent) {
         when (intent) {
             is IconsIntent.ChangeIcon -> {
@@ -169,19 +172,36 @@ class AppViewModel @Inject constructor(
         }
     }
 
+    fun checkTitleUniqueness(title: String) {
+        viewModelScope.launch {
+            val all = repository.getAllLists().first()
+            _isTitleDuplicate.value = all.any {
+                it.listName.equals(title.trim(), ignoreCase = true)
+            }
+        }
+    }
+
     fun createNewList(title: String, onComplete: () -> Unit) {
         viewModelScope.launch {
             val data = iconState.value
             val newItem = ListElement(
                 id = 0L,
                 icon = data.icon!!.toInt(),
-                iconBackground = data.iconColor!!,
+                iconBackground = data.iconColor!!.value.toLong(),
                 listName = title,
                 boughtCount = 0,
                 totalCount = 0
             )
             repository.addItem(newItem)
             onComplete()
+            actionIntent(AppIntents.LoadList)
+        }
+    }
+    fun updateList(item: ListElement, onComplete: () -> Unit) {
+        viewModelScope.launch {
+            repository.updateList(item)
+            onComplete()
+            actionIntent(AppIntents.LoadList)
         }
     }
 

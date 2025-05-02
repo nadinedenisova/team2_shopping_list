@@ -17,7 +17,8 @@ object ShoppingListButtons {
     fun AppLargeButton(
         modifier: Modifier = Modifier,
         onClick: () -> Unit,
-        text: String
+        text: String,
+        enabled: Boolean = true
     ) {
         FilledTonalButton(
             modifier = modifier
@@ -28,7 +29,9 @@ object ShoppingListButtons {
                 containerColor = Team2Colors.tortoise,
                 contentColor = Color.White
             ),
-            onClick = { onClick() })
+            onClick = { onClick() },
+            enabled = enabled
+        )
         {
             Text(text)
         }
