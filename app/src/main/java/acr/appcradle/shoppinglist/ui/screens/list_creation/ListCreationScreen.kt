@@ -7,6 +7,7 @@ import acr.appcradle.shoppinglist.ui.AppViewModel
 import acr.appcradle.shoppinglist.ui.components.AppInputFields
 import acr.appcradle.shoppinglist.ui.components.AppNavTopBar
 import acr.appcradle.shoppinglist.ui.components.ShoppingListButtons
+import acr.appcradle.shoppinglist.ui.theme.Team2Colors
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,7 +16,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -74,12 +77,13 @@ fun ListCreationScreenUi(
     onIconClick: (Int) -> Unit,
     onColorClick: (Color) -> Unit,
     onNextClick: (String) -> Unit,
-    existingList: ListElement?
-
+    existingList: ListElement?,
+    viewModel: AppViewModel = hiltViewModel()
 ) {
     val scroll = rememberScrollState()
     var inputText by remember(existingList) { mutableStateOf(existingList?.listName ?: "") }
     val isEditing = existingList != null
+    val isDuplicate by viewModel.isTitleDuplicate.collectAsStateWithLifecycle()
 
     Scaffold(
         topBar = {
@@ -103,9 +107,20 @@ fun ListCreationScreenUi(
                     .padding(horizontal = 16.dp),
                 placeholderText = "Введите название списка",
                 editedValue = inputText,
-                onValueChange = { inputText = it },
+                isError = isDuplicate,
+                onValueChange = {
+                    inputText = it
+                    viewModel.checkTitleUniqueness(it) },
 
                 )
+            if (isDuplicate) {
+                Text(
+                    text = "Это название уже используется, пожалуйста, измените его.",
+                    color = Team2Colors.team2color_red,
+                    style = MaterialTheme.typography.bodySmall,
+                    modifier = Modifier.padding(horizontal = 32.dp)
+                )
+            }
             ColorPalette(
                 modifier = Modifier.padding(vertical = 16.dp),
                 onColorClick = onColorClick,
@@ -117,7 +132,7 @@ fun ListCreationScreenUi(
             )
             Spacer(Modifier.weight(1f))
             ShoppingListButtons.AppLargeButton(
-                enabled = inputText.isNotBlank(),
+                enabled = inputText.isNotBlank() && !isDuplicate,
                 onClick = { if (inputText.isNotBlank()) onNextClick(inputText.trim()) },
                 text = if (isEditing) "Сохранить" else "Создать"
             )

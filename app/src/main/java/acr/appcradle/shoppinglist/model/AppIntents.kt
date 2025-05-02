@@ -14,7 +14,5 @@ sealed interface AppIntents {
     data class DeleteAllChecked(val listId: Long) : AppIntents
     data class MakeAllUnChecked(val listId: Long) : AppIntents
     data class DuplicateList(val listId: Long) : AppIntents
-    data class ShareList(val name: String, val list: List<ShoppingElement>, val context: Context) :
-        AppIntents
-
+    data class ShareList(val name: String, val list: List<ShoppingElement>, val context: Context) : AppIntents
 }
