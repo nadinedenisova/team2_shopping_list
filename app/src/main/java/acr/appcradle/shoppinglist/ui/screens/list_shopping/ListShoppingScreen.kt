@@ -26,6 +26,7 @@ fun ListShoppingScreen(
     }
     val list = viewModel.itemsList.collectAsStateWithLifecycle().value
     val context = LocalContext.current
+
     Scaffold(
         topBar = {
             AppNavTopBar(
@@ -58,18 +59,3 @@ fun ListShoppingScreen(
         }
     }
 }
-
-
-//@ThemePreviews
-//@Composable
-//private fun ListShoppingPreview() {
-//    ShoppingListTheme {
-//        Surface {
-//            ListShoppingScreen(
-//                viewModel = AppViewModel(Repository()),
-//                onBackClick = {},
-////                listOfItems = emptyList(),
-//            )
-//        }
-//    }
-//}

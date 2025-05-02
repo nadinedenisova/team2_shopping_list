@@ -3,15 +3,21 @@ package acr.appcradle.shoppinglist.ui.components
 import acr.appcradle.shoppinglist.R
 import acr.appcradle.shoppinglist.ui.theme.Team2Colors
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
-import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MenuAnchorType
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -47,11 +53,11 @@ object AppInputFields {
                 onValueChange(inputText)
             },
             colors = TextFieldDefaults.colors(
-                focusedIndicatorColor   = Color.Transparent,
+                focusedIndicatorColor = Color.Transparent,
                 unfocusedIndicatorColor = Color.Transparent,
-                errorIndicatorColor     = Team2Colors.team2color_red,
-                errorCursorColor        = Team2Colors.team2color_red,
-                errorLabelColor         = Team2Colors.team2color_red
+                errorIndicatorColor = Team2Colors.team2color_red,
+                errorCursorColor = Team2Colors.team2color_red,
+                errorLabelColor = Team2Colors.team2color_red
             ),
             shape = RoundedCornerShape(10.dp),
             singleLine = true,
@@ -60,7 +66,7 @@ object AppInputFields {
                 imeAction = ImeAction.Done
             ),
             trailingIcon = {
-                if(isError) {
+                if (isError) {
                     Icon(
                         painter = painterResource(R.drawable.ic_error_textfield),
                         contentDescription = null,
@@ -79,7 +85,60 @@ object AppInputFields {
                         imageVector = Icons.Default.Search, contentDescription = null
                     )
             },
+
         )
+    }
+
+    @OptIn(ExperimentalMaterial3Api::class)
+    @Composable
+    fun AppDropdownItemChooser(
+        modifier: Modifier = Modifier,
+        onValueChange: (String) -> Unit
+    ) {
+        val options = listOf("шт", "кг", "г", "л", "мл")
+        var expanded by rememberSaveable { mutableStateOf(false) }
+        var selectedOption by rememberSaveable { mutableStateOf(options[0]) }
+
+        ExposedDropdownMenuBox(
+            modifier = modifier,
+            expanded = expanded,
+            onExpandedChange = { expanded = !expanded }
+        ) {
+            TextField(
+                modifier = Modifier
+                    .menuAnchor(MenuAnchorType.PrimaryEditable, true)
+                    .fillMaxWidth(),
+                readOnly = true,
+                value = selectedOption,
+                onValueChange = {
+                    onValueChange(selectedOption)
+                },
+                trailingIcon = {
+                    ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
+                },
+                colors = ExposedDropdownMenuDefaults.textFieldColors(
+                    focusedIndicatorColor = Color.Transparent,
+                    unfocusedIndicatorColor = Color.Transparent
+                ),
+                shape = RoundedCornerShape(10.dp)
+            )
+
+            ExposedDropdownMenu(
+                expanded = expanded,
+                onDismissRequest = { expanded = false }
+            ) {
+                options.forEach { selectionOption ->
+                    DropdownMenuItem(
+                        text = { Text(selectionOption) },
+                        onClick = {
+                            selectedOption = selectionOption
+                            expanded = false
+                            onValueChange(selectionOption)
+                        }
+                    )
+                }
+            }
+        }
     }
 }
 

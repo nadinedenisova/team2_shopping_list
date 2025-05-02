@@ -154,26 +154,6 @@ fun SwipeableListsItem(
             iconBackground = iconBackground,
             boughtCount = boughtCount,
             totalCount = totalCount,
-
         )
-    }
-}
-
-@ThemePreviews
-@Composable
-private fun ShoppingListItemPreview() {
-    ShoppingListTheme {
-        Surface {
-            SwipeableListsItem(
-                icon = TODO(),
-                title = "dfdfg",
-                iconBackground = TODO(),
-                boughtCount = 3,
-                totalCount = 34,
-                onEdit = TODO(),
-                onDuplicate = TODO(),
-                onDelete = TODO()
-            ) { }
-        }
     }
 }

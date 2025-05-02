@@ -19,8 +19,13 @@ import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 object AppBottomSheets {
@@ -33,19 +38,23 @@ object AppBottomSheets {
         onDismissCallback: () -> Unit,
         onAddClick: (ShoppingElement) -> Unit = {},
         onEditClick: (ShoppingElement) -> Unit = {},
-        editItem: ShoppingElement? = null
+        editItem: ShoppingElement? = null,
+        existingNames: List<String> = emptyList()
     ) {
         val sheetState = rememberModalBottomSheetState()
+        var errorText by remember { mutableStateOf<String?>(null) }
 
         if (editItem == null) {
-            var newItem = ShoppingElement(
-                id = 0L,
-                name = "",
-                amount = "",
-                unit = "шт",
-                checked = false,
-                listId = listId,
-            )
+            var newItem by remember { mutableStateOf(
+                ShoppingElement(
+                    id = 0L,
+                    name = "",
+                    amount = "",
+                    unit = "шт",
+                    checked = false,
+                    listId = listId,
+                )
+            ) }
             ModalBottomSheet(
                 modifier = modifier
                     .fillMaxWidth()
@@ -69,7 +78,11 @@ object AppBottomSheets {
                                 .padding(vertical = 8.dp, horizontal = 16.dp)
                                 .size(48.dp)
                                 .clickable {
-                                    if (newItem.name.isNotEmpty() && newItem.amount.isNotEmpty()) {
+                                    val nameNormalized = newItem.name.trim().lowercase()
+                                    if (nameNormalized.isEmpty() || newItem.amount.isEmpty()) return@clickable
+                                    if (existingNames.contains(nameNormalized)) {
+                                        errorText = "Этот товар уже есть в списке, добавьте другой"
+                                    } else {
                                         onAddClick(newItem)
                                         onDismissCallback()
                                     }
@@ -87,7 +100,18 @@ object AppBottomSheets {
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp),
                     placeholderText = "Введите название товара",
-                    onValueChange = { newItem = newItem.copy(name = it) })
+                    onValueChange = {
+                        newItem = newItem.copy(name = it)
+                        errorText = null
+                    }
+                )
+                if (errorText != null) {
+                    Text(
+                        text = errorText!!,
+                        color = Color.Red,
+                        modifier = Modifier.padding(start = 16.dp, top = 4.dp)
+                    )
+                }
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -101,12 +125,12 @@ object AppBottomSheets {
                         onValueChange = { newItem = newItem.copy(amount = it) },
                         isNumeric = true
                     )
-                    AppInputFields.MainInputField(
+                    AppInputFields.AppDropdownItemChooser(
                         modifier = Modifier
                             .padding(end = 16.dp)
                             .weight(0.5f),
-                        placeholderText = "шт",
-                        onValueChange = { newItem = newItem.copy(unit = it) })
+                        onValueChange = { newItem = newItem.copy(unit = it) }
+                    )
                 }
             }
         } else {
@@ -168,12 +192,12 @@ object AppBottomSheets {
                         placeholderText = "1",
                         isNumeric = true,
                         onValueChange = { newItem = newItem.copy(amount = it) })
-                    AppInputFields.MainInputField(
+                    AppInputFields.AppDropdownItemChooser(
                         modifier = Modifier
                             .padding(end = 16.dp)
                             .weight(0.5f),
-                        placeholderText = "шт",
-                        onValueChange = { newItem = newItem.copy(unit = it) })
+                        onValueChange = { newItem = newItem.copy(unit = it) }
+                    )
                 }
             }
         }
