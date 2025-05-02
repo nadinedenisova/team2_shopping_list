@@ -85,6 +85,7 @@ object AppInputFields {
                         imageVector = Icons.Default.Search, contentDescription = null
                     )
             },
+
         )
     }
 

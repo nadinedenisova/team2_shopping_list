@@ -37,7 +37,8 @@ fun FilledListUi(
     var addItemBottomSheetVisibility by remember { mutableStateOf(false) }
     var editItemBottomSheetVisibility by remember { mutableStateOf(false) }
     var editItem: ShoppingElement? by remember { mutableStateOf(null) }
-
+    var searchText by remember { mutableStateOf("") }
+    
     Box(
         modifier = modifier.fillMaxSize(),
         contentAlignment = Alignment.BottomEnd
@@ -50,9 +51,15 @@ fun FilledListUi(
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp),
                 isSearchIconNeeded = true,
-                placeholderText = "Введите название товара"
+                placeholderText = "Введите название товара",
+                onValueChange = { searchText = it }
             )
-            listOfItems.forEach { item ->
+            val filteredItems = if (searchText.isBlank()) {
+                listOfItems
+            } else {
+                listOfItems.filter { it.name.contains(searchText, ignoreCase = true) }
+            }
+            filteredItems.forEach { item ->
                 AppSwipeAbleListItem.SwipeAbleShoppingItems(
                     item = item,
                     onEdit = {
@@ -78,7 +85,8 @@ fun FilledListUi(
                 onAddClick = {
                     viewModel.actionIntent(AppIntents.AddItem(item = it))
                 },
-                listId = listId
+                listId = listId,
+                existingNames = listOfItems.map { it.name.trim().lowercase() }
             )
         if (editItemBottomSheetVisibility)
             AppBottomSheets.AddItemDialog(
