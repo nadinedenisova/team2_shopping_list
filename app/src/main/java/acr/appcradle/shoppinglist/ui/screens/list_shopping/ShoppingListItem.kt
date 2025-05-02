@@ -17,6 +17,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -24,13 +25,12 @@ fun ShoppingListItem(
     item: ShoppingElement,
     onCheckedChange: () -> Unit
 ) {
+    val textAlpha = if (!item.checked) 1f else 0.5f
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .clickable { onCheckedChange() }
-            .background(
-                color = colorScheme.background,
-            ),
+            .background(color = colorScheme.background,),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Box(
@@ -45,7 +45,9 @@ fun ShoppingListItem(
             )
         }
         Text(
-            modifier = Modifier.weight(1f),
+            modifier = Modifier
+                .weight(1f)
+                .alpha(textAlpha),
             text = item.name,
         )
         Text(

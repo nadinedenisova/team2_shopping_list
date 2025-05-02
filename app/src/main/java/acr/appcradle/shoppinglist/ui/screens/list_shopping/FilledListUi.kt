@@ -4,10 +4,13 @@ import acr.appcradle.shoppinglist.model.AppIntents
 import acr.appcradle.shoppinglist.model.ShoppingElement
 import acr.appcradle.shoppinglist.ui.AppViewModel
 import acr.appcradle.shoppinglist.ui.components.AppBottomSheets
+import acr.appcradle.shoppinglist.ui.components.AppInputFields
 import acr.appcradle.shoppinglist.ui.components.AppSwipeAbleListItem
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -42,6 +45,13 @@ fun FilledListUi(
         Column(
             modifier = modifier.fillMaxSize()
         ) {
+            AppInputFields.MainInputField(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp),
+                isSearchIconNeeded = true,
+                placeholderText = "Введите название товара"
+            )
             listOfItems.forEach { item ->
                 AppSwipeAbleListItem.SwipeAbleShoppingItems(
                     item = item,
@@ -55,7 +65,9 @@ fun FilledListUi(
             }
         }
         FloatingActionButton(
-            modifier = Modifier.size(48.dp),
+            modifier = Modifier
+                .padding(16.dp)
+                .size(48.dp),
             onClick = { addItemBottomSheetVisibility = true }
         ) {
             Icon(imageVector = Icons.Default.Add, contentDescription = null)

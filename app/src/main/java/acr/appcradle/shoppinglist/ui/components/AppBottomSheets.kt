@@ -54,16 +54,22 @@ object AppBottomSheets {
                 onDismissRequest = { onDismissCallback() }) {
                 Column {
                     Row(
+                        modifier = Modifier.fillMaxWidth(),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Text(
+                        Box(
                             modifier = Modifier
+                                .weight(1f)
                                 .padding(vertical = 18.dp, horizontal = 16.dp)
-                                .height(48.dp)
-                                .weight(1f),
-                            text = "Добавление товара",
-                            style = Typography.titleLarge
-                        )
+                                .height(48.dp),
+                            contentAlignment = Alignment.CenterStart
+                        ) {
+                            Text(
+                                text = "Добавление товара",
+                                style = Typography.titleLarge,
+                            )
+                        }
+
                         Box(
                             modifier = Modifier
                                 .padding(vertical = 8.dp, horizontal = 16.dp)
@@ -73,7 +79,9 @@ object AppBottomSheets {
                                         onAddClick(newItem)
                                         onDismissCallback()
                                     }
-                                }) {
+                                },
+                            contentAlignment = Alignment.Center
+                        ) {
                             Icon(
                                 imageVector = Icons.Default.Check,
                                 contentDescription = null,
