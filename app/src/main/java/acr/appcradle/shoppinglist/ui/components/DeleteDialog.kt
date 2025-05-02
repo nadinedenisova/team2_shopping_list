@@ -2,7 +2,6 @@ package acr.appcradle.shoppinglist.ui.components
 
 import acr.appcradle.shoppinglist.ui.theme.Team2Colors
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -10,6 +9,8 @@ import androidx.compose.runtime.Composable
 @Composable
 fun DeleteDialog(
     visibility: Boolean,
+    title: String,
+    message: String,
     onDismissRequest: () -> Unit,
     onConfirmation: () -> Unit
 ) {
@@ -20,12 +21,12 @@ fun DeleteDialog(
             },
             title = {
                 Text(
-                    text = "Удаление списка"
+                    text = title
                 )
             },
             text = {
                 Text(
-                    text = "Вы действительно хотите удалить список?"
+                    text = message
                 )
             },
             confirmButton = {

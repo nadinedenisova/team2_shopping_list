@@ -70,7 +70,9 @@ fun SwipeableListsItem(
 
     DeleteDialog(
         visibility = shouldShowDialog.value,
-        onDismissRequest = { shouldShowDialog.value = false}
+        onDismissRequest = { shouldShowDialog.value = false },
+        title = "Удаление списка",
+        message = "Вы действительно хотите удалить список?"
     ) {
         onDelete()
     }

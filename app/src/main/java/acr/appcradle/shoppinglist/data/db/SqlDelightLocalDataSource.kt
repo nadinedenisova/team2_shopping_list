@@ -8,7 +8,6 @@ import acr.appcradle.shoppinglist.model.ListElement
 import acr.appcradle.shoppinglist.model.ShoppingElement
 import acr.appcradle.shoppinglist.model.ShoppingLocalDataSource
 import android.util.Log
-import androidx.compose.ui.graphics.toArgb
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
 import kotlinx.coroutines.Dispatchers

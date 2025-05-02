@@ -16,6 +16,8 @@ import androidx.compose.material3.SwipeToDismissBox
 import androidx.compose.material3.SwipeToDismissBoxValue
 import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -39,6 +41,16 @@ object AppSwipeAbleListItem {
     ) {
         val dismissState = rememberSwipeToDismissBoxState()
         val scope = rememberCoroutineScope()
+        val shouldShowDialog = remember { mutableStateOf(false) }
+
+        DeleteDialog(
+            visibility = shouldShowDialog.value,
+            onDismissRequest = { shouldShowDialog.value = false },
+            title = "Удаление товара",
+            message = "Вы действительно хотите удалить товар?"
+        ) {
+            onDelete()
+        }
 
         SwipeToDismissBox(
             modifier = modifier,
@@ -78,7 +90,7 @@ object AppSwipeAbleListItem {
                             .background(Team2Colors.team2color_red)
                             .size(72.dp),
                         onClick = {
-                            onDelete()
+                            shouldShowDialog.value = true
                             scope.launch {
                                 dismissState.snapTo(SwipeToDismissBoxValue.Settled)
                             }
