@@ -50,10 +50,6 @@ class SqlDelightLocalDataSource @Inject constructor(
                 "Ошибка при загрузке списков"
             }
 
-    override suspend fun getListById(id: Long): ListElement {
-        val list = listQueries.getListByListId(id).executeAsOne()
-        return converterList.map(list)
-    }
 
     override suspend fun insertList(item: ListElement): Long {
         return withContext(Dispatchers.IO) {
