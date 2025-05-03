@@ -25,13 +25,12 @@ private val LightColorScheme = lightColorScheme(
     tertiary = Pink40,
 )
 
-
 val LocalTypography = staticCompositionLocalOf<CustomTypography> {
     error("No Typography provided")
 }
 
 @Composable
-fun ShoppingListTheme(
+internal fun ShoppingListTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
     dynamicColor: Boolean = true,

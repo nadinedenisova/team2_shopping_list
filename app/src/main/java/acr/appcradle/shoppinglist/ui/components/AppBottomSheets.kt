@@ -1,6 +1,7 @@
 package acr.appcradle.shoppinglist.ui.components
 
 import acr.appcradle.shoppinglist.model.ShoppingElement
+import acr.appcradle.shoppinglist.ui.components.AppBottomSheets.Constants.WEIGHT
 import acr.appcradle.shoppinglist.ui.theme.Team2Colors
 import acr.appcradle.shoppinglist.ui.theme.Typography
 import androidx.compose.foundation.clickable
@@ -28,7 +29,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
-object AppBottomSheets {
+internal object AppBottomSheets {
+
+    private object Constants {
+        const val WEIGHT = 0.5f
+    }
 
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
@@ -45,22 +50,27 @@ object AppBottomSheets {
         var errorText by remember { mutableStateOf<String?>(null) }
 
         if (editItem == null) {
-            var newItem by remember { mutableStateOf(
-                ShoppingElement(
-                    id = 0L,
-                    name = "",
-                    amount = "",
-                    unit = "шт",
-                    checked = false,
-                    listId = listId,
+            var newItem by remember {
+                mutableStateOf(
+                    ShoppingElement(
+                        id = 0L,
+                        name = "",
+                        amount = "",
+                        unit = "шт",
+                        checked = false,
+                        listId = listId,
+                    )
                 )
-            ) }
+            }
             ModalBottomSheet(
                 modifier = modifier
                     .fillMaxWidth()
                     .height(548.dp),
                 sheetState = sheetState,
-                onDismissRequest = { onDismissCallback() }) {
+                onDismissRequest = {
+                    onDismissCallback()
+                }
+            ) {
                 Column {
                     Row(
                         verticalAlignment = Alignment.CenterVertically
@@ -86,7 +96,8 @@ object AppBottomSheets {
                                         onAddClick(newItem)
                                         onDismissCallback()
                                     }
-                                }) {
+                                }
+                        ) {
                             Icon(
                                 imageVector = Icons.Default.Check,
                                 contentDescription = null,
@@ -120,7 +131,7 @@ object AppBottomSheets {
                     AppInputFields.MainInputField(
                         modifier = Modifier
                             .padding(start = 16.dp, end = 6.dp)
-                            .weight(0.5f),
+                            .weight(WEIGHT),
                         placeholderText = "1",
                         onValueChange = { newItem = newItem.copy(amount = it) },
                         isNumeric = true
@@ -128,7 +139,7 @@ object AppBottomSheets {
                     AppInputFields.AppDropdownItemChooser(
                         modifier = Modifier
                             .padding(end = 16.dp)
-                            .weight(0.5f),
+                            .weight(WEIGHT),
                         onValueChange = { newItem = newItem.copy(unit = it) }
                     )
                 }
@@ -141,7 +152,10 @@ object AppBottomSheets {
                     .fillMaxWidth()
                     .height(548.dp),
                 sheetState = sheetState,
-                onDismissRequest = { onDismissCallback() }) {
+                onDismissRequest = {
+                    onDismissCallback()
+                }
+            ) {
                 Column {
                     Row(
                         verticalAlignment = Alignment.CenterVertically
@@ -163,7 +177,8 @@ object AppBottomSheets {
                                         onEditClick(newItem)
                                         onDismissCallback()
                                     }
-                                }) {
+                                }
+                        ) {
                             Icon(
                                 imageVector = Icons.Default.Check,
                                 contentDescription = null,
@@ -178,7 +193,10 @@ object AppBottomSheets {
                         .padding(horizontal = 16.dp),
                     editedValue = newItem.name,
                     placeholderText = "Введите название товара",
-                    onValueChange = { newItem = newItem.copy(name = it) })
+                    onValueChange = {
+                        newItem = newItem.copy(name = it)
+                    },
+                )
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -186,16 +204,22 @@ object AppBottomSheets {
                 ) {
                     AppInputFields.MainInputField(
                         modifier = Modifier
-                            .padding(start = 16.dp, end = 6.dp)
-                            .weight(0.5f),
+                            .padding(
+                                start = 16.dp,
+                                end = 6.dp
+                            )
+                            .weight(WEIGHT),
                         editedValue = newItem.amount,
                         placeholderText = "1",
                         isNumeric = true,
-                        onValueChange = { newItem = newItem.copy(amount = it) })
+                        onValueChange = {
+                            newItem = newItem.copy(amount = it)
+                        }
+                    )
                     AppInputFields.AppDropdownItemChooser(
                         modifier = Modifier
                             .padding(end = 16.dp)
-                            .weight(0.5f),
+                            .weight(WEIGHT),
                         onValueChange = { newItem = newItem.copy(unit = it) }
                     )
                 }

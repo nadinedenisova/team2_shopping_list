@@ -31,8 +31,7 @@ object ShoppingListButtons {
             ),
             onClick = { onClick() },
             enabled = enabled
-        )
-        {
+        ) {
             Text(text)
         }
     }

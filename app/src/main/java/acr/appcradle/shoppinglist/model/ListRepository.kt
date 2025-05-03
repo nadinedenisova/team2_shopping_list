@@ -2,7 +2,7 @@ package acr.appcradle.shoppinglist.model
 
 import kotlinx.coroutines.flow.Flow
 
-interface ListRepository {
+internal interface ListRepository {
 
     fun getAllLists(): Flow<List<ListElement>>
     fun getSortedLists(): Flow<List<ListElement>>

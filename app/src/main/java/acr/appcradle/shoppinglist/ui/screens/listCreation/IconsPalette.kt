@@ -1,7 +1,8 @@
-package acr.appcradle.shoppinglist.ui.screens.list_creation
+package acr.appcradle.shoppinglist.ui.screens.listCreation
 
 import acr.appcradle.shoppinglist.R
 import acr.appcradle.shoppinglist.model.NewListData
+import acr.appcradle.shoppinglist.ui.screens.listCreation.IconsPaletteConstants.GRID_CELLS
 import acr.appcradle.shoppinglist.ui.theme.ShoppingListTheme
 import acr.appcradle.shoppinglist.ui.theme.Team2Colors
 import acr.appcradle.shoppinglist.ui.theme.Typography
@@ -32,7 +33,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun IconsPalette(
+internal fun IconsPalette(
     iconsState: NewListData,
     modifier: Modifier = Modifier,
     onIconClick: (Int) -> Unit
@@ -56,7 +57,7 @@ fun IconsPalette(
                     .padding(16.dp),
                 horizontalArrangement = Arrangement.SpaceEvenly, // Отступы между столбцами
                 verticalArrangement = Arrangement.spacedBy(12.dp), // Отступы между строками
-                columns = GridCells.Fixed(5),
+                columns = GridCells.Fixed(GRID_CELLS),
                 content = {
                     items(listOfIcons.size) { index ->
                         Box(
@@ -65,8 +66,11 @@ fun IconsPalette(
                                 .aspectRatio(1f)
                                 .clickable { onIconClick(listOfIcons[index]) }
                                 .background(
-                                    color = if (listOfIcons[index] == iconsState.icon) iconsState.iconColor
-                                        ?: Team2Colors.iconsBg else Team2Colors.iconsBg,
+                                    color = if (listOfIcons[index] == iconsState.icon) {
+                                        iconsState.iconColor ?: Team2Colors.iconsBg
+                                    } else {
+                                        Team2Colors.iconsBg
+                                    },
                                     shape = RoundedCornerShape(24.dp)
                                 ),
                             contentAlignment = Alignment.Center
@@ -83,6 +87,10 @@ fun IconsPalette(
             )
         }
     }
+}
+
+private object IconsPaletteConstants {
+    const val GRID_CELLS = 5
 }
 
 @ThemePreviews

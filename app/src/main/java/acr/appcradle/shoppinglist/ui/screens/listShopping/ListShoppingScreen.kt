@@ -1,4 +1,4 @@
-package acr.appcradle.shoppinglist.ui.screens.list_shopping
+package acr.appcradle.shoppinglist.ui.screens.listShopping
 
 import acr.appcradle.shoppinglist.model.AppIntents
 import acr.appcradle.shoppinglist.ui.AppViewModel
@@ -15,7 +15,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 @Composable
-fun ListShoppingScreen(
+internal fun ListShoppingScreen(
     viewModel: AppViewModel = hiltViewModel(),
     listId: Long,
     onBackClick: () -> Unit,
@@ -46,16 +46,18 @@ fun ListShoppingScreen(
                                     context = context
                                 )
                             )
-                        })
+                        }
+                    )
                 }
             )
         }
     ) { innerPaddings ->
         Box(modifier = Modifier.padding(innerPaddings)) {
-            if (list.isEmpty())
+            if (list.isEmpty()) {
                 EmptyListUi(viewModel = viewModel, listId = listId)
-            else
+            } else {
                 FilledListUi(listOfItems = list, viewModel = viewModel, listId = listId)
+            }
         }
     }
 }

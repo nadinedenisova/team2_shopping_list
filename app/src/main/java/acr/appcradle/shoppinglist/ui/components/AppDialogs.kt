@@ -7,7 +7,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
-object AppDialogs {
+internal object AppDialogs {
 
     @Composable
     fun MainAppDialog(
@@ -31,7 +31,8 @@ object AppDialogs {
             },
             onDismissRequest = { onDismissRequest() },
             confirmButton = {
-                TextButton(onClick = { onConfirmation() }
+                TextButton(
+                    onClick = { onConfirmation() }
                 ) {
                     Text(
                         text = "Удалить",
@@ -41,7 +42,8 @@ object AppDialogs {
                 }
             },
             dismissButton = {
-                TextButton(onClick = { onDismissRequest() }
+                TextButton(
+                    onClick = { onDismissRequest() }
                 ) {
                     Text(
                         text = "Отменить",

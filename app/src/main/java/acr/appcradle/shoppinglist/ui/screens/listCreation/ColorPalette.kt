@@ -1,10 +1,8 @@
-package acr.appcradle.shoppinglist.ui.screens.list_creation
+package acr.appcradle.shoppinglist.ui.screens.listCreation
 
 import acr.appcradle.shoppinglist.model.NewListData
-import acr.appcradle.shoppinglist.ui.theme.ShoppingListTheme
 import acr.appcradle.shoppinglist.ui.theme.Team2Colors
 import acr.appcradle.shoppinglist.ui.theme.Typography
-import acr.appcradle.shoppinglist.utils.ThemePreviews
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -17,7 +15,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -27,7 +24,7 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun ColorPalette(
+internal fun ColorPalette(
     iconsState: NewListData,
     modifier: Modifier = Modifier,
     onColorClick: (Color) -> Unit
@@ -76,24 +73,6 @@ fun ColorPalette(
                     )
                 }
             }
-        }
-    }
-}
-
-
-@ThemePreviews
-@Composable
-private fun Preview() {
-    ShoppingListTheme {
-        Surface {
-            ColorPalette(
-                onColorClick = {},
-                iconsState = NewListData(
-                    title = "sdf",
-                    icon = null,
-                    iconColor = Team2Colors.additionalColorBlue
-                )
-            )
         }
     }
 }

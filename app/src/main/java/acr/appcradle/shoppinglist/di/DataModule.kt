@@ -11,14 +11,11 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object SavedDataModule {
+object DataModule {
 
     @Provides
     @Singleton
-    fun providePrefs(
+    internal fun providePrefs(
         @ApplicationContext context: Context
     ): ThemeRemember = ThemeRemember(context)
-
 }
-
-

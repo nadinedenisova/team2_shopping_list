@@ -1,7 +1,6 @@
 package acr.appcradle.shoppinglist.utils
 
 import acr.appcradle.shoppinglist.ShoppingDatabase
-import acr.appcradle.shoppinglist.ShoppingItems
 import android.content.Context
 import app.cash.sqldelight.ColumnAdapter
 import app.cash.sqldelight.driver.android.AndroidSqliteDriver
@@ -23,7 +22,7 @@ class DbFactory @Inject constructor(
     }
 }
 
-object DbAdapters {
+internal object DbAdapters {
     val booleanToLong = object : ColumnAdapter<Boolean, Long> {
         override fun decode(databaseValue: Long): Boolean = databaseValue != 0L
         override fun encode(value: Boolean): Long = if (value) 1L else 0L

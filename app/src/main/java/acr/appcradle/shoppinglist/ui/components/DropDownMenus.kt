@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 
-object DropDownMenus {
+internal object DropDownMenus {
 
     @Composable
     fun ShoppingListMenu(
@@ -64,7 +64,6 @@ object DropDownMenus {
                     text = { Text("Поделиться") },
                     onClick = {
                         onShareClick()
-
                     }
                 )
                 DropdownMenuItem(
@@ -79,7 +78,7 @@ object DropDownMenus {
                     onClick = { openDeleteAllDialog = true }
                 )
             }
-            if (openDeleteAllDialog)
+            if (openDeleteAllDialog) {
                 AppDialogs.MainAppDialog(
                     dialogTitle = "Удаление купленных товаров",
                     dialogText = "Вы действительно хотите удалить все купленные товары?",
@@ -90,7 +89,8 @@ object DropDownMenus {
                         expanded = false
                     }
                 )
-            if (openDeleteDialog)
+            }
+            if (openDeleteDialog) {
                 AppDialogs.MainAppDialog(
                     dialogTitle = "Удаление товара",
                     dialogText = "Вы действительно хотите удалить товар?",
@@ -100,17 +100,17 @@ object DropDownMenus {
                         openDeleteDialog = false
                     }
                 )
+            }
         }
     }
 
     @Composable
-    fun AllListsMenu(
+    internal fun AllListsMenu(
         viewModel: AppViewModel = hiltViewModel(),
         onThemeChange: (ThemeOption) -> Unit
     ) {
         var expanded by remember { mutableStateOf(false) }
         var themeMenuExpanded by remember { mutableStateOf(false) }
-
         Box(
             modifier = Modifier
                 .padding(horizontal = 4.dp, vertical = 8.dp)

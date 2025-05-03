@@ -1,4 +1,4 @@
-package acr.appcradle.shoppinglist.ui.screens.list_shopping
+package acr.appcradle.shoppinglist.ui.screens.listShopping
 
 import acr.appcradle.shoppinglist.R
 import acr.appcradle.shoppinglist.model.AppIntents
@@ -26,7 +26,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun EmptyListUi(
+internal fun EmptyListUi(
     listId: Long,
     modifier: Modifier = Modifier,
     viewModel: AppViewModel,
@@ -65,11 +65,12 @@ fun EmptyListUi(
             text = "Добавить товар",
             onClick = { addItemBottomSheetVisibility = true }
         )
-        if (addItemBottomSheetVisibility)
+        if (addItemBottomSheetVisibility) {
             AppBottomSheets.AddItemDialog(
                 onDismissCallback = { addItemBottomSheetVisibility = false },
                 onAddClick = { viewModel.actionIntent(AppIntents.AddItem(item = it)) },
                 listId = listId
             )
+        }
     }
 }

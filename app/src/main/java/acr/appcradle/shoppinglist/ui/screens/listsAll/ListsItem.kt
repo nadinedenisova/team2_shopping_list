@@ -1,9 +1,6 @@
-package acr.appcradle.shoppinglist.ui.screens.lists_all
+package acr.appcradle.shoppinglist.ui.screens.listsAll
 
-import acr.appcradle.shoppinglist.R
-import acr.appcradle.shoppinglist.ui.theme.ShoppingListTheme
 import acr.appcradle.shoppinglist.ui.theme.Typography
-import acr.appcradle.shoppinglist.utils.ThemePreviews
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -16,7 +13,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme.colorScheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -26,7 +22,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun ListsItem(
+internal fun ListsItem(
     modifier: Modifier = Modifier,
     @DrawableRes icon: Int,
     title: String,
@@ -71,21 +67,5 @@ fun ListsItem(
             modifier = Modifier.padding(end = 16.dp),
             text = "$boughtCount/$totalCount",
         )
-    }
-}
-
-@ThemePreviews
-@Composable
-private fun ListItemPreview() {
-    ShoppingListTheme {
-        Surface {
-            ListsItem(
-                icon = R.drawable.alert_outline,
-                iconBackground = Color(0xFFB3E5FC),
-                title = "Новый год",
-                boughtCount = 2,
-                totalCount = 30
-            )
-        }
     }
 }

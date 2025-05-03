@@ -2,7 +2,7 @@ package acr.appcradle.shoppinglist.ui.components
 
 import acr.appcradle.shoppinglist.R
 import acr.appcradle.shoppinglist.model.ShoppingElement
-import acr.appcradle.shoppinglist.ui.screens.list_shopping.ShoppingListItem
+import acr.appcradle.shoppinglist.ui.screens.listShopping.ShoppingListItem
 import acr.appcradle.shoppinglist.ui.theme.Team2Colors
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -28,7 +28,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 
-object AppSwipeAbleListItem {
+internal object AppSwipeAbleListItem {
 
     @Composable
     fun SwipeAbleShoppingItems(
@@ -83,7 +83,8 @@ object AppSwipeAbleListItem {
                         modifier = Modifier
                             .clip(
                                 RoundedCornerShape(
-                                    topEnd = 12.dp, bottomEnd = 12.dp
+                                    topEnd = 12.dp,
+                                    bottomEnd = 12.dp
                                 )
                             )
                             .background(Team2Colors.team2color_red)

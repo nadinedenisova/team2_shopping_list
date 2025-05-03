@@ -10,11 +10,10 @@ import kotlinx.serialization.Serializable
 @Serializable
 data object GreetingRoute
 
-fun NavController.navigateToGreeting(navOptions: NavOptions) =
+internal fun NavController.navigateToGreeting(navOptions: NavOptions) =
     navigate(route = GreetingRoute, navOptions)
 
-
-fun NavGraphBuilder.greeting(
+internal fun NavGraphBuilder.greeting(
     onNextClick: () -> Unit
 ) {
     composable<GreetingRoute> {

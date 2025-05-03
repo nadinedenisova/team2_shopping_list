@@ -31,7 +31,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 
-object AppInputFields {
+internal object AppInputFields {
     @Composable
     fun MainInputField(
         modifier: Modifier = Modifier,
@@ -81,13 +81,13 @@ object AppInputFields {
                 }
             },
             leadingIcon = {
-                if (isSearchIconNeeded)
+                if (isSearchIconNeeded) {
                     Icon(
                         imageVector = Icons.Default.Search,
                         contentDescription = "Search Icon"
                     )
+                }
             },
-
         )
     }
 
@@ -143,4 +143,3 @@ object AppInputFields {
         }
     }
 }
-

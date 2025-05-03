@@ -17,7 +17,7 @@ import androidx.compose.ui.platform.LocalContext
 import dagger.hilt.android.EntryPointAccessors
 
 @Composable
-fun ShoppingListApp() {
+internal fun ShoppingListApp() {
     val context = LocalContext.current
     val entryPoint = EntryPointAccessors.fromApplication(
         context = context,
@@ -45,4 +45,3 @@ fun ShoppingListApp() {
         }
     }
 }
-

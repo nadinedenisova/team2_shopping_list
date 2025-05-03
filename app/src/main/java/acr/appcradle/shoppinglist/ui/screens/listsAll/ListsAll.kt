@@ -1,4 +1,4 @@
-package acr.appcradle.shoppinglist.ui.screens.lists_all
+package acr.appcradle.shoppinglist.ui.screens.listsAll
 
 import acr.appcradle.shoppinglist.model.AppIntents
 import acr.appcradle.shoppinglist.model.ListElement
@@ -28,9 +28,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 
-
 @Composable
-fun ListsAll(
+internal fun ListsAll(
     viewModel: AppViewModel = hiltViewModel(),
     createNewListClick: () -> Unit,
     onListClick: (Long, String) -> Unit,
@@ -82,7 +81,7 @@ fun ListsAll(
                         modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
                     ) {
                         items(state.list) { item ->
-                            SwipeableListsItem(
+                            SwipeListsItem(
                                 icon = item.icon,
                                 title = item.listName,
                                 iconBackground = Color(item.iconBackground.toULong()),

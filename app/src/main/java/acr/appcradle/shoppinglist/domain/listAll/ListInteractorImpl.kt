@@ -1,14 +1,15 @@
-package acr.appcradle.shoppinglist.domain.list_all
+package acr.appcradle.shoppinglist.domain.listAll
 
 import acr.appcradle.shoppinglist.model.ListElement
 import acr.appcradle.shoppinglist.model.ListInteractor
 import acr.appcradle.shoppinglist.model.ListRepository
 import kotlinx.coroutines.flow.Flow
+import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class ListInteractorImpl @Inject constructor(
+internal class ListInteractorImpl @Inject constructor(
     private val repository: ListRepository
 ) : ListInteractor {
 
@@ -16,22 +17,21 @@ class ListInteractorImpl @Inject constructor(
         return repository.getAllLists()
     }
 
-    override suspend fun addItem(item: ListElement) : Result<Unit> {
+    override suspend fun addItem(item: ListElement): Result<Unit> {
         return try {
             repository.addItem(item)
             Result.success(Unit)
-        } catch (e: Exception) {
+        } catch (e: IOException) {
             Result.failure(e)
         }
     }
 
-    override suspend fun deleteItem(id: Long) : Result<Unit> {
+    override suspend fun deleteItem(id: Long): Result<Unit> {
         return try {
             repository.deleteItem(id)
             Result.success(Unit)
-        } catch (e: Exception) {
+        } catch (e: IOException) {
             Result.failure(e)
         }
     }
-
 }
