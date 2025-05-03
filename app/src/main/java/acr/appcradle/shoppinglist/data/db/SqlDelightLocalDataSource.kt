@@ -50,9 +50,12 @@ class SqlDelightLocalDataSource @Inject constructor(
             }
 
     override suspend fun getListById(id: Long): ListElement {
-        val list = listQueries.getListByListId(id).executeAsOne()
+        val list = listQueries.getListByListId(id).executeAsOneOrNull()
+            ?: throw NoSuchElementException("Список с id = $id не найден")
         return converterList.map(list)
     }
+
+
 
     override suspend fun insertList(item: ListElement): Long {
         return withContext(Dispatchers.IO) {
@@ -84,14 +87,20 @@ class SqlDelightLocalDataSource @Inject constructor(
     }
 
     override suspend fun updateList(item: ListElement) {
-        listQueries.updateListById(
-            id = item.id,
-            icon = item.icon.toLong(),
-            iconBackground = item.iconBackground.toLong(),
-            listName = item.listName,
-            boughtCount = item.boughtCount.toLong(),
-            totalCount = item.totalCount.toLong()
-        )
+       withContext(Dispatchers.IO) {
+           try {
+               listQueries.updateListById(
+                   id = item.id,
+                   icon = item.icon.toLong(),
+                   iconBackground = item.iconBackground.toLong(),
+                   listName = item.listName,
+                   boughtCount = item.boughtCount.toLong(),
+                   totalCount = item.totalCount.toLong()
+               )
+           } catch (e: Exception) {
+               Log.e("ListRepository", "Ошибка при обновлении списка: ${e.message}", e)
+           }
+       }
     }
 
     override fun getAllItems(listId: Long): Flow<List<ShoppingElement>> =
@@ -135,8 +144,14 @@ class SqlDelightLocalDataSource @Inject constructor(
     }
 
     override suspend fun updateItemCheck(item: ShoppingElement) {
-        val bdItem = converterItem.map(item.copy(checked = !item.checked))
-        itemsQueries.updateItemsCheck(checked = bdItem.checked, id = item.id)
+       withContext(Dispatchers.IO) {
+           try {
+               val bdItem = converterItem.map(item.copy(checked = !item.checked))
+               itemsQueries.updateItemsCheck(checked = bdItem.checked, id = item.id)
+           } catch (e: Exception) {
+               Log.e("ListRepository", "Ошибка при добавлении элемента: ${e.message}", e)
+           }
+       }
     }
 
     override suspend fun deleteItem(id: Long) {

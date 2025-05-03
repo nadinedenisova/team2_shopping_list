@@ -66,7 +66,7 @@ fun FilledListUi(
                         editItem = item
                         editItemBottomSheetVisibility = true
                     },
-                    onDelete = { viewModel.actionIntent(AppIntents.DeleteItem(item.id)) },
+                    onDelete = { viewModel.actionIntent(AppIntents.DeleteItem(item.id, item.listId)) },
                     onItemClick = { viewModel.actionIntent(AppIntents.UpdateItemCheck(item = item)) },
                 )
             }

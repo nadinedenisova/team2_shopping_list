@@ -62,10 +62,8 @@ class AppViewModel @Inject constructor(
         when (intent) {
             is AppIntents.DeleteItem -> {
                 viewModelScope.launch {
-                    repository.deleteItem(intent.id)
                     itemsInteractor.deleteItem(intent.id)
-                    updateListCounters(intent.id)
-                    loadLists()
+                    updateListCounters(intent.listId)
                     Log.i("database", "Пришел запрос на удаление ид = ${intent.id}")
                 }
             }
@@ -144,6 +142,14 @@ class AppViewModel @Inject constructor(
 
                 val shareIntent = Intent.createChooser(sendIntent, "Поделиться списком")
                 intent.context.startActivity(shareIntent)
+            }
+
+            is AppIntents.DeleteList -> {
+                viewModelScope.launch {
+                    repository.deleteItem(intent.id)
+                    loadLists()
+                    Log.i("database", "Пришел запрос на удаление ид = ${intent.id}")
+                }
             }
         }
     }
