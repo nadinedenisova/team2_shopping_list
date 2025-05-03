@@ -1,4 +1,4 @@
-package acr.appcradle.shoppinglist.data.list_shopping
+package acr.appcradle.shoppinglist.data.listShopping
 
 import acr.appcradle.shoppinglist.model.ItemsRepository
 import acr.appcradle.shoppinglist.model.ShoppingElement
@@ -9,7 +9,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class ItemsRepositoryImpl @Inject constructor(
+internal class ItemsRepositoryImpl @Inject constructor(
     private val localDataSource: ShoppingLocalDataSource
 ) : ItemsRepository {
 
@@ -30,7 +30,6 @@ class ItemsRepositoryImpl @Inject constructor(
     override suspend fun deleteItem(id: Long) {
         localDataSource.deleteItem(id)
         Log.i("database", "удаление в репозитории")
-
     }
 
     override suspend fun updatedItemCheck(item: ShoppingElement) {

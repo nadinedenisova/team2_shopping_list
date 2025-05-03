@@ -2,7 +2,7 @@ package acr.appcradle.shoppinglist.model
 
 import kotlinx.coroutines.flow.Flow
 
-interface ShoppingLocalDataSource {
+internal interface ShoppingLocalDataSource {
     fun getAllLists(): Flow<List<ListElement>>
     fun getSortedLists(): Flow<List<ListElement>>
     suspend fun getListById(id: Long): ListElement

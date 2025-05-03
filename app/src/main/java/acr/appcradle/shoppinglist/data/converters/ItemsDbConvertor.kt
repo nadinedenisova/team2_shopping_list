@@ -5,7 +5,7 @@ import acr.appcradle.shoppinglist.model.ShoppingElement
 import acr.appcradle.shoppinglist.utils.DbAdapters
 import javax.inject.Inject
 
-class ItemsDbConvertor @Inject constructor() {
+internal class ItemsDbConvertor @Inject constructor() {
 
     fun map(shoppingElement: ShoppingElement): ShoppingItems {
         return ShoppingItems(

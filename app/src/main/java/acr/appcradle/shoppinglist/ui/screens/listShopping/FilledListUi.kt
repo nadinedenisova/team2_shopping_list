@@ -1,4 +1,4 @@
-package acr.appcradle.shoppinglist.ui.screens.list_shopping
+package acr.appcradle.shoppinglist.ui.screens.listShopping
 
 import acr.appcradle.shoppinglist.model.AppIntents
 import acr.appcradle.shoppinglist.model.ShoppingElement
@@ -28,7 +28,7 @@ import androidx.compose.ui.unit.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun FilledListUi(
+internal fun FilledListUi(
     modifier: Modifier = Modifier,
     listId: Long,
     listOfItems: List<ShoppingElement>,
@@ -79,7 +79,7 @@ fun FilledListUi(
         ) {
             Icon(imageVector = Icons.Default.Add, contentDescription = null)
         }
-        if (addItemBottomSheetVisibility)
+        if (addItemBottomSheetVisibility) {
             AppBottomSheets.AddItemDialog(
                 onDismissCallback = { addItemBottomSheetVisibility = false },
                 onAddClick = {
@@ -88,7 +88,8 @@ fun FilledListUi(
                 listId = listId,
                 existingNames = listOfItems.map { it.name.trim().lowercase() }
             )
-        if (editItemBottomSheetVisibility)
+        }
+        if (editItemBottomSheetVisibility) {
             AppBottomSheets.AddItemDialog(
                 onDismissCallback = { editItemBottomSheetVisibility = false },
                 listId = listId,
@@ -98,38 +99,6 @@ fun FilledListUi(
                     editItemBottomSheetVisibility = false
                 }
             )
+        }
     }
 }
-
-
-//@ThemePreviews
-//@Composable
-//private fun Preview() {
-//    ShoppingListTheme {
-//        Surface {
-//            FilledListUi(
-//                listOfItems = listOf(
-//                    ShoppingElement(
-//                        name = "Яблоко",
-//                        amount = "31",
-//                        unit = "кг",
-//                        checked = false
-//                    ),
-//                    ShoppingElement(
-//                        name = "Груша",
-//                        amount = "3",
-//                        unit = "шт",
-//                        checked = true
-//                    ),
-//                    ShoppingElement(
-//                        name = "Апельсины",
-//                        amount = "3",
-//                        unit = "шт",
-//                        checked = false
-//                    ),
-//                ),
-//                viewModel = viewModel
-//            )
-//        }
-//    }
-//}

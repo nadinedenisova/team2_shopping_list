@@ -22,7 +22,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class AppViewModel @Inject constructor(
+internal class AppViewModel @Inject constructor(
     private val repository: ListRepository,
     private val itemsInteractor: ItemsRepository
 //    private val itemsInteractor: ItemsInteractor
@@ -52,9 +52,7 @@ class AppViewModel @Inject constructor(
                 _iconState.update { it.copy(iconColor = intent.color) }
             }
 
-            is IconsIntent.ChangeTitle -> {
-
-            }
+            is IconsIntent.ChangeTitle -> {}
         }
     }
 
@@ -171,10 +169,11 @@ class AppViewModel @Inject constructor(
 
     private fun loadItems(listId: Long, sorted: Boolean = false) {
         viewModelScope.launch {
-            val flow = if (sorted)
+            val flow = if (sorted) {
                 itemsInteractor.getSortedItems(listId)
-            else
+            } else {
                 itemsInteractor.getAllItems(listId)
+            }
 
             flow.collect { items ->
                 _itemsList.update { items }
@@ -207,6 +206,7 @@ class AppViewModel @Inject constructor(
             actionIntent(AppIntents.LoadList)
         }
     }
+
     fun updateList(item: ListElement, onComplete: () -> Unit) {
         viewModelScope.launch {
             repository.updateList(item)
@@ -231,9 +231,9 @@ class AppViewModel @Inject constructor(
                 }
                 loadLists()
             }
-
         }
     }
+
     private fun updateListCounters(listId: Long) {
         viewModelScope.launch {
             val items = itemsInteractor.getAllItems(listId).first()
@@ -249,6 +249,4 @@ class AppViewModel @Inject constructor(
             loadLists()
         }
     }
-
-
 }

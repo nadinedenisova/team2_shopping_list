@@ -1,4 +1,4 @@
-package acr.appcradle.shoppinglist.ui.screens.list_creation
+package acr.appcradle.shoppinglist.ui.screens.listCreation
 
 import acr.appcradle.shoppinglist.model.IconsIntent
 import acr.appcradle.shoppinglist.model.ListElement
@@ -33,7 +33,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 @Composable
-fun ListCreationScreen(
+internal fun ListCreationScreen(
     viewModel: AppViewModel = hiltViewModel(),
     onBackClick: () -> Unit,
     onNextClick: () -> Unit,
@@ -71,7 +71,7 @@ fun ListCreationScreen(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ListCreationScreenUi(
+internal fun ListCreationScreenUi(
     iconsState: NewListData,
     onBackClick: () -> Unit,
     onIconClick: (Int) -> Unit,
@@ -110,7 +110,8 @@ fun ListCreationScreenUi(
                 isError = isDuplicate,
                 onValueChange = {
                     inputText = it
-                    viewModel.checkTitleUniqueness(it) },
+                    viewModel.checkTitleUniqueness(it)
+                },
 
                 )
             if (isDuplicate) {
@@ -139,18 +140,3 @@ fun ListCreationScreenUi(
         }
     }
 }
-
-
-//@ThemePreviews
-//@Composable
-//fun GreetingPreview() {
-//    ShoppingListTheme {
-//        Surface {
-//            ListCreationScreen(
-//                viewModel = AppViewModel(ListRepository()),
-//                onBackClick = {},
-//                onNextClick = {}
-//            )
-//        }
-//    }
-//}

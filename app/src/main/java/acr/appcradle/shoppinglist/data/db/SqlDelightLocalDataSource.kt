@@ -16,23 +16,28 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.retry
 import kotlinx.coroutines.withContext
+import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class SqlDelightLocalDataSource @Inject constructor(
+internal class SqlDelightLocalDataSource @Inject internal constructor(
     private val listQueries: ShoppingListQueries,
     private val itemsQueries: ShoppingItemsQueries,
     private val converterList: ListDbConvertor,
     private val converterItem: ItemsDbConvertor
 ) : ShoppingLocalDataSource {
 
+    private companion object {
+        private const val RETRY_COUNT = 3L
+    }
+
     override fun getAllLists(): Flow<List<ListElement>> =
         listQueries.selectAll()
             .asFlow()
             .mapToList(Dispatchers.IO)
             .map { dbList -> dbList.map { converterList.map(it) } }
-            .retry(3)
+            .retry(RETRY_COUNT)
             .catch { e ->
                 Log.e("ListRepository", "Ошибка при чтении списка из БД: ${e.message}", e)
                 emit(emptyList())
@@ -43,7 +48,7 @@ class SqlDelightLocalDataSource @Inject constructor(
             .asFlow()
             .mapToList(Dispatchers.IO)
             .map { dbList -> dbList.map { converterList.map(it) } }
-            .retry(3)
+            .retry(RETRY_COUNT)
             .catch { e ->
                 Log.e("ListRepository", "Ошибка при чтении списка из БД: ${e.message}", e)
                 emit(emptyList())
@@ -55,8 +60,6 @@ class SqlDelightLocalDataSource @Inject constructor(
         return converterList.map(list)
     }
 
-
-
     override suspend fun insertList(item: ListElement): Long {
         return withContext(Dispatchers.IO) {
             try {
@@ -67,9 +70,8 @@ class SqlDelightLocalDataSource @Inject constructor(
                     boughtCount = item.boughtCount.toLong(),
                     totalCount = item.totalCount.toLong()
                 )
-
                 listQueries.lastInsertedId().executeAsOne()
-            } catch (e: Exception) {
+            } catch (e: IOException) {
                 Log.e("ListRepository", "Ошибка при добавлении списка: ${e.message}", e)
                 -1L
             }
@@ -80,27 +82,27 @@ class SqlDelightLocalDataSource @Inject constructor(
         withContext(Dispatchers.IO) {
             try {
                 listQueries.deleteElement(id)
-            } catch (e: Exception) {
+            } catch (e: IOException) {
                 Log.e("ListRepository", "Ошибка при удалении списка: ${e.message}", e)
             }
         }
     }
 
     override suspend fun updateList(item: ListElement) {
-       withContext(Dispatchers.IO) {
-           try {
-               listQueries.updateListById(
-                   id = item.id,
-                   icon = item.icon.toLong(),
-                   iconBackground = item.iconBackground.toLong(),
-                   listName = item.listName,
-                   boughtCount = item.boughtCount.toLong(),
-                   totalCount = item.totalCount.toLong()
-               )
-           } catch (e: Exception) {
-               Log.e("ListRepository", "Ошибка при обновлении списка: ${e.message}", e)
-           }
-       }
+        withContext(Dispatchers.IO) {
+            try {
+                listQueries.updateListById(
+                    id = item.id,
+                    icon = item.icon.toLong(),
+                    iconBackground = item.iconBackground.toLong(),
+                    listName = item.listName,
+                    boughtCount = item.boughtCount.toLong(),
+                    totalCount = item.totalCount.toLong()
+                )
+            } catch (e: IOException) {
+                Log.e("ListRepository", "Ошибка при обновлении списка: ${e.message}", e)
+            }
+        }
     }
 
     override fun getAllItems(listId: Long): Flow<List<ShoppingElement>> =
@@ -108,7 +110,7 @@ class SqlDelightLocalDataSource @Inject constructor(
             .asFlow()
             .mapToList(Dispatchers.IO)
             .map { dbList -> dbList.map { converterItem.map(it) } }
-            .retry(3)
+            .retry(RETRY_COUNT)
             .catch { e ->
                 Log.e("ItemRepository", "Ошибка при чтении списка из БД: ${e.message}", e)
                 emit(emptyList())
@@ -119,7 +121,7 @@ class SqlDelightLocalDataSource @Inject constructor(
             .asFlow()
             .mapToList(Dispatchers.IO)
             .map { dbList -> dbList.map { converterItem.map(it) } }
-            .retry(3)
+            .retry(RETRY_COUNT)
             .catch { e ->
                 Log.e("ItemRepository", "Ошибка при чтении списка из БД: ${e.message}", e)
                 emit(emptyList())
@@ -136,35 +138,32 @@ class SqlDelightLocalDataSource @Inject constructor(
                     unit = bdItem.unit,
                     checked = bdItem.checked
                 )
-            } catch (e: Exception) {
+            } catch (e: IOException) {
                 Log.e("ListRepository", "Ошибка при добавлении элемента: ${e.message}", e)
-
             }
         }
     }
 
     override suspend fun updateItemCheck(item: ShoppingElement) {
-       withContext(Dispatchers.IO) {
-           try {
-               val bdItem = converterItem.map(item.copy(checked = !item.checked))
-               itemsQueries.updateItemsCheck(checked = bdItem.checked, id = item.id)
-           } catch (e: Exception) {
-               Log.e("ListRepository", "Ошибка при добавлении элемента: ${e.message}", e)
-           }
-       }
+        withContext(Dispatchers.IO) {
+            try {
+                val bdItem = converterItem.map(item.copy(checked = !item.checked))
+                itemsQueries.updateItemsCheck(checked = bdItem.checked, id = item.id)
+            } catch (e: IOException) {
+                Log.e("ListRepository", "Ошибка при добавлении элемента: ${e.message}", e)
+            }
+        }
     }
 
     override suspend fun deleteItem(id: Long) {
         withContext(Dispatchers.IO) {
             try {
                 itemsQueries.deleteItems(id)
-            } catch (e: Exception) {
+            } catch (e: IOException) {
                 Log.e("ListRepository", "Ошибка при удалении элемента: ${e.message}", e)
-                // throw e
             }
         }
         Log.i("database", "удаление в прослойке")
-
     }
 
     override suspend fun updateItemInfo(item: ShoppingElement) {
@@ -175,7 +174,7 @@ class SqlDelightLocalDataSource @Inject constructor(
                 unit = item.unit,
                 id = item.id
             )
-        } catch (e: Exception) {
+        } catch (e: IOException) {
             Log.e("ListRepository", "Ошибка при обновлении элемента: ${e.message}", e)
         }
     }
@@ -183,7 +182,7 @@ class SqlDelightLocalDataSource @Inject constructor(
     override suspend fun deleteAllChecked(listId: Long) {
         try {
             itemsQueries.deleteAllChecked(listId)
-        } catch (e: Exception) {
+        } catch (e: IOException) {
             Log.e("ListRepository", "Ошибка при удалении отмеченных элементов: ${e.message}", e)
         }
     }
@@ -191,9 +190,8 @@ class SqlDelightLocalDataSource @Inject constructor(
     override suspend fun makeAllUnChecked(listId: Long) {
         try {
             itemsQueries.makeAllUnchecked(listId)
-        } catch (e: Exception) {
+        } catch (e: IOException) {
             Log.e("ListRepository", "Ошибка при снятии всех отметок: ${e.message}", e)
         }
     }
 }
-

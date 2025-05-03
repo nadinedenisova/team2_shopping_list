@@ -8,9 +8,9 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 
 const val THEME_PREFS_KEY = "app_theme_key"
 
-enum class ThemeOption { SYSTEM, DARK, LIGHT }
+internal enum class ThemeOption { SYSTEM, DARK, LIGHT }
 
-class ThemeRemember(
+internal class ThemeRemember(
     @ApplicationContext private val context: Context
 ) {
 
@@ -26,5 +26,4 @@ class ThemeRemember(
             else -> ThemeOption.LIGHT
         }
     }
-
 }

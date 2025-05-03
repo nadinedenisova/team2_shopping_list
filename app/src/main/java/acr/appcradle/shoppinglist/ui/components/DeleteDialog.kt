@@ -7,7 +7,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 
 @Composable
-fun DeleteDialog(
+internal fun DeleteDialog(
     visibility: Boolean,
     title: String,
     message: String,

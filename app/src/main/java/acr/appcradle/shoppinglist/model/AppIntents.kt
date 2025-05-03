@@ -2,7 +2,7 @@ package acr.appcradle.shoppinglist.model
 
 import android.content.Context
 
-sealed interface AppIntents {
+internal sealed interface AppIntents {
     class DeleteItem(val id: Long, val listId: Long) : AppIntents
     object LoadList : AppIntents
     class DeleteList(val id: Long) : AppIntents

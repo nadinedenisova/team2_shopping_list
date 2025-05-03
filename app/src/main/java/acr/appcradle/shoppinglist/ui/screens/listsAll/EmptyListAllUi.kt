@@ -1,4 +1,4 @@
-package acr.appcradle.shoppinglist.ui.screens.lists_all
+package acr.appcradle.shoppinglist.ui.screens.listsAll
 
 import acr.appcradle.shoppinglist.R
 import acr.appcradle.shoppinglist.ui.components.ShoppingListButtons
@@ -14,11 +14,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun EmptyListAllUi(onNextClick: () -> Unit) {
+internal fun EmptyListAllUi(onNextClick: () -> Unit) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Spacer(Modifier.height(104.dp))
         Image(
@@ -43,10 +42,4 @@ fun EmptyListAllUi(onNextClick: () -> Unit) {
             }
         )
     }
-}
-
-@Preview
-@Composable
-private fun EmptyListPreview() {
-    EmptyListAllUi {}
 }

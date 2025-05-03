@@ -1,4 +1,4 @@
-package acr.appcradle.shoppinglist.ui.screens.list_creation
+package acr.appcradle.shoppinglist.ui.screens.listCreation
 
 import acr.appcradle.shoppinglist.ui.theme.Team2Colors
 import androidx.compose.ui.graphics.Color

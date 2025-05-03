@@ -1,8 +1,7 @@
-package acr.appcradle.shoppinglist.ui.screens.list_shopping
+package acr.appcradle.shoppinglist.ui.screens.listShopping
 
 import acr.appcradle.shoppinglist.model.ShoppingElement
-import acr.appcradle.shoppinglist.ui.theme.ShoppingListTheme
-import acr.appcradle.shoppinglist.utils.ThemePreviews
+import acr.appcradle.shoppinglist.ui.screens.listShopping.IconsPaletteConstants.TEXT_ALFA
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -12,7 +11,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.MaterialTheme.colorScheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -21,11 +19,11 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun ShoppingListItem(
+internal fun ShoppingListItem(
     item: ShoppingElement,
     onCheckedChange: () -> Unit
 ) {
-    val textAlpha = if (!item.checked) 1f else 0.5f
+    val textAlpha = if (!item.checked) 1f else TEXT_ALFA
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -58,21 +56,6 @@ fun ShoppingListItem(
     }
 }
 
-@ThemePreviews
-@Composable
-private fun ShoppingListItemPreview() {
-    ShoppingListTheme {
-        Surface {
-            ShoppingListItem(
-                item = ShoppingElement(
-                    listId = 2,
-                    name = "Груша",
-                    amount = "3",
-                    unit = "шт",
-                    checked = false,
-                    id = 2L
-                )
-            ) { }
-        }
-    }
+private object IconsPaletteConstants {
+    const val TEXT_ALFA = 0.5f
 }

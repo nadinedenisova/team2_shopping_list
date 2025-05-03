@@ -1,6 +1,6 @@
-package acr.appcradle.shoppinglist.ui.screens.list_shopping.nav
+package acr.appcradle.shoppinglist.ui.screens.listShopping.nav
 
-import acr.appcradle.shoppinglist.ui.screens.list_shopping.ListShoppingScreen
+import acr.appcradle.shoppinglist.ui.screens.listShopping.ListShoppingScreen
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
@@ -12,13 +12,13 @@ import java.net.URLEncoder
 @Serializable
 data object ListShoppingRoute
 
-fun NavController.navigateToShoppingList(listId: Long, listName: String) {
+internal fun NavController.navigateToShoppingList(listId: Long, listName: String) {
 //    navigate("listShopping/$listId")
     val encodedName = URLEncoder.encode(listName, "UTF-8")
     navigate("listShopping/$listId/$encodedName")
 }
 
-fun NavGraphBuilder.shoppingScreen(
+internal fun NavGraphBuilder.shoppingScreen(
     onBackClick: () -> Unit,
 ) {
     composable(

@@ -3,12 +3,12 @@ package acr.appcradle.shoppinglist
 import acr.appcradle.shoppinglist.model.ListElement
 import acr.appcradle.shoppinglist.ui.screens.greeting.nav.GreetingRoute
 import acr.appcradle.shoppinglist.ui.screens.greeting.nav.greeting
-import acr.appcradle.shoppinglist.ui.screens.list_creation.nav.creationScreen
-import acr.appcradle.shoppinglist.ui.screens.list_creation.nav.navigateToListCreation
-import acr.appcradle.shoppinglist.ui.screens.list_shopping.nav.navigateToShoppingList
-import acr.appcradle.shoppinglist.ui.screens.list_shopping.nav.shoppingScreen
-import acr.appcradle.shoppinglist.ui.screens.lists_all.nav.listsAll
-import acr.appcradle.shoppinglist.ui.screens.lists_all.nav.navigateListsAll
+import acr.appcradle.shoppinglist.ui.screens.listCreation.nav.creationScreen
+import acr.appcradle.shoppinglist.ui.screens.listCreation.nav.navigateToListCreation
+import acr.appcradle.shoppinglist.ui.screens.listShopping.nav.navigateToShoppingList
+import acr.appcradle.shoppinglist.ui.screens.listShopping.nav.shoppingScreen
+import acr.appcradle.shoppinglist.ui.screens.listsAll.nav.listsAll
+import acr.appcradle.shoppinglist.ui.screens.listsAll.nav.navigateListsAll
 import acr.appcradle.shoppinglist.utils.ThemeOption
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
@@ -18,7 +18,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 
 @Composable
-fun AppNavHost(
+internal fun AppNavHost(
     scaffoldPaddings: PaddingValues,
     modifier: Modifier = Modifier,
     onThemeChange: (ThemeOption) -> Unit
@@ -42,7 +42,7 @@ fun AppNavHost(
                 )
             },
             onThemeChange = onThemeChange,
-            onEdit = {list: ListElement ->
+            onEdit = { list: ListElement ->
                 navController.navigateToListCreation(list)
             }
         )

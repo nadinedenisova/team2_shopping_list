@@ -22,7 +22,7 @@ data class CustomTypography(
     val labelLarge: TextStyle,
 )
 
-val Typography = CustomTypography(
+internal val Typography = CustomTypography(
     headlineLarge = TextStyle(
         fontFamily = RubikFontFamily,
         fontWeight = FontWeight.W400,
@@ -66,4 +66,3 @@ val Typography = CustomTypography(
         letterSpacing = 0.1.sp
     ),
 )
-

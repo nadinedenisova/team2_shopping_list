@@ -2,11 +2,9 @@ package acr.appcradle.shoppinglist.data.converters
 
 import acr.appcradle.shoppinglist.ShoppingList
 import acr.appcradle.shoppinglist.model.ListElement
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.toArgb
 import javax.inject.Inject
 
-class ListDbConvertor @Inject constructor() {
+internal class ListDbConvertor @Inject constructor() {
 
     fun map(listElement: ListElement): ShoppingList {
         return ShoppingList(
@@ -29,6 +27,4 @@ class ListDbConvertor @Inject constructor() {
             totalCount = shoppingList.totalCount.toInt()
         )
     }
-
-
 }
