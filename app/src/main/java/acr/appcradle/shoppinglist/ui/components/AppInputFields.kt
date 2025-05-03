@@ -69,20 +69,22 @@ object AppInputFields {
                 if (isError) {
                     Icon(
                         painter = painterResource(R.drawable.ic_error_textfield),
-                        contentDescription = null,
+                        contentDescription = "Error Icon",
                         tint = Team2Colors.team2color_red
                     )
                 } else if (inputText != "") {
                     Icon(
                         modifier = Modifier.clickable { inputText = "" },
-                        imageVector = Icons.Default.Clear, contentDescription = null
+                        imageVector = Icons.Default.Clear,
+                        contentDescription = "Clear Button"
                     )
                 }
             },
             leadingIcon = {
                 if (isSearchIconNeeded)
                     Icon(
-                        imageVector = Icons.Default.Search, contentDescription = null
+                        imageVector = Icons.Default.Search,
+                        contentDescription = "Search Icon"
                     )
             },
 

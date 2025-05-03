@@ -95,7 +95,7 @@ fun ListsAll(
                                     viewModel.actionIntent(AppIntents.DuplicateList(item.id))
                                 },
                                 onDelete = {
-                                    viewModel.actionIntent(AppIntents.DeleteItem(item.id))
+                                    viewModel.actionIntent(AppIntents.DeleteList(item.id))
                                 },
                                 onListClick = { onListClick(item.id, item.listName) }
                             )
