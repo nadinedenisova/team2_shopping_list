@@ -88,7 +88,9 @@ class SqlDelightLocalDataSource @Inject constructor(
             id = item.id,
             icon = item.icon.toLong(),
             iconBackground = item.iconBackground.toLong(),
-            listName = item.listName
+            listName = item.listName,
+            boughtCount = item.boughtCount.toLong(),
+            totalCount = item.totalCount.toLong()
         )
     }
 

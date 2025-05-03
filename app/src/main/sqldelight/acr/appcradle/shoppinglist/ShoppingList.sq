@@ -34,5 +34,5 @@ WHERE id = ?;
 
 updateListById:
 UPDATE ShoppingList
-SET icon = ?, iconBackground = ?, listName = ?
+SET icon = ?, iconBackground = ?, listName = ?, boughtCount = ?, totalCount = ?
 WHERE id = ?;

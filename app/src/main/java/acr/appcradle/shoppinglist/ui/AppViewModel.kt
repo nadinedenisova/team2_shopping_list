@@ -64,6 +64,7 @@ class AppViewModel @Inject constructor(
                 viewModelScope.launch {
                     repository.deleteItem(intent.id)
                     itemsInteractor.deleteItem(intent.id)
+                    updateListCounters(intent.id)
                     loadLists()
                     Log.i("database", "Пришел запрос на удаление ид = ${intent.id}")
                 }
@@ -90,6 +91,7 @@ class AppViewModel @Inject constructor(
             is AppIntents.AddItem -> {
                 viewModelScope.launch {
                     itemsInteractor.addItem(item = intent.item)
+                    updateListCounters(intent.item.listId)
                 }
                 Log.i("database", "Новый элемент добавлен: ${intent.item}")
             }
@@ -107,12 +109,14 @@ class AppViewModel @Inject constructor(
             is AppIntents.UpdateItemCheck -> {
                 viewModelScope.launch {
                     itemsInteractor.updatedItemCheck(intent.item)
+                    updateListCounters(intent.item.listId)
                 }
             }
 
             is AppIntents.DeleteAllChecked -> {
                 viewModelScope.launch {
                     itemsInteractor.deleteAllChecked(intent.listId)
+                    updateListCounters(intent.listId)
                 }
             }
 
@@ -222,6 +226,21 @@ class AppViewModel @Inject constructor(
                 loadLists()
             }
 
+        }
+    }
+    private fun updateListCounters(listId: Long) {
+        viewModelScope.launch {
+            val items = itemsInteractor.getAllItems(listId).first()
+            val totalCount = items.size
+            val boughtCount = items.count { it.checked }
+            val list = repository.getListById(listId)
+
+            val updatedList = list.copy(
+                totalCount = totalCount,
+                boughtCount = boughtCount
+            )
+            repository.updateList(updatedList)
+            loadLists()
         }
     }
 
