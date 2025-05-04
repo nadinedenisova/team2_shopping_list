@@ -1,5 +1,6 @@
 package acr.appcradle.shoppinglist.data.db
 
+import acr.appcradle.shoppinglist.BuildConfig
 import acr.appcradle.shoppinglist.ShoppingItemsQueries
 import acr.appcradle.shoppinglist.ShoppingListQueries
 import acr.appcradle.shoppinglist.data.converters.ItemsDbConvertor
@@ -17,6 +18,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.retry
 import kotlinx.coroutines.withContext
+import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -35,7 +37,9 @@ class SqlDelightLocalDataSource @Inject constructor(
             .map { dbList -> dbList.map { converterList.map(it) } }
             .retry(3)
             .catch { e ->
-                Log.e("ListRepository", "Ошибка при чтении списка из БД: ${e.message}", e)
+                if (BuildConfig.DEBUG) {
+                    Log.e("ListRepository", "Ошибка при чтении списка из БД: ${e.message}", e)
+                }
                 "Ошибка при загрузке списков"
             }
 
@@ -46,7 +50,9 @@ class SqlDelightLocalDataSource @Inject constructor(
             .map { dbList -> dbList.map { converterList.map(it) } }
             .retry(3)
             .catch { e ->
-                Log.e("ListRepository", "Ошибка при чтении списка из БД: ${e.message}", e)
+                if (BuildConfig.DEBUG) {
+                    Log.e("ListRepository", "Ошибка при чтении списка из БД: ${e.message}", e)
+                }
                 "Ошибка при загрузке списков"
             }
 
@@ -63,8 +69,10 @@ class SqlDelightLocalDataSource @Inject constructor(
                 )
 
                 listQueries.lastInsertedId().executeAsOne()
-            } catch (e: Exception) {
-                Log.e("ListRepository", "Ошибка при добавлении списка: ${e.message}", e)
+            } catch (e: IOException) {
+                if (BuildConfig.DEBUG) {
+                    Log.e("ListRepository", "Ошибка при добавлении списка: ${e.message}", e)
+                }
                 -1L
             }
         }
@@ -74,8 +82,10 @@ class SqlDelightLocalDataSource @Inject constructor(
         withContext(Dispatchers.IO) {
             try {
                 listQueries.deleteElement(id)
-            } catch (e: Exception) {
-                Log.e("ListRepository", "Ошибка при удалении списка: ${e.message}", e)
+            } catch (e: IOException) {
+                if (BuildConfig.DEBUG) {
+                    Log.e("ListRepository", "Ошибка при удалении списка: ${e.message}", e)
+                }
             }
         }
     }
@@ -101,7 +111,9 @@ class SqlDelightLocalDataSource @Inject constructor(
             .map { dbList -> dbList.map { converterItem.map(it) } }
             .retry(3)
             .catch { e ->
-                Log.e("ItemRepository", "Ошибка при чтении списка из БД: ${e.message}", e)
+                if (BuildConfig.DEBUG) {
+                    Log.e("ItemRepository", "Ошибка при чтении списка из БД: ${e.message}", e)
+                }
                 "Ошибка"
             }
 
@@ -112,7 +124,9 @@ class SqlDelightLocalDataSource @Inject constructor(
             .map { dbList -> dbList.map { converterItem.map(it) } }
             .retry(3)
             .catch { e ->
-                Log.e("ItemRepository", "Ошибка при чтении списка из БД: ${e.message}", e)
+                if (BuildConfig.DEBUG) {
+                    Log.e("ItemRepository", "Ошибка при чтении списка из БД: ${e.message}", e)
+                }
                 "Ошибка"
             }
 
@@ -128,9 +142,10 @@ class SqlDelightLocalDataSource @Inject constructor(
                     unit = bdItem.unit,
                     checked = bdItem.checked
                 )
-            } catch (e: Exception) {
-                Log.e("ListRepository", "Ошибка при добавлении элемента: ${e.message}", e)
-
+            } catch (e: IOException) {
+                if (BuildConfig.DEBUG) {
+                    Log.e("ListRepository", "Ошибка при добавлении элемента: ${e.message}", e)
+                }
             }
         }
     }
@@ -144,9 +159,10 @@ class SqlDelightLocalDataSource @Inject constructor(
         withContext(Dispatchers.IO) {
             try {
                 itemsQueries.deleteItems(id)
-            } catch (e: Exception) {
-                Log.e("ListRepository", "Ошибка при удалении элемента: ${e.message}", e)
-                // throw e
+            } catch (e: IOException) {
+                if (BuildConfig.DEBUG) {
+                    Log.e("ListRepository", "Ошибка при удалении элемента: ${e.message}", e)
+                }
             }
         }
         Log.i("database", "удаление в прослойке")
@@ -161,24 +177,30 @@ class SqlDelightLocalDataSource @Inject constructor(
                 unit = item.unit,
                 id = item.id
             )
-        } catch (e: Exception) {
-            Log.e("ListRepository", "Ошибка при обновлении элемента: ${e.message}", e)
+        } catch (e: IOException) {
+            if (BuildConfig.DEBUG) {
+                Log.e("ListRepository", "Ошибка при обновлении элемента: ${e.message}", e)
+            }
         }
     }
 
     override suspend fun deleteAllChecked(listId: Long) {
         try {
             itemsQueries.deleteAllChecked(listId)
-        } catch (e: Exception) {
-            Log.e("ListRepository", "Ошибка при удалении отмеченных элементов: ${e.message}", e)
+        } catch (e: IOException) {
+            if (BuildConfig.DEBUG) {
+                Log.e("ListRepository", "Ошибка при удалении отмеченных элементов: ${e.message}", e)
+            }
         }
     }
 
     override suspend fun makeAllUnChecked(listId: Long) {
         try {
             itemsQueries.makeAllUnchecked(listId)
-        } catch (e: Exception) {
-            Log.e("ListRepository", "Ошибка при снятии всех отметок: ${e.message}", e)
+        } catch (e: IOException) {
+            if (BuildConfig.DEBUG) {
+                Log.e("ListRepository", "Ошибка при снятии всех отметок: ${e.message}", e)
+            }
         }
     }
 }

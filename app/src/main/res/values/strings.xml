@@ -4,4 +4,5 @@
     <string name="under_greets_advise">Никогда не забывайте, что нужно купить!</string>
     <string name="under_greets_advise_2">Создавайте списки и не переживайте о покупках</string>
     <string name="greeting_button_text">Начать!</string>
+    <string name="item_amount_unit">%1$s %2$s</string>
 </resources>

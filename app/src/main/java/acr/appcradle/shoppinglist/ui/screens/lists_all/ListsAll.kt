@@ -33,7 +33,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 fun ListsAll(
     viewModel: AppViewModel = hiltViewModel(),
     createNewListClick: () -> Unit,
-    onListClick: (Long, String) -> Unit,
+    onListClick: (ListElement) -> Unit,
     onEdit: (ListElement) -> Unit,
     onThemeChange: (ThemeOption) -> Unit
 ) {
@@ -97,7 +97,7 @@ fun ListsAll(
                                 onDelete = {
                                     viewModel.actionIntent(AppIntents.DeleteItem(item.id))
                                 },
-                                onListClick = { onListClick(item.id, item.listName) }
+                                onListClick = { onListClick(item) }
                             )
                         }
                     }

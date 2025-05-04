@@ -1,5 +1,6 @@
 package acr.appcradle.shoppinglist.ui.screens.list_shopping
 
+import acr.appcradle.shoppinglist.R
 import acr.appcradle.shoppinglist.model.ShoppingElement
 import acr.appcradle.shoppinglist.ui.theme.ShoppingListTheme
 import acr.appcradle.shoppinglist.utils.ThemePreviews
@@ -16,6 +17,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -23,6 +25,8 @@ fun ShoppingListItem(
     item: ShoppingElement,
     onCheckedChange: () -> Unit
 ) {
+    val context = LocalContext.current
+    val amountWithUnit = context.getString(R.string.item_amount_unit, item.amount, item.unit)
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -47,7 +51,7 @@ fun ShoppingListItem(
         Text(
             modifier = Modifier
                 .padding(horizontal = 16.dp),
-            text = "${item.amount} ${item.unit}"
+            text = amountWithUnit
         )
     }
 }

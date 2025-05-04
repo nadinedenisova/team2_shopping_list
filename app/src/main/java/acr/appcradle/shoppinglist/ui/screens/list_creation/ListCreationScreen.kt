@@ -28,6 +28,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -43,16 +44,16 @@ fun ListCreationScreen(
 
     LaunchedEffect(existingList) {
         existingList?.let {
-            viewModel.iconsIntent(IconsIntent.ChangeIcon(it.icon))
-            viewModel.iconsIntent(IconsIntent.ChangeColor(Color(it.iconBackground.toULong())))
+            viewModel.iconsIntent(IconsIntent.Update(icon = it.icon))
+            viewModel.iconsIntent(IconsIntent.Update(color = Color(it.iconBackground.toULong())))
         }
     }
 
     ListCreationScreenUi(
         iconsState = iconState,
         onBackClick = onBackClick,
-        onIconClick = { viewModel.iconsIntent(IconsIntent.ChangeIcon(it)) },
-        onColorClick = { viewModel.iconsIntent(IconsIntent.ChangeColor(it)) },
+        onIconClick = { viewModel.iconsIntent(IconsIntent.Update(icon = it)) },
+        onColorClick = { viewModel.iconsIntent(IconsIntent.Update(color = Color(it.toArgb()))) },
         onNextClick = {
             if (existingList != null) {
                 val update = existingList.copy(
@@ -65,7 +66,7 @@ fun ListCreationScreen(
                 viewModel.createNewList(it) { onNextClick() }
             }
         },
-        existingList = existingList,
+        listName = existingList?.listName ?: "",
     )
 }
 
@@ -77,12 +78,12 @@ fun ListCreationScreenUi(
     onIconClick: (Int) -> Unit,
     onColorClick: (Color) -> Unit,
     onNextClick: (String) -> Unit,
-    existingList: ListElement?,
+    listName: String = "",
     viewModel: AppViewModel = hiltViewModel()
 ) {
     val scroll = rememberScrollState()
-    var inputText by remember(existingList) { mutableStateOf(existingList?.listName ?: "") }
-    val isEditing = existingList != null
+    var inputText by remember(listName) { mutableStateOf(listName) }
+    val isEditing = listName.isNotBlank()
     val isDuplicate by viewModel.isTitleDuplicate.collectAsStateWithLifecycle()
 
     Scaffold(
@@ -139,7 +140,6 @@ fun ListCreationScreenUi(
         }
     }
 }
-
 
 //@ThemePreviews
 //@Composable

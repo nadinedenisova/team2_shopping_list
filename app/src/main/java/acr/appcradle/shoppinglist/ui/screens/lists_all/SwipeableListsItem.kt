@@ -39,6 +39,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -66,7 +67,7 @@ fun SwipeableListsItem(
 ) {
     val dismissState = rememberSwipeToDismissBoxState()
     val scope = rememberCoroutineScope()
-    val shouldShowDialog = remember { mutableStateOf(false) }
+    val shouldShowDialog = rememberSaveable { mutableStateOf(false) }
 
     DeleteDialog(
         visibility = shouldShowDialog.value,
@@ -76,9 +77,7 @@ fun SwipeableListsItem(
     }
 
     SwipeToDismissBox(
-        modifier = Modifier.clickable{
-            onListClick()
-        },
+        modifier = Modifier.clickable(onClick = onListClick),
         state = dismissState,
         backgroundContent = {
             Row(
@@ -100,7 +99,7 @@ fun SwipeableListsItem(
                 ) {
                     Icon(
                         painter = painterResource(R.drawable.ic_edit),
-                        contentDescription = null,
+                        contentDescription = "Edit List Icon",
                         tint = Color.White
                     )
                 }
@@ -118,7 +117,7 @@ fun SwipeableListsItem(
                 ) {
                     Icon(
                         painter = painterResource(R.drawable.ic_copy),
-                        contentDescription = null,
+                        contentDescription = "Copy List Icon",
                         tint = Color.White
                     )
                 }
@@ -138,7 +137,7 @@ fun SwipeableListsItem(
                 ) {
                     Icon(
                         painter = painterResource(R.drawable.ic_delete),
-                        contentDescription = null,
+                        contentDescription = "Delete List Icon",
                         tint = Color.White
                     )
                 }

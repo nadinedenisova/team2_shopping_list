@@ -1,5 +1,6 @@
 package acr.appcradle.shoppinglist.ui
 
+import acr.appcradle.shoppinglist.R
 import acr.appcradle.shoppinglist.model.AppIntents
 import acr.appcradle.shoppinglist.model.IconsIntent
 import acr.appcradle.shoppinglist.model.ItemsRepository
@@ -8,8 +9,10 @@ import acr.appcradle.shoppinglist.model.ListRepository
 import acr.appcradle.shoppinglist.model.ListsScreenState
 import acr.appcradle.shoppinglist.model.NewListData
 import acr.appcradle.shoppinglist.model.ShoppingElement
+import acr.appcradle.shoppinglist.ui.theme.Team2Colors
 import android.content.Intent
 import android.util.Log
+import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -42,18 +45,18 @@ class AppViewModel @Inject constructor(
 
     fun iconsIntent(intent: IconsIntent) {
         when (intent) {
-            is IconsIntent.ChangeIcon -> {
-                _iconState.update { it.copy(icon = intent.icon) }
-                Log.e("database", "${repository.getAllLists()}")
-                repository.getAllLists()
-            }
-
-            is IconsIntent.ChangeColor -> {
-                _iconState.update { it.copy(iconColor = intent.color) }
-            }
-
-            is IconsIntent.ChangeTitle -> {
-
+            is IconsIntent.Update -> {
+                intent.icon?.let { icon ->
+                    _iconState.update { it.copy(icon = icon) }
+                    Log.e("database", "${repository.getAllLists()}")
+                    repository.getAllLists()
+                }
+                intent.color?.let { color ->
+                    _iconState.update { it.copy(iconColor = color) }
+                }
+                intent.title?.let { title ->
+                    _iconState.update { it.copy(title = title) }
+                }
             }
         }
     }
@@ -184,6 +187,9 @@ class AppViewModel @Inject constructor(
     fun createNewList(title: String, onComplete: () -> Unit) {
         viewModelScope.launch {
             val data = iconState.value
+            if (data.icon == null || data.iconColor == null) {
+                return@launch
+            }
             val newItem = ListElement(
                 id = 0L,
                 icon = data.icon!!.toInt(),
@@ -197,6 +203,7 @@ class AppViewModel @Inject constructor(
             actionIntent(AppIntents.LoadList)
         }
     }
+
     fun updateList(item: ListElement, onComplete: () -> Unit) {
         viewModelScope.launch {
             repository.updateList(item)
@@ -209,21 +216,17 @@ class AppViewModel @Inject constructor(
         viewModelScope.launch {
             val originalList = repository.getListById(listId)
             val items = itemsInteractor.getAllItems(listId).first()
-            if (originalList != emptyList<ListElement>()) {
-                val newList = originalList.copy(
-                    id = 0L,
-                    listName = "${originalList.listName} копия"
-                )
-                val newListId = repository.addItem(newList)
-                items.forEach { item ->
-                    val newItem = item.copy(listId = newListId)
-                    itemsInteractor.addItem(newItem)
-                }
-                loadLists()
+            val newList = originalList.copy(
+                id = 0L,
+                listName = "${originalList.listName} копия"
+            )
+            val newListId = repository.addItem(newList)
+            items.forEach { item ->
+                val newItem = item.copy(listId = newListId)
+                itemsInteractor.addItem(newItem)
             }
+            loadLists()
 
         }
     }
-
-
 }
