@@ -1,6 +1,5 @@
 package acr.appcradle.shoppinglist.ui
 
-import acr.appcradle.shoppinglist.R
 import acr.appcradle.shoppinglist.model.AppIntents
 import acr.appcradle.shoppinglist.model.IconsIntent
 import acr.appcradle.shoppinglist.model.ItemsRepository
@@ -9,7 +8,6 @@ import acr.appcradle.shoppinglist.model.ListRepository
 import acr.appcradle.shoppinglist.model.ListsScreenState
 import acr.appcradle.shoppinglist.model.NewListData
 import acr.appcradle.shoppinglist.model.ShoppingElement
-import acr.appcradle.shoppinglist.ui.theme.Team2Colors
 import android.content.Intent
 import android.util.Log
 import androidx.lifecycle.ViewModel
