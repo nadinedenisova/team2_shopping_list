@@ -8,6 +8,7 @@ import acr.appcradle.shoppinglist.model.ListRepository
 import acr.appcradle.shoppinglist.model.ListsScreenState
 import acr.appcradle.shoppinglist.model.NewListData
 import acr.appcradle.shoppinglist.model.ShoppingElement
+import android.content.Intent
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -21,7 +22,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class AppViewModel @Inject constructor(
+internal class AppViewModel @Inject constructor(
     private val repository: ListRepository,
     private val itemsInteractor: ItemsRepository
 //    private val itemsInteractor: ItemsInteractor
@@ -36,6 +37,9 @@ class AppViewModel @Inject constructor(
     private val _itemsList = MutableStateFlow(emptyList<ShoppingElement>())
     val itemsList: StateFlow<List<ShoppingElement>> = _itemsList.asStateFlow()
 
+    private val _isTitleDuplicate = MutableStateFlow(false)
+    val isTitleDuplicate: StateFlow<Boolean> = _isTitleDuplicate.asStateFlow()
+
     fun iconsIntent(intent: IconsIntent) {
         when (intent) {
             is IconsIntent.ChangeIcon -> {
@@ -48,46 +52,111 @@ class AppViewModel @Inject constructor(
                 _iconState.update { it.copy(iconColor = intent.color) }
             }
 
-            is IconsIntent.ChangeTitle -> {
-
-            }
+            is IconsIntent.ChangeTitle -> {}
         }
     }
 
     fun actionIntent(intent: AppIntents) {
         when (intent) {
-
             is AppIntents.DeleteItem -> {
                 viewModelScope.launch {
-                    repository.deleteItem(intent.id)
-                    loadLists()
+                    itemsInteractor.deleteItem(intent.id)
+                    updateListCounters(intent.listId)
+                    Log.i("database", "Пришел запрос на удаление ид = ${intent.id}")
                 }
             }
 
             is AppIntents.LoadList -> {
-                loadLists()
+                loadLists(sorted = false)
                 Log.i("database", "Загружаются списки")
+            }
 
+            is AppIntents.LoadSortedLists -> {
+                loadLists(sorted = true)
             }
 
             is AppIntents.LoadItems -> {
-                loadItems()
+                loadItems(intent.listId, sorted = false)
                 Log.i("database", "Загружаются элементы списка")
+            }
+
+            is AppIntents.LoadSortedItems -> {
+                loadItems(intent.listId, sorted = true)
             }
 
             is AppIntents.AddItem -> {
                 viewModelScope.launch {
                     itemsInteractor.addItem(item = intent.item)
+                    updateListCounters(intent.item.listId)
                 }
                 Log.i("database", "Новый элемент добавлен: ${intent.item}")
+            }
+
+            is AppIntents.DuplicateList -> {
+                duplicateList(intent.listId)
+            }
+
+            is AppIntents.UpdateItem -> {
+                viewModelScope.launch {
+                    itemsInteractor.updatedItem(item = intent.item)
+                }
+            }
+
+            is AppIntents.UpdateItemCheck -> {
+                viewModelScope.launch {
+                    itemsInteractor.updatedItemCheck(intent.item)
+                    updateListCounters(intent.item.listId)
+                }
+            }
+
+            is AppIntents.DeleteAllChecked -> {
+                viewModelScope.launch {
+                    itemsInteractor.deleteAllChecked(intent.listId)
+                    updateListCounters(intent.listId)
+                }
+            }
+
+            is AppIntents.MakeAllUnChecked -> {
+                viewModelScope.launch {
+                    itemsInteractor.makeAllUnChecked(intent.listId)
+                }
+            }
+
+            is AppIntents.ShareList -> {
+                val text = buildString {
+                    appendLine("Название списка: ${intent.name}")
+                    appendLine()
+                    appendLine("Список товаров:")
+                    intent.list.forEach {
+                        appendLine("- ${it.name}")
+                    }
+                }
+
+                val sendIntent = Intent(Intent.ACTION_SEND).apply {
+                    type = "text/plain"
+                    putExtra(Intent.EXTRA_TEXT, text)
+                    flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                }
+
+                val shareIntent = Intent.createChooser(sendIntent, "Поделиться списком")
+                intent.context.startActivity(shareIntent)
+            }
+
+            is AppIntents.DeleteList -> {
+                viewModelScope.launch {
+                    repository.deleteItem(intent.id)
+                    loadLists()
+                    Log.i("database", "Пришел запрос на удаление ид = ${intent.id}")
+                }
             }
         }
     }
 
-    private fun loadLists() {
+    private fun loadLists(sorted: Boolean = false) {
         viewModelScope.launch {
             _listsAllState.update { it.copy(isLoading = true) }
-            val items = repository.getAllLists().first()
+            val flow = if (sorted) repository.getSortedLists() else repository.getAllLists()
+            val items = flow.first()
             _listsAllState.update {
                 ListsScreenState(
                     isLoading = false,
@@ -98,10 +167,25 @@ class AppViewModel @Inject constructor(
         }
     }
 
-    private fun loadItems() {
+    private fun loadItems(listId: Long, sorted: Boolean = false) {
         viewModelScope.launch {
-            itemsInteractor.getAllItems().collect { items ->
+            val flow = if (sorted) {
+                itemsInteractor.getSortedItems(listId)
+            } else {
+                itemsInteractor.getAllItems(listId)
+            }
+
+            flow.collect { items ->
                 _itemsList.update { items }
+            }
+        }
+    }
+
+    fun checkTitleUniqueness(title: String) {
+        viewModelScope.launch {
+            val all = repository.getAllLists().first()
+            _isTitleDuplicate.value = all.any {
+                it.listName.equals(title.trim(), ignoreCase = true)
             }
         }
     }
@@ -112,14 +196,57 @@ class AppViewModel @Inject constructor(
             val newItem = ListElement(
                 id = 0L,
                 icon = data.icon!!.toInt(),
-                iconBackground = data.iconColor!!,
+                iconBackground = data.iconColor!!.value.toLong(),
                 listName = title,
                 boughtCount = 0,
                 totalCount = 0
             )
             repository.addItem(newItem)
             onComplete()
+            actionIntent(AppIntents.LoadList)
         }
     }
 
+    fun updateList(item: ListElement, onComplete: () -> Unit) {
+        viewModelScope.launch {
+            repository.updateList(item)
+            onComplete()
+            actionIntent(AppIntents.LoadList)
+        }
+    }
+
+    private fun duplicateList(listId: Long) {
+        viewModelScope.launch {
+            val originalList = repository.getListById(listId)
+            val items = itemsInteractor.getAllItems(listId).first()
+            if (originalList != emptyList<ListElement>()) {
+                val newList = originalList.copy(
+                    id = 0L,
+                    listName = "${originalList.listName} копия"
+                )
+                val newListId = repository.addItem(newList)
+                items.forEach { item ->
+                    val newItem = item.copy(listId = newListId)
+                    itemsInteractor.addItem(newItem)
+                }
+                loadLists()
+            }
+        }
+    }
+
+    private fun updateListCounters(listId: Long) {
+        viewModelScope.launch {
+            val items = itemsInteractor.getAllItems(listId).first()
+            val totalCount = items.size
+            val boughtCount = items.count { it.checked }
+            val list = repository.getListById(listId)
+
+            val updatedList = list.copy(
+                totalCount = totalCount,
+                boughtCount = boughtCount
+            )
+            repository.updateList(updatedList)
+            loadLists()
+        }
+    }
 }

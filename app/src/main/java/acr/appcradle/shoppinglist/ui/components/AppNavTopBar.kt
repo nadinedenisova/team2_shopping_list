@@ -1,8 +1,6 @@
 package acr.appcradle.shoppinglist.ui.components
 
-import acr.appcradle.shoppinglist.ui.theme.ShoppingListTheme
 import acr.appcradle.shoppinglist.ui.theme.Typography
-import acr.appcradle.shoppinglist.utils.ThemePreviews
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -14,7 +12,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -23,15 +20,17 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun AppNavTopBar(
+internal fun AppNavTopBar(
     title: String,
     onBackIconClick: () -> Unit,
     isBackIconEnable: Boolean = false,
     isSearchIconEnabled: Boolean = false,
     onSearchIconClick: () -> Unit = {},
-    dropDownMenu: @Composable () -> Unit = {}
+    dropDownMenu: @Composable () -> Unit = {},
 ) {
+
     val iconsInnerSize = 22.dp
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -77,21 +76,5 @@ fun AppNavTopBar(
             }
         }
         dropDownMenu()
-    }
-}
-
-@ThemePreviews
-@Composable
-fun GreetingPreview() {
-    ShoppingListTheme {
-        Surface {
-            AppNavTopBar(
-                title = "Создать список",
-                onBackIconClick = {},
-                isSearchIconEnabled = true,
-                dropDownMenu = { Text("2333") }
-//                screenRoute = RoutesList.ListsAllRoute
-            )
-        }
     }
 }

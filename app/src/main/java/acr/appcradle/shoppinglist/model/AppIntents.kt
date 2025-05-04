@@ -1,8 +1,19 @@
 package acr.appcradle.shoppinglist.model
 
-sealed interface AppIntents {
-    data class DeleteItem(val id: Long) : AppIntents
-    data object LoadList : AppIntents
-    data object LoadItems : AppIntents
-    data class AddItem(val item: ShoppingElement) : AppIntents
+import android.content.Context
+
+internal sealed interface AppIntents {
+    class DeleteItem(val id: Long, val listId: Long) : AppIntents
+    object LoadList : AppIntents
+    class DeleteList(val id: Long) : AppIntents
+    object LoadSortedLists : AppIntents
+    class LoadItems(val listId: Long) : AppIntents
+    class LoadSortedItems(val listId: Long) : AppIntents
+    class AddItem(val item: ShoppingElement) : AppIntents
+    class UpdateItem(val item: ShoppingElement) : AppIntents
+    class UpdateItemCheck(val item: ShoppingElement) : AppIntents
+    class DeleteAllChecked(val listId: Long) : AppIntents
+    class MakeAllUnChecked(val listId: Long) : AppIntents
+    class DuplicateList(val listId: Long) : AppIntents
+    class ShareList(val name: String, val list: List<ShoppingElement>, val context: Context) : AppIntents
 }

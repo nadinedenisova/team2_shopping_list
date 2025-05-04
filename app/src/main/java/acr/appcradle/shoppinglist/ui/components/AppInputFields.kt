@@ -1,12 +1,21 @@
 package acr.appcradle.shoppinglist.ui.components
 
+import acr.appcradle.shoppinglist.R
+import acr.appcradle.shoppinglist.ui.theme.Team2Colors
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MenuAnchorType
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -17,21 +26,27 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 
-object AppInputFields {
+internal object AppInputFields {
     @Composable
     fun MainInputField(
         modifier: Modifier = Modifier,
         placeholderText: String,
         isSearchIconNeeded: Boolean = false,
-        onValueChange: (String) -> Unit = {}
+        onValueChange: (String) -> Unit = {},
+        editedValue: String? = null,
+        isNumeric: Boolean = false,
+        isError: Boolean = false,
     ) {
-        var inputText by rememberSaveable { mutableStateOf("") }
-        TextField(
+        var inputText by rememberSaveable { mutableStateOf(editedValue ?: "") }
+        OutlinedTextField(
             modifier = modifier,
             value = inputText,
+            isError = isError,
             placeholder = { Text(text = placeholderText) },
             onValueChange = {
                 inputText = it
@@ -39,24 +54,92 @@ object AppInputFields {
             },
             colors = TextFieldDefaults.colors(
                 focusedIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent
+                unfocusedIndicatorColor = Color.Transparent,
+                errorIndicatorColor = Team2Colors.team2color_red,
+                errorCursorColor = Team2Colors.team2color_red,
+                errorLabelColor = Team2Colors.team2color_red
             ),
             shape = RoundedCornerShape(10.dp),
             singleLine = true,
-            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+            keyboardOptions = KeyboardOptions(
+                keyboardType = if (isNumeric) KeyboardType.Number else KeyboardType.Text,
+                imeAction = ImeAction.Done
+            ),
             trailingIcon = {
-                if (inputText != "")
+                if (isError) {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_error_textfield),
+                        contentDescription = "Error Icon",
+                        tint = Team2Colors.team2color_red
+                    )
+                } else if (inputText != "") {
                     Icon(
                         modifier = Modifier.clickable { inputText = "" },
-                        imageVector = Icons.Default.Clear, contentDescription = null
+                        imageVector = Icons.Default.Clear,
+                        contentDescription = "Clear Button"
                     )
+                }
             },
             leadingIcon = {
-                if (isSearchIconNeeded)
+                if (isSearchIconNeeded) {
                     Icon(
-                        imageVector = Icons.Default.Search, contentDescription = null
+                        imageVector = Icons.Default.Search,
+                        contentDescription = "Search Icon"
                     )
-            }
+                }
+            },
         )
+    }
+
+    @OptIn(ExperimentalMaterial3Api::class)
+    @Composable
+    fun AppDropdownItemChooser(
+        modifier: Modifier = Modifier,
+        onValueChange: (String) -> Unit
+    ) {
+        val options = listOf("шт", "кг", "г", "л", "мл")
+        var expanded by rememberSaveable { mutableStateOf(false) }
+        var selectedOption by rememberSaveable { mutableStateOf(options[0]) }
+
+        ExposedDropdownMenuBox(
+            modifier = modifier,
+            expanded = expanded,
+            onExpandedChange = { expanded = !expanded }
+        ) {
+            TextField(
+                modifier = Modifier
+                    .menuAnchor(MenuAnchorType.PrimaryEditable, true)
+                    .fillMaxWidth(),
+                readOnly = true,
+                value = selectedOption,
+                onValueChange = {
+                    onValueChange(selectedOption)
+                },
+                trailingIcon = {
+                    ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
+                },
+                colors = ExposedDropdownMenuDefaults.textFieldColors(
+                    focusedIndicatorColor = Color.Transparent,
+                    unfocusedIndicatorColor = Color.Transparent
+                ),
+                shape = RoundedCornerShape(10.dp)
+            )
+
+            ExposedDropdownMenu(
+                expanded = expanded,
+                onDismissRequest = { expanded = false }
+            ) {
+                options.forEach { selectionOption ->
+                    DropdownMenuItem(
+                        text = { Text(selectionOption) },
+                        onClick = {
+                            selectedOption = selectionOption
+                            expanded = false
+                            onValueChange(selectionOption)
+                        }
+                    )
+                }
+            }
+        }
     }
 }

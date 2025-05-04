@@ -23,7 +23,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun GreetingScreen(onNextClick: () -> Unit) {
+internal fun GreetingScreen(onNextClick: () -> Unit) {
     val scroll = rememberScrollState()
     Column(
         modifier = Modifier
@@ -64,7 +64,7 @@ fun GreetingScreen(onNextClick: () -> Unit) {
 
 @ThemePreviews
 @Composable
-fun GreetingPreview() {
+private fun GreetingPreview() {
     ShoppingListTheme {
         Surface {
             GreetingScreen(onNextClick = { })
