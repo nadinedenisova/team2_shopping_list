@@ -12,7 +12,6 @@ import acr.appcradle.shoppinglist.model.ShoppingElement
 import acr.appcradle.shoppinglist.ui.theme.Team2Colors
 import android.content.Intent
 import android.util.Log
-import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -187,13 +186,10 @@ class AppViewModel @Inject constructor(
     fun createNewList(title: String, onComplete: () -> Unit) {
         viewModelScope.launch {
             val data = iconState.value
-            if (data.icon == null || data.iconColor == null) {
-                return@launch
-            }
-            val newItem = ListElement(
+            var newItem = ListElement(
                 id = 0L,
-                icon = data.icon!!.toInt(),
-                iconBackground = data.iconColor!!.value.toLong(),
+                icon = data.icon.toInt(),
+                iconBackground = data.iconColor.value.toLong(),
                 listName = title,
                 boughtCount = 0,
                 totalCount = 0
@@ -226,7 +222,6 @@ class AppViewModel @Inject constructor(
                 itemsInteractor.addItem(newItem)
             }
             loadLists()
-
         }
     }
 }
