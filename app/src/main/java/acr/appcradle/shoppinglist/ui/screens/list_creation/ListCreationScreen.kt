@@ -58,8 +58,8 @@ fun ListCreationScreen(
             if (existingList != null) {
                 val update = existingList.copy(
                     listName = it,
-                    icon = iconState.icon!!,
-                    iconBackground = iconState.iconColor!!.value.toLong()
+                    icon = iconState.icon,
+                    iconBackground = iconState.iconColor.value.toLong()
                 )
                 viewModel.updateList(update) { onNextClick() }
             } else {
