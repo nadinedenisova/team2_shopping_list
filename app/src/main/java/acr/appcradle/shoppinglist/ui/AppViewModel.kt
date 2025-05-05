@@ -122,25 +122,7 @@ class AppViewModel @Inject constructor(
                 }
             }
 
-            is AppIntents.ShareList -> {
-                val text = buildString {
-                    appendLine("Название списка: ${intent.name}")
-                    appendLine()
-                    appendLine("Список товаров:")
-                    intent.list.forEach {
-                        appendLine("- ${it.name}")
-                    }
-                }
-
-                val sendIntent = Intent(Intent.ACTION_SEND).apply {
-                    type = "text/plain"
-                    putExtra(Intent.EXTRA_TEXT, text)
-                    flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                }
-
-                val shareIntent = Intent.createChooser(sendIntent, "Поделиться списком")
-                intent.context.startActivity(shareIntent)
-            }
+            else -> {}
         }
     }
 

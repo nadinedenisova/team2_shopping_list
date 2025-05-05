@@ -4,6 +4,7 @@ import acr.appcradle.shoppinglist.model.AppIntents
 import acr.appcradle.shoppinglist.ui.AppViewModel
 import acr.appcradle.shoppinglist.ui.components.AppNavTopBar
 import acr.appcradle.shoppinglist.ui.components.DropDownMenus
+import acr.appcradle.shoppinglist.utils.sendList
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -38,12 +39,14 @@ fun ListShoppingScreen(
                     DropDownMenus.ShoppingListMenu(
                         listId = listId,
                         onShareClick = {
-                            viewModel.actionIntent(
-                                AppIntents.ShareList(
-                                    name = listName,
-                                    list = list,
-                                    context = context
-                                )
+//                            viewModel.actionIntent(
+                            sendList(
+                                intent =
+                                    AppIntents.ShareList(
+                                        name = listName,
+                                        list = list,
+                                        context = context
+                                    )
                             )
                         })
                 }
