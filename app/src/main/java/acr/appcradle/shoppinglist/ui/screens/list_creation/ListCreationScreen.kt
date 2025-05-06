@@ -1,11 +1,13 @@
 package acr.appcradle.shoppinglist.ui.screens.list_creation
 
 import acr.appcradle.shoppinglist.model.IconsIntent
+import acr.appcradle.shoppinglist.model.ListElement
 import acr.appcradle.shoppinglist.model.NewListData
 import acr.appcradle.shoppinglist.ui.AppViewModel
 import acr.appcradle.shoppinglist.ui.components.AppInputFields
 import acr.appcradle.shoppinglist.ui.components.AppNavTopBar
 import acr.appcradle.shoppinglist.ui.components.ShoppingListButtons
+import acr.appcradle.shoppinglist.ui.theme.Team2Colors
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,15 +16,19 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -31,16 +37,36 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 fun ListCreationScreen(
     viewModel: AppViewModel = hiltViewModel(),
     onBackClick: () -> Unit,
-    onNextClick: () -> Unit
+    onNextClick: () -> Unit,
+    existingList: ListElement?,
 ) {
     val iconState by viewModel.iconState.collectAsStateWithLifecycle()
+
+    LaunchedEffect(existingList) {
+        existingList?.let {
+            viewModel.iconsIntent(IconsIntent.Update(icon = it.icon))
+            viewModel.iconsIntent(IconsIntent.Update(color = Color(it.iconBackground.toULong())))
+        }
+    }
 
     ListCreationScreenUi(
         iconsState = iconState,
         onBackClick = onBackClick,
-        onIconClick = { viewModel.iconsIntent(IconsIntent.ChangeIcon(it)) },
-        onColorClick = { viewModel.iconsIntent(IconsIntent.ChangeColor(it)) },
-        onNextClick = onNextClick
+        onIconClick = { viewModel.iconsIntent(IconsIntent.Update(icon = it)) },
+        onColorClick = { viewModel.iconsIntent(IconsIntent.Update(color = Color(it.toArgb()))) },
+        onNextClick = {
+            if (existingList != null) {
+                val update = existingList.copy(
+                    listName = it,
+                    icon = iconState.icon,
+                    iconBackground = iconState.iconColor.value.toLong()
+                )
+                viewModel.updateList(update) { onNextClick() }
+            } else {
+                viewModel.createNewList(it) { onNextClick() }
+            }
+        },
+        listName = existingList?.listName ?: "",
     )
 }
 
@@ -51,17 +77,20 @@ fun ListCreationScreenUi(
     onBackClick: () -> Unit,
     onIconClick: (Int) -> Unit,
     onColorClick: (Color) -> Unit,
-    onNextClick: () -> Unit
+    onNextClick: (String) -> Unit,
+    listName: String = "",
+    viewModel: AppViewModel = hiltViewModel()
 ) {
     val scroll = rememberScrollState()
-    var inputText by rememberSaveable { mutableStateOf("") }
-    val viewModel: AppViewModel = hiltViewModel()
+    var inputText by remember(listName) { mutableStateOf(listName) }
+    val isEditing = listName.isNotBlank()
+    val isDuplicate by viewModel.isTitleDuplicate.collectAsStateWithLifecycle()
 
     Scaffold(
         topBar = {
             AppNavTopBar(
                 isBackIconEnable = true,
-                title = "Создать список",
+                title = if (isEditing) "Редактировать список" else "Создать список",
                 onBackIconClick = { onBackClick() },
             )
         }
@@ -78,8 +107,21 @@ fun ListCreationScreenUi(
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp),
                 placeholderText = "Введите название списка",
-                onValueChange = { inputText = it }
-            )
+                editedValue = inputText,
+                isError = isDuplicate,
+                onValueChange = {
+                    inputText = it
+                    viewModel.checkTitleUniqueness(it) },
+
+                )
+            if (isDuplicate) {
+                Text(
+                    text = "Это название уже используется, пожалуйста, измените его.",
+                    color = Team2Colors.team2color_red,
+                    style = MaterialTheme.typography.bodySmall,
+                    modifier = Modifier.padding(horizontal = 32.dp)
+                )
+            }
             ColorPalette(
                 modifier = Modifier.padding(vertical = 16.dp),
                 onColorClick = onColorClick,
@@ -91,19 +133,13 @@ fun ListCreationScreenUi(
             )
             Spacer(Modifier.weight(1f))
             ShoppingListButtons.AppLargeButton(
-                onClick = {
-                    if (inputText.isNotBlank()) {
-                        viewModel.createNewList(inputText.trim()) {
-                            onNextClick()
-                        }
-                    }
-                },
-                text = "Создать"
+                enabled = inputText.isNotBlank() && !isDuplicate,
+                onClick = { if (inputText.isNotBlank()) onNextClick(inputText.trim()) },
+                text = if (isEditing) "Сохранить" else "Создать"
             )
         }
     }
 }
-
 
 //@ThemePreviews
 //@Composable

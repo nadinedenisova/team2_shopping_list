@@ -29,71 +29,152 @@ object AppBottomSheets {
     @Composable
     fun AddItemDialog(
         modifier: Modifier = Modifier,
+        listId: Long,
         onDismissCallback: () -> Unit,
-        onConfirmClick: (ShoppingElement) -> Unit
+        onAddClick: (ShoppingElement) -> Unit = {},
+        onEditClick: (ShoppingElement) -> Unit = {},
+        editItem: ShoppingElement? = null
     ) {
         val sheetState = rememberModalBottomSheetState()
-        var newItem = ShoppingElement(name = "", amount = "", unit = "шт", checked = false)
 
-        ModalBottomSheet(
-            modifier = modifier
-                .fillMaxWidth()
-                .height(548.dp),
-            sheetState = sheetState,
-            onDismissRequest = { onDismissCallback() }) {
-            Column {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text(
-                        modifier = Modifier
-                            .padding(vertical = 18.dp, horizontal = 16.dp)
-                            .height(48.dp)
-                            .weight(1f),
-                        text = "Добавление товара",
-                        style = Typography.titleLarge
-                    )
-                    Box(
-                        modifier = Modifier
-                            .padding(vertical = 8.dp, horizontal = 16.dp)
-                            .size(48.dp)
-                            .clickable {
-                                if (newItem.name.isNotEmpty() && newItem.amount.isNotEmpty()) {
-                                    onConfirmClick(newItem)
-                                    onDismissCallback()
-                                }
-                            }) {
-                        Icon(
-                            imageVector = Icons.Default.Check,
-                            contentDescription = null,
-                            tint = Team2Colors.team2colors_gray
+        if (editItem == null) {
+            var newItem = ShoppingElement(
+                id = 0L,
+                name = "",
+                amount = "",
+                unit = "шт",
+                checked = false,
+                listId = listId,
+            )
+            ModalBottomSheet(
+                modifier = modifier
+                    .fillMaxWidth()
+                    .height(548.dp),
+                sheetState = sheetState,
+                onDismissRequest = { onDismissCallback() }) {
+                Column {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            modifier = Modifier
+                                .padding(vertical = 18.dp, horizontal = 16.dp)
+                                .height(48.dp)
+                                .weight(1f),
+                            text = "Добавление товара",
+                            style = Typography.titleLarge
                         )
+                        Box(
+                            modifier = Modifier
+                                .padding(vertical = 8.dp, horizontal = 16.dp)
+                                .size(48.dp)
+                                .clickable {
+                                    if (newItem.name.isNotEmpty() && newItem.amount.isNotEmpty()) {
+                                        onAddClick(newItem)
+                                        onDismissCallback()
+                                    }
+                                }) {
+                            Icon(
+                                imageVector = Icons.Default.Check,
+                                contentDescription = null,
+                                tint = Team2Colors.team2colors_gray
+                            )
+                        }
                     }
                 }
+                AppInputFields.MainInputField(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp),
+                    placeholderText = "Введите название товара",
+                    onValueChange = { newItem = newItem.copy(name = it) })
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 10.dp)
+                ) {
+                    AppInputFields.MainInputField(
+                        modifier = Modifier
+                            .padding(start = 16.dp, end = 6.dp)
+                            .weight(0.5f),
+                        placeholderText = "1",
+                        onValueChange = { newItem = newItem.copy(amount = it) },
+                        isNumeric = true
+                    )
+                    AppInputFields.MainInputField(
+                        modifier = Modifier
+                            .padding(end = 16.dp)
+                            .weight(0.5f),
+                        placeholderText = "шт",
+                        onValueChange = { newItem = newItem.copy(unit = it) })
+                }
             }
-            AppInputFields.MainInputField(
-                modifier = Modifier
+        } else {
+            var newItem = editItem!!
+
+            ModalBottomSheet(
+                modifier = modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 16.dp),
-                placeholderText = "Введите название товара",
-                onValueChange = { newItem = newItem.copy(name = it) })
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 10.dp)
-            ) {
+                    .height(548.dp),
+                sheetState = sheetState,
+                onDismissRequest = { onDismissCallback() }) {
+                Column {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            modifier = Modifier
+                                .padding(vertical = 18.dp, horizontal = 16.dp)
+                                .height(48.dp)
+                                .weight(1f),
+                            text = "Добавление товара",
+                            style = Typography.titleLarge
+                        )
+                        Box(
+                            modifier = Modifier
+                                .padding(vertical = 8.dp, horizontal = 16.dp)
+                                .size(48.dp)
+                                .clickable {
+                                    if (newItem.name.isNotEmpty() && newItem.amount.isNotEmpty()) {
+                                        onEditClick(newItem)
+                                        onDismissCallback()
+                                    }
+                                }) {
+                            Icon(
+                                imageVector = Icons.Default.Check,
+                                contentDescription = null,
+                                tint = Team2Colors.team2colors_gray
+                            )
+                        }
+                    }
+                }
                 AppInputFields.MainInputField(
                     modifier = Modifier
-                        .padding(start = 16.dp, end = 6.dp)
-                        .weight(0.5f),
-                    placeholderText = "1",
-                    onValueChange = { newItem = newItem.copy(amount = it) })
-                AppInputFields.MainInputField(
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp),
+                    editedValue = newItem.name,
+                    placeholderText = "Введите название товара",
+                    onValueChange = { newItem = newItem.copy(name = it) })
+                Row(
                     modifier = Modifier
-                        .padding(end = 16.dp)
-                        .weight(0.5f),
-                    placeholderText = "шт",
-                    onValueChange = { newItem = newItem.copy(unit = it) })
+                        .fillMaxWidth()
+                        .padding(vertical = 10.dp)
+                ) {
+                    AppInputFields.MainInputField(
+                        modifier = Modifier
+                            .padding(start = 16.dp, end = 6.dp)
+                            .weight(0.5f),
+                        editedValue = newItem.amount,
+                        placeholderText = "1",
+                        isNumeric = true,
+                        onValueChange = { newItem = newItem.copy(amount = it) })
+                    AppInputFields.MainInputField(
+                        modifier = Modifier
+                            .padding(end = 16.dp)
+                            .weight(0.5f),
+                        placeholderText = "шт",
+                        onValueChange = { newItem = newItem.copy(unit = it) })
+                }
             }
         }
     }

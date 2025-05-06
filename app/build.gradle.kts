@@ -67,6 +67,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 }
 
@@ -118,6 +119,7 @@ sqldelight {
             packageName.set("acr.appcradle.shoppinglist")
             schemaOutputDirectory.set(file("src/main/sqldelight/databases"))
         }
+
     }
 }
 

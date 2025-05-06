@@ -1,6 +1,8 @@
 package acr.appcradle.shoppinglist.ui.screens.lists_all.nav
 
+import acr.appcradle.shoppinglist.model.ListElement
 import acr.appcradle.shoppinglist.ui.screens.lists_all.ListsAll
+import acr.appcradle.shoppinglist.utils.ThemeOption
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
@@ -13,12 +15,16 @@ fun NavController.navigateListsAll() = navigate(route = ListsAllRoute)
 
 fun NavGraphBuilder.listsAll(
     createNewListClick: () -> Unit,
-    onListClick: () -> Unit
+    onEdit: (ListElement) -> Unit,
+    onListClick: (ListElement) -> Unit,
+    onThemeChange: (ThemeOption) -> Unit
 ) {
     composable<ListsAllRoute> {
         ListsAll(
             createNewListClick = createNewListClick,
-            onListClick = onListClick
+            onListClick = onListClick,
+            onThemeChange = onThemeChange,
+            onEdit = onEdit
         )
     }
 }

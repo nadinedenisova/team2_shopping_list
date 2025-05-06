@@ -1,5 +1,6 @@
 package acr.appcradle.shoppinglist
 
+import acr.appcradle.shoppinglist.model.ListElement
 import acr.appcradle.shoppinglist.ui.screens.greeting.nav.GreetingRoute
 import acr.appcradle.shoppinglist.ui.screens.greeting.nav.greeting
 import acr.appcradle.shoppinglist.ui.screens.list_creation.nav.creationScreen
@@ -8,6 +9,7 @@ import acr.appcradle.shoppinglist.ui.screens.list_shopping.nav.navigateToShoppin
 import acr.appcradle.shoppinglist.ui.screens.list_shopping.nav.shoppingScreen
 import acr.appcradle.shoppinglist.ui.screens.lists_all.nav.listsAll
 import acr.appcradle.shoppinglist.ui.screens.lists_all.nav.navigateListsAll
+import acr.appcradle.shoppinglist.utils.ThemeOption
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
@@ -18,7 +20,8 @@ import androidx.navigation.compose.rememberNavController
 @Composable
 fun AppNavHost(
     scaffoldPaddings: PaddingValues,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onThemeChange: (ThemeOption) -> Unit
 ) {
     val navController = rememberNavController()
 
@@ -32,20 +35,18 @@ fun AppNavHost(
         )
         listsAll(
             createNewListClick = { navController.navigateToListCreation() },
-            onListClick = { navController.navigateToShoppingList() }
+            onListClick = { navController.navigateToShoppingList(it) },
+            onThemeChange = onThemeChange,
+            onEdit = {list: ListElement ->
+                navController.navigateToListCreation(list)
+            }
         )
         creationScreen(
             onBackClick = { navController.popBackStack() },
-            onNextClick = { navController.navigateListsAll() })
+            onNextClick = { navController.navigateListsAll() },
+        )
         shoppingScreen(
             onBackClick = { navController.popBackStack() },
         )
     }
-}
-
-enum class RoutesList {
-    GreetingRoute,
-    ListsAllRoute,
-    ListShoppingRoute,
-    ListCreationRoute
 }

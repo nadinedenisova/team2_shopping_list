@@ -1,9 +1,11 @@
 package acr.appcradle.shoppinglist.ui.screens.lists_all
 
 import acr.appcradle.shoppinglist.model.AppIntents
+import acr.appcradle.shoppinglist.model.ListElement
 import acr.appcradle.shoppinglist.ui.AppViewModel
 import acr.appcradle.shoppinglist.ui.components.AppNavTopBar
 import acr.appcradle.shoppinglist.ui.components.DropDownMenus
+import acr.appcradle.shoppinglist.utils.ThemeOption
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -22,16 +24,18 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 
 
 @Composable
 fun ListsAll(
-    modifier: Modifier = Modifier,
     viewModel: AppViewModel = hiltViewModel(),
     createNewListClick: () -> Unit,
-    onListClick: () -> Unit
+    onListClick: (ListElement) -> Unit,
+    onEdit: (ListElement) -> Unit,
+    onThemeChange: (ThemeOption) -> Unit
 ) {
     val state by viewModel.listsAllState.collectAsState()
 
@@ -43,10 +47,8 @@ fun ListsAll(
         topBar = {
             AppNavTopBar(
                 title = "Мои списки",
-                onBackIconClick = {
-
-                },
-                dropDownMenu = { DropDownMenus.AllListsMenu() }
+                onBackIconClick = {},
+                dropDownMenu = { DropDownMenus.AllListsMenu(onThemeChange = onThemeChange) },
             )
         },
         floatingActionButton = {
@@ -83,19 +85,19 @@ fun ListsAll(
                             SwipeableListsItem(
                                 icon = item.icon,
                                 title = item.listName,
-                                iconBackground = item.iconBackground,
+                                iconBackground = Color(item.iconBackground.toULong()),
                                 totalCount = item.totalCount,
                                 boughtCount = item.boughtCount,
                                 onEdit = {
-
+                                    onEdit(item)
                                 },
                                 onDuplicate = {
-
+                                    viewModel.actionIntent(AppIntents.DuplicateList(item.id))
                                 },
                                 onDelete = {
                                     viewModel.actionIntent(AppIntents.DeleteItem(item.id))
                                 },
-                                onListClick = { onListClick() }
+                                onListClick = { onListClick(item) }
                             )
                         }
                     }

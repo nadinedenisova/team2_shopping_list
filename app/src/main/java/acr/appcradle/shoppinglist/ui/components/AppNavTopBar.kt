@@ -29,9 +29,11 @@ fun AppNavTopBar(
     isBackIconEnable: Boolean = false,
     isSearchIconEnabled: Boolean = false,
     onSearchIconClick: () -> Unit = {},
-    dropDownMenu: @Composable () -> Unit = {}
+    dropDownMenu: @Composable () -> Unit = {},
 ) {
+
     val iconsInnerSize = 22.dp
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -90,7 +92,6 @@ fun GreetingPreview() {
                 onBackIconClick = {},
                 isSearchIconEnabled = true,
                 dropDownMenu = { Text("2333") }
-//                screenRoute = RoutesList.ListsAllRoute
             )
         }
     }

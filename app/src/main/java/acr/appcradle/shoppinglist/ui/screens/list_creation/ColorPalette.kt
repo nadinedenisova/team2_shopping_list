@@ -90,7 +90,6 @@ private fun Preview() {
                 onColorClick = {},
                 iconsState = NewListData(
                     title = "sdf",
-                    icon = null,
                     iconColor = Team2Colors.additionalColorBlue
                 )
             )

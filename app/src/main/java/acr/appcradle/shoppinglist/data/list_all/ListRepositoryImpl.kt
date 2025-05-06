@@ -16,12 +16,24 @@ class ListRepositoryImpl @Inject constructor(
     override fun getAllLists(): Flow<List<ListElement>> =
         localDataSource.getAllLists()
 
-    override suspend fun addItem(item: ListElement) {
-       localDataSource.insertList(item)
+    override fun getSortedLists(): Flow<List<ListElement>> =
+        localDataSource.getSortedLists()
+
+
+    override suspend fun getListById(id: Long): ListElement {
+        return localDataSource.getListById(id)
+    }
+
+    override suspend fun addItem(item: ListElement): Long {
+       return localDataSource.insertList(item)
     }
 
     override suspend fun deleteItem(id: Long) {
         localDataSource.deleteList(id)
+    }
+
+    override suspend fun updateList(item: ListElement) {
+        localDataSource.updateList(item)
     }
 
 

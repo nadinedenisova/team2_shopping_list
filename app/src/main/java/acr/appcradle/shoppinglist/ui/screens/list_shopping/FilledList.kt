@@ -4,6 +4,7 @@ import acr.appcradle.shoppinglist.model.AppIntents
 import acr.appcradle.shoppinglist.model.ShoppingElement
 import acr.appcradle.shoppinglist.ui.AppViewModel
 import acr.appcradle.shoppinglist.ui.components.AppBottomSheets
+import acr.appcradle.shoppinglist.ui.components.AppSwipeAbleListItem
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -26,10 +27,14 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun FilledListUi(
     modifier: Modifier = Modifier,
+    listId: Long,
     listOfItems: List<ShoppingElement>,
     viewModel: AppViewModel
 ) {
     var addItemBottomSheetVisibility by remember { mutableStateOf(false) }
+    var editItemBottomSheetVisibility by remember { mutableStateOf(false) }
+    var editItem: ShoppingElement? by remember { mutableStateOf(null) }
+
     Box(
         modifier = modifier.fillMaxSize(),
         contentAlignment = Alignment.BottomEnd
@@ -38,7 +43,15 @@ fun FilledListUi(
             modifier = modifier.fillMaxSize()
         ) {
             listOfItems.forEach { item ->
-                ShoppingListItem(item) { }
+                AppSwipeAbleListItem.SwipeAbleShoppingItems(
+                    item = item,
+                    onEdit = {
+                        editItem = item
+                        editItemBottomSheetVisibility = true
+                    },
+                    onDelete = { viewModel.actionIntent(AppIntents.DeleteItem(item.id)) },
+                    onItemClick = { viewModel.actionIntent(AppIntents.UpdateItemCheck(item = item)) },
+                )
             }
         }
         FloatingActionButton(
@@ -50,7 +63,20 @@ fun FilledListUi(
         if (addItemBottomSheetVisibility)
             AppBottomSheets.AddItemDialog(
                 onDismissCallback = { addItemBottomSheetVisibility = false },
-                onConfirmClick = { viewModel.actionIntent(AppIntents.AddItem(item = it)) }
+                onAddClick = {
+                    viewModel.actionIntent(AppIntents.AddItem(item = it))
+                },
+                listId = listId
+            )
+        if (editItemBottomSheetVisibility)
+            AppBottomSheets.AddItemDialog(
+                onDismissCallback = { editItemBottomSheetVisibility = false },
+                listId = listId,
+                editItem = editItem,
+                onEditClick = {
+                    viewModel.actionIntent(AppIntents.UpdateItem(item = it))
+                    editItemBottomSheetVisibility = false
+                }
             )
     }
 }
