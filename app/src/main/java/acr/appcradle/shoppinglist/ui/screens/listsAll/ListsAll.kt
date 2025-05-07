@@ -1,10 +1,10 @@
 package acr.appcradle.shoppinglist.ui.screens.listsAll
 
-import acr.appcradle.shoppinglist.model.AppIntents
 import acr.appcradle.shoppinglist.model.ListElement
-import acr.appcradle.shoppinglist.ui.AppViewModel
+import acr.appcradle.shoppinglist.model.ListsIntent
 import acr.appcradle.shoppinglist.ui.components.AppNavTopBar
 import acr.appcradle.shoppinglist.ui.components.DropDownMenus
+import acr.appcradle.shoppinglist.ui.viewmodels.ListsViewModel
 import acr.appcradle.shoppinglist.utils.ThemeOption
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -30,16 +30,16 @@ import androidx.hilt.navigation.compose.hiltViewModel
 
 @Composable
 internal fun ListsAll(
-    viewModel: AppViewModel = hiltViewModel(),
+    viewModel: ListsViewModel = hiltViewModel(),
     createNewListClick: () -> Unit,
     onListClick: (Long, String) -> Unit,
     onEdit: (ListElement) -> Unit,
     onThemeChange: (ThemeOption) -> Unit
 ) {
-    val state by viewModel.listsAllState.collectAsState()
+    val state by viewModel.state.collectAsState()
 
     LaunchedEffect(Unit) {
-        viewModel.actionIntent(AppIntents.LoadList)
+        viewModel.handleIntent(ListsIntent.LoadLists(false))
     }
 
     Scaffold(
@@ -65,7 +65,6 @@ internal fun ListsAll(
             modifier = Modifier.padding(innerPaddings),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-
             when {
                 state.isLoading -> {
                     CircularProgressIndicator()
@@ -91,10 +90,10 @@ internal fun ListsAll(
                                     onEdit(item)
                                 },
                                 onDuplicate = {
-                                    viewModel.actionIntent(AppIntents.DuplicateList(item.id))
+                                    viewModel.handleIntent(ListsIntent.DuplicateList(item.id))
                                 },
                                 onDelete = {
-                                    viewModel.actionIntent(AppIntents.DeleteList(item.id))
+                                    viewModel.handleIntent(ListsIntent.DeleteList(item.id))
                                 },
                                 onListClick = { onListClick(item.id, item.listName) }
                             )

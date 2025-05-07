@@ -26,10 +26,12 @@ class ListCreationViewModel @Inject internal constructor(
 
     fun handleIntent(intent: ListCreationIntent) {
         when (intent) {
+            is ListCreationIntent.SetExistingList -> setExistingList(intent.list)
             is ListCreationIntent.ChangeIcon -> changeIcon(intent.icon)
             is ListCreationIntent.ChangeColor -> changeColor(intent.color)
             is ListCreationIntent.ChangeTitle -> changeTitle(intent.title)
             is ListCreationIntent.CreateList -> createList(intent.title)
+            is ListCreationIntent.UpdateList -> updateList(intent.list)
             is ListCreationIntent.CheckTitleUniqueness -> checkTitleUniqueness(intent.title)
         }
     }
@@ -73,14 +75,35 @@ class ListCreationViewModel @Inject internal constructor(
                 val all = repository.getAllLists().first()
                 _state.update {
                     it.copy(
-                        isTitleDuplicate = all.any {
-                            it.listName.equals(title.trim(), ignoreCase = true)
+                        isTitleDuplicate = all.any { list ->
+                            list.listName.equals(title.trim(), ignoreCase = true)
                         }
                     )
                 }
             } catch (e: Exception) {
                 _state.update { it.copy(error = e.message) }
             }
+        }
+    }
+
+    private fun setExistingList(list: ListElement) {
+        _state.update { 
+            it.copy(
+                title = list.listName,
+                icon = list.icon,
+                iconColor = Color(list.iconBackground.toULong())
+            )
+        }
+    }
+
+    private fun updateList(list: ListElement) {
+        viewModelScope.launch {
+            val updatedList = list.copy(
+                listName = state.value.title,
+                icon = state.value.icon ?: list.icon,
+                iconBackground = state.value.iconColor?.value?.toLong() ?: list.iconBackground
+            )
+            repository.updateList(updatedList)
         }
     }
 } 

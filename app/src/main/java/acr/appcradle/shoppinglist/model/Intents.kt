@@ -11,10 +11,12 @@ sealed class ListsIntent {
 }
 
 sealed class ListCreationIntent {
+    data class SetExistingList(val list: ListElement) : ListCreationIntent()
     data class ChangeIcon(val icon: Int) : ListCreationIntent()
     data class ChangeColor(val color: Color) : ListCreationIntent()
     data class ChangeTitle(val title: String) : ListCreationIntent()
     data class CreateList(val title: String) : ListCreationIntent()
+    data class UpdateList(val list: ListElement) : ListCreationIntent()
     data class CheckTitleUniqueness(val title: String) : ListCreationIntent()
 }
 
