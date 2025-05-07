@@ -1,9 +1,9 @@
 package acr.appcradle.shoppinglist.ui.screens.auth
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import acr.appcradle.shoppinglist.data.repository.AuthRepository
 import android.util.Log
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AuthViewModel @Inject constructor(
-    private val authRepository: AuthRepository
+    private val authRepository: AuthRepository,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow<AuthUiState>(AuthUiState.Initial)
@@ -37,6 +37,8 @@ class AuthViewModel @Inject constructor(
 sealed class AuthUiState {
     object Initial : AuthUiState()
     object Loading : AuthUiState()
-    data class Success(val response: acr.appcradle.shoppinglist.data.model.AuthResponse) : AuthUiState()
+    data class Success(val response: acr.appcradle.shoppinglist.data.model.AuthResponse) :
+        AuthUiState()
+
     data class Error(val message: String) : AuthUiState()
 } 

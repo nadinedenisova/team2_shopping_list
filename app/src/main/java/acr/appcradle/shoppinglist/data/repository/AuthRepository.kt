@@ -1,19 +1,19 @@
 package acr.appcradle.shoppinglist.data.repository
 
+import acr.appcradle.shoppinglist.data.local.TokenStorage
 import acr.appcradle.shoppinglist.data.model.AuthRequest
 import acr.appcradle.shoppinglist.data.model.AuthResponse
 import acr.appcradle.shoppinglist.data.model.RefreshTokenRequest
 import acr.appcradle.shoppinglist.data.remote.AuthApi
+import android.util.Log
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class AuthRepository @Inject constructor(
-    private val authApi: AuthApi
+    private val authApi: AuthApi,
+    private val tokenStorage: TokenStorage
 ) {
-    private var currentAccessToken: String? = null
-    private var currentRefreshToken: String? = null
-
     suspend fun register(email: String, password: String): Result<AuthResponse> {
         return try {
             val response = authApi.register(AuthRequest(email, password))
@@ -54,20 +54,23 @@ class AuthRepository @Inject constructor(
     }
 
     suspend fun getValidAccessToken(): Result<String> {
-        val accessToken = currentAccessToken ?: return Result.failure(Exception("No access token"))
-        
+        val accessToken = tokenStorage.getAccessToken() ?: return Result.failure(Exception("No access token"))
+        Log.d("auth", "token check")
         return try {
             val isValid = checkToken(accessToken).getOrNull() == true
             
             if (isValid) {
+                Log.d("auth", "token valid")
                 Result.success(accessToken)
             } else {
-                val refreshToken = currentRefreshToken ?: return Result.failure(Exception("No refresh token"))
+                val refreshToken = tokenStorage.getRefreshToken() ?: return Result.failure(Exception("No refresh token"))
                 val refreshResult = refreshToken(refreshToken).getOrNull()
                 
                 if (refreshResult != null) {
+                    Log.d("auth", "token refreshed")
                     Result.success(refreshResult.access_token)
                 } else {
+                    Log.d("auth", "token check failed")
                     Result.failure(Exception("Token refresh failed"))
                 }
             }
@@ -77,12 +80,6 @@ class AuthRepository @Inject constructor(
     }
 
     private fun saveTokens(response: AuthResponse) {
-        currentAccessToken = response.access_token
-        currentRefreshToken = response.refresh_token
-    }
-
-    fun clearTokens() {
-        currentAccessToken = null
-        currentRefreshToken = null
+        tokenStorage.saveTokens(response.access_token, response.refresh_token)
     }
 } 

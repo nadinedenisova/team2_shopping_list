@@ -1,5 +1,6 @@
 package acr.appcradle.shoppinglist
 
+import acr.appcradle.shoppinglist.di.DataModuleEntryPoint
 import acr.appcradle.shoppinglist.model.ListElement
 import acr.appcradle.shoppinglist.ui.screens.auth.nav.authScreen
 import acr.appcradle.shoppinglist.ui.screens.auth.nav.navigateToAuth
@@ -17,9 +18,12 @@ import acr.appcradle.shoppinglist.utils.ThemeOption
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
+import dagger.hilt.android.EntryPointAccessors
 
 @Composable
 internal fun AppNavHost(
@@ -28,6 +32,16 @@ internal fun AppNavHost(
     onThemeChange: (ThemeOption) -> Unit
 ) {
     val navController = rememberNavController()
+    val authStateManager = EntryPointAccessors.fromApplication(
+        context = LocalContext.current,
+        entryPoint = DataModuleEntryPoint::class.java
+    ).authStateManager()
+
+    LaunchedEffect(Unit) {
+        if (!authStateManager.checkAndRefreshToken()) {
+            navController.navigateToAuth()
+        }
+    }
 
     NavHost(
         navController = navController,
@@ -46,7 +60,7 @@ internal fun AppNavHost(
         )
 
         greeting(
-            onNextClick = { navController.navigateToAuth() }
+            onNextClick = { navController.navigateListsAll() }
         )
 
         listsAll(
