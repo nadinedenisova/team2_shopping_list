@@ -1,7 +1,6 @@
 package acr.appcradle.shoppinglist
 
 import acr.appcradle.shoppinglist.model.ListElement
-import acr.appcradle.shoppinglist.ui.screens.auth.nav.AuthRoute
 import acr.appcradle.shoppinglist.ui.screens.auth.nav.authScreen
 import acr.appcradle.shoppinglist.ui.screens.auth.nav.navigateToAuth
 import acr.appcradle.shoppinglist.ui.screens.greeting.nav.GreetingRoute
