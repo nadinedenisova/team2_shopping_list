@@ -25,7 +25,7 @@ internal fun ShoppingListApp() {
     )
     val themeRemember = entryPoint.themeRemember()
     var theme by remember { mutableStateOf(themeRemember.getTheme()) }
-    themeRemember.saveTheme(theme)
+    
     val isDarkTheme = when (theme) {
         ThemeOption.SYSTEM -> isSystemInDarkTheme()
         ThemeOption.DARK -> true
@@ -39,7 +39,10 @@ internal fun ShoppingListApp() {
             Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                 AppNavHost(
                     scaffoldPaddings = innerPadding,
-                    onThemeChange = { theme = it }
+                    onThemeChange = { newTheme ->
+                        theme = newTheme
+                        themeRemember.saveTheme(newTheme)
+                    }
                 )
             }
         }

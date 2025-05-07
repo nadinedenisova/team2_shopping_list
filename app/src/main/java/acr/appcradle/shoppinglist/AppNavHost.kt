@@ -1,6 +1,8 @@
 package acr.appcradle.shoppinglist
 
 import acr.appcradle.shoppinglist.model.ListElement
+import acr.appcradle.shoppinglist.ui.screens.auth.nav.authScreen
+import acr.appcradle.shoppinglist.ui.screens.auth.nav.navigateToAuth
 import acr.appcradle.shoppinglist.ui.screens.greeting.nav.GreetingRoute
 import acr.appcradle.shoppinglist.ui.screens.greeting.nav.greeting
 import acr.appcradle.shoppinglist.ui.screens.listCreation.nav.creationScreen
@@ -9,6 +11,8 @@ import acr.appcradle.shoppinglist.ui.screens.listShopping.nav.navigateToShopping
 import acr.appcradle.shoppinglist.ui.screens.listShopping.nav.shoppingScreen
 import acr.appcradle.shoppinglist.ui.screens.listsAll.nav.listsAll
 import acr.appcradle.shoppinglist.ui.screens.listsAll.nav.navigateListsAll
+import acr.appcradle.shoppinglist.ui.screens.register.nav.navigateToRegister
+import acr.appcradle.shoppinglist.ui.screens.register.nav.registerScreen
 import acr.appcradle.shoppinglist.utils.ThemeOption
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
@@ -30,9 +34,21 @@ internal fun AppNavHost(
         startDestination = GreetingRoute,
         modifier = modifier.padding(scaffoldPaddings),
     ) {
-        greeting(
-            onNextClick = { navController.navigateListsAll() }
+        authScreen(
+            onNavigateToRegister = { navController.navigateToRegister() },
+            onNavigateToRestorePassword = {},
+            onLoginSuccess = { navController.navigateListsAll() }
         )
+
+        registerScreen(
+            onNavigateBack = { navController.popBackStack() },
+            onRegisterSuccess = { navController.navigateToAuth() }
+        )
+
+        greeting(
+            onNextClick = { navController.navigateToAuth() }
+        )
+
         listsAll(
             createNewListClick = { navController.navigateToListCreation() },
             onListClick = { listId, listName ->
@@ -46,11 +62,13 @@ internal fun AppNavHost(
                 navController.navigateToListCreation(list)
             }
         )
+
         creationScreen(
             onBackClick = { navController.popBackStack() },
             onNextClick = { navController.navigateListsAll() },
             onThemeChange = onThemeChange
         )
+
         shoppingScreen(
             onBackClick = { navController.popBackStack() },
         )
