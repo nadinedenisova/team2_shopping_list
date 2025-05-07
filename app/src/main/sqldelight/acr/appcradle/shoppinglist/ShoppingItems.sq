@@ -1,0 +1,52 @@
+CREATE TABLE ShoppingItems(
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    listId INTEGER NOT NULL,
+    name TEXT NOT NULL,
+    amount TEXT NOT NULL,
+    unit TEXT NOT NULL,
+    checked INTEGER NOT NULL DEFAULT 0,
+    FOREIGN KEY (listId) REFERENCES ShoppingList(id) ON DELETE CASCADE
+);
+
+
+selectItemsById:
+SELECT id, listId, name, amount, unit, checked
+FROM ShoppingItems
+WHERE listId = ?;
+
+selectAllSortedByName:
+SELECT id, listId, name, amount, unit, checked
+FROM ShoppingItems
+ORDER BY name COLLATE NOCASE ASC;
+
+insertItems:
+INSERT INTO ShoppingItems(listId, name, amount, unit, checked)
+VALUES (?, ?, ?, ?, ?);
+
+deleteItems:
+DELETE
+FROM ShoppingItems
+WHERE id = ?;
+
+updateItemsInfo:
+UPDATE ShoppingItems
+SET
+    name = ?,
+    amount = ?,
+    unit = ?
+WHERE id = ?;
+
+updateItemsCheck:
+UPDATE ShoppingItems
+SET checked = ?
+WHERE id = ?;
+
+deleteAllChecked:
+DELETE
+FROM ShoppingItems
+WHERE checked = 1 AND listId = ?;
+
+makeAllUnchecked:
+UPDATE ShoppingItems
+SET checked = 0
+WHERE listId = ?;
