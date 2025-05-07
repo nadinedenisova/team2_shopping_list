@@ -4,6 +4,7 @@ import acr.appcradle.shoppinglist.model.ListElement
 import acr.appcradle.shoppinglist.ui.screens.auth.nav.AuthRoute
 import acr.appcradle.shoppinglist.ui.screens.auth.nav.authScreen
 import acr.appcradle.shoppinglist.ui.screens.auth.nav.navigateToAuth
+import acr.appcradle.shoppinglist.ui.screens.greeting.nav.GreetingRoute
 import acr.appcradle.shoppinglist.ui.screens.greeting.nav.greeting
 import acr.appcradle.shoppinglist.ui.screens.listCreation.nav.creationScreen
 import acr.appcradle.shoppinglist.ui.screens.listCreation.nav.navigateToListCreation
@@ -31,7 +32,7 @@ internal fun AppNavHost(
 
     NavHost(
         navController = navController,
-        startDestination = AuthRoute,
+        startDestination = GreetingRoute,
         modifier = modifier.padding(scaffoldPaddings),
     ) {
         authScreen(
@@ -46,7 +47,7 @@ internal fun AppNavHost(
         )
 
         greeting(
-            onNextClick = { navController.navigateListsAll() }
+            onNextClick = { navController.navigateToAuth() }
         )
 
         listsAll(
