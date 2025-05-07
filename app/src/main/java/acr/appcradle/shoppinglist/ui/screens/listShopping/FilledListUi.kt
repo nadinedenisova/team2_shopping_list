@@ -1,20 +1,19 @@
 package acr.appcradle.shoppinglist.ui.screens.listShopping
 
-import acr.appcradle.shoppinglist.model.AppIntents
 import acr.appcradle.shoppinglist.model.ShoppingElement
-import acr.appcradle.shoppinglist.ui.AppViewModel
+import acr.appcradle.shoppinglist.model.ShoppingListIntent
 import acr.appcradle.shoppinglist.ui.components.AppBottomSheets
-import acr.appcradle.shoppinglist.ui.components.AppInputFields
 import acr.appcradle.shoppinglist.ui.components.AppSwipeAbleListItem
+import acr.appcradle.shoppinglist.ui.viewmodels.ShoppingListViewModel
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
@@ -26,79 +25,68 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun FilledListUi(
-    modifier: Modifier = Modifier,
-    listId: Long,
     listOfItems: List<ShoppingElement>,
-    viewModel: AppViewModel
+    viewModel: ShoppingListViewModel,
+    listId: Long
 ) {
-    var addItemBottomSheetVisibility by remember { mutableStateOf(false) }
     var editItemBottomSheetVisibility by remember { mutableStateOf(false) }
-    var editItem: ShoppingElement? by remember { mutableStateOf(null) }
-    var searchText by remember { mutableStateOf("") }
-    
+    var selectedItem by remember { mutableStateOf<ShoppingElement?>(null) }
+
     Box(
-        modifier = modifier.fillMaxSize(),
-        contentAlignment = Alignment.BottomEnd
+        modifier = Modifier.fillMaxSize()
     ) {
         Column(
-            modifier = modifier.fillMaxSize()
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp)
         ) {
-            AppInputFields.MainInputField(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp),
-                isSearchIconNeeded = true,
-                placeholderText = "Введите название товара",
-                onValueChange = { searchText = it }
-            )
-            val filteredItems = if (searchText.isBlank()) {
-                listOfItems
-            } else {
-                listOfItems.filter { it.name.contains(searchText, ignoreCase = true) }
-            }
-            filteredItems.forEach { item ->
-                AppSwipeAbleListItem.SwipeAbleShoppingItems(
-                    item = item,
-                    onEdit = {
-                        editItem = item
-                        editItemBottomSheetVisibility = true
-                    },
-                    onDelete = { viewModel.actionIntent(AppIntents.DeleteItem(item.id, item.listId)) },
-                    onItemClick = { viewModel.actionIntent(AppIntents.UpdateItemCheck(item = item)) },
-                )
+            LazyColumn(
+                modifier = Modifier.weight(1f)
+            ) {
+                items(listOfItems) { item ->
+                    AppSwipeAbleListItem.SwipeAbleShoppingItems(
+                        item = item,
+                        onEdit = {
+                            selectedItem = item
+                            editItemBottomSheetVisibility = true
+                        },
+                        onDelete = {
+                            viewModel.handleIntent(ShoppingListIntent.DeleteItem(item.id, listId))
+                        },
+                        onItemClick = {
+                            viewModel.handleIntent(ShoppingListIntent.UpdateItemCheck(item))
+                        }
+                    )
+                }
             }
         }
+
         FloatingActionButton(
             modifier = Modifier
+                .align(Alignment.BottomEnd)
                 .padding(16.dp)
                 .size(48.dp),
-            onClick = { addItemBottomSheetVisibility = true }
+            onClick = { editItemBottomSheetVisibility = true }
         ) {
-            Icon(imageVector = Icons.Default.Add, contentDescription = null)
-        }
-        if (addItemBottomSheetVisibility) {
-            AppBottomSheets.AddItemDialog(
-                onDismissCallback = { addItemBottomSheetVisibility = false },
-                onAddClick = {
-                    viewModel.actionIntent(AppIntents.AddItem(item = it))
-                },
-                listId = listId,
-                existingNames = listOfItems.map { it.name.trim().lowercase() }
+            Icon(
+                imageVector = Icons.Default.Add,
+                contentDescription = "Добавить товар"
             )
         }
-        if (editItemBottomSheetVisibility) {
-            AppBottomSheets.AddItemDialog(
-                onDismissCallback = { editItemBottomSheetVisibility = false },
-                listId = listId,
-                editItem = editItem,
-                onEditClick = {
-                    viewModel.actionIntent(AppIntents.UpdateItem(item = it))
-                    editItemBottomSheetVisibility = false
-                }
-            )
-        }
+    }
+
+    if (editItemBottomSheetVisibility) {
+        AppBottomSheets.AddItemDialog(
+            onDismissCallback = { 
+                editItemBottomSheetVisibility = false
+                selectedItem = null
+            },
+            onAddClick = { viewModel.handleIntent(ShoppingListIntent.AddItem(it)) },
+            onEditClick = { viewModel.handleIntent(ShoppingListIntent.UpdateItem(it)) },
+            editItem = selectedItem,
+            listId = listId
+        )
     }
 }

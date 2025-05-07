@@ -1,6 +1,6 @@
 package acr.appcradle.shoppinglist.model
 
-internal data class ShoppingElement(
+data class ShoppingElement(
     val id: Long,
     val listId: Long,
     val name: String,

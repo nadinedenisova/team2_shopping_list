@@ -1,11 +1,12 @@
 package acr.appcradle.shoppinglist.ui.screens.listShopping
 
 import acr.appcradle.shoppinglist.R
-import acr.appcradle.shoppinglist.model.AppIntents
-import acr.appcradle.shoppinglist.ui.AppViewModel
+import acr.appcradle.shoppinglist.model.ShoppingElement
+import acr.appcradle.shoppinglist.model.ShoppingListIntent
 import acr.appcradle.shoppinglist.ui.components.AppBottomSheets
 import acr.appcradle.shoppinglist.ui.components.ShoppingListButtons
 import acr.appcradle.shoppinglist.ui.theme.Typography
+import acr.appcradle.shoppinglist.ui.viewmodels.ShoppingListViewModel
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -29,7 +30,7 @@ import androidx.compose.ui.unit.dp
 internal fun EmptyListUi(
     listId: Long,
     modifier: Modifier = Modifier,
-    viewModel: AppViewModel,
+    viewModel: ShoppingListViewModel,
 ) {
     var addItemBottomSheetVisibility by rememberSaveable { mutableStateOf(false) }
 
@@ -56,7 +57,6 @@ internal fun EmptyListUi(
             modifier = Modifier.padding(top = 12.dp),
             text = "Начните добавлять товары",
             style = Typography.bodyLarge.copy(textAlign = TextAlign.Center)
-
         )
 
         Spacer(Modifier.weight(1f))
@@ -68,7 +68,7 @@ internal fun EmptyListUi(
         if (addItemBottomSheetVisibility) {
             AppBottomSheets.AddItemDialog(
                 onDismissCallback = { addItemBottomSheetVisibility = false },
-                onAddClick = { viewModel.actionIntent(AppIntents.AddItem(item = it)) },
+                onAddClick = { viewModel.handleIntent(ShoppingListIntent.AddItem(it)) },
                 listId = listId
             )
         }
