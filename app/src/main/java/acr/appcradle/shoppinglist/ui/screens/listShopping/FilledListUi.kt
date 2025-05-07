@@ -1,11 +1,13 @@
 package acr.appcradle.shoppinglist.ui.screens.listShopping
 
+import acr.appcradle.shoppinglist.R
 import acr.appcradle.shoppinglist.model.AppIntents
 import acr.appcradle.shoppinglist.model.ShoppingElement
 import acr.appcradle.shoppinglist.ui.AppViewModel
 import acr.appcradle.shoppinglist.ui.components.AppBottomSheets
 import acr.appcradle.shoppinglist.ui.components.AppInputFields
 import acr.appcradle.shoppinglist.ui.components.AppSwipeAbleListItem
+import acr.appcradle.shoppinglist.ui.theme.Team2Colors
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -24,6 +26,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -51,7 +54,7 @@ internal fun FilledListUi(
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp),
                 isSearchIconNeeded = true,
-                placeholderText = "Введите название товара",
+                placeholderText = stringResource(R.string.enter_the_product_name),
                 onValueChange = { searchText = it }
             )
             val filteredItems = if (searchText.isBlank()) {
@@ -75,7 +78,8 @@ internal fun FilledListUi(
             modifier = Modifier
                 .padding(16.dp)
                 .size(48.dp),
-            onClick = { addItemBottomSheetVisibility = true }
+            onClick = { addItemBottomSheetVisibility = true },
+            containerColor = Team2Colors.tortoise,
         ) {
             Icon(imageVector = Icons.Default.Add, contentDescription = null)
         }

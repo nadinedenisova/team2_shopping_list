@@ -9,8 +9,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
 val RubikFontFamily = FontFamily(
-    Font(R.font.rubik_variablefont_wght, FontWeight.W400, FontStyle.Italic),
-    Font(R.font.rubik_variablefont_wght, FontWeight.W500, FontStyle.Normal),
+    Font(R.font.rubik_variablefont_wght, FontWeight.W400, FontStyle.Normal),
+    Font(R.font.rubik_bold, FontWeight.W500, FontStyle.Normal)
 )
 
 data class CustomTypography(

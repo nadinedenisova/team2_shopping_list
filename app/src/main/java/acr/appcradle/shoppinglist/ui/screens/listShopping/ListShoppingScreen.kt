@@ -30,7 +30,7 @@ internal fun ListShoppingScreen(
     Scaffold(
         topBar = {
             AppNavTopBar(
-                title = "$listName.",
+                title = listName,
                 onBackIconClick = { onBackClick() },
                 onSearchIconClick = {},
                 isBackIconEnable = true,
