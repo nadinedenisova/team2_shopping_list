@@ -28,14 +28,6 @@ sealed class ShoppingListIntent {
     data class UpdateItemCheck(val item: ShoppingElement) : ShoppingListIntent()
     data class DeleteAllChecked(val listId: Long) : ShoppingListIntent()
     data class MakeAllUnChecked(val listId: Long) : ShoppingListIntent()
-    data class ShareList(val name: String, val list: List<ShoppingElement>, val context: Context) : ShoppingListIntent()
+    data class ShareList(val name: String, val list: List<ShoppingElement>, val context: Context) :
+        ShoppingListIntent()
 }
-
-sealed class AuthIntent {
-    data class Login(val email: String, val password: String) : AuthIntent()
-    data object Logout : AuthIntent()
-}
-
-sealed class RegisterIntent {
-    data class Register(val email: String, val password: String) : RegisterIntent()
-} 

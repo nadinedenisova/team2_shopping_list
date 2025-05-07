@@ -1,5 +1,6 @@
 package acr.appcradle.shoppinglist.model
 
+import acr.appcradle.shoppinglist.data.model.AuthResponse
 import androidx.compose.ui.graphics.Color
 
 data class ListsScreenState(
@@ -24,14 +25,16 @@ data class ShoppingListState(
     val error: String? = null
 )
 
-data class AuthState(
-    val isLoading: Boolean = false,
-    val isAuthenticated: Boolean = false,
-    val error: String? = null
-)
+sealed class AuthUiState {
+    object Initial : AuthUiState()
+    object Loading : AuthUiState()
+    data class Success(val response: AuthResponse) : AuthUiState()
+    data class Error(val message: String) : AuthUiState()
+}
 
-data class RegisterState(
-    val isLoading: Boolean = false,
-    val isRegistered: Boolean = false,
-    val error: String? = null
-) 
+sealed class RegisterUiState {
+    object Initial : RegisterUiState()
+    object Loading : RegisterUiState()
+    data class Success(val response: AuthResponse) : RegisterUiState()
+    data class Error(val message: String) : RegisterUiState()
+}
