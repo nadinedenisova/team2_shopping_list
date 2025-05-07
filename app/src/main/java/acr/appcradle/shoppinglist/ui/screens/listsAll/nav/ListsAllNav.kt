@@ -1,6 +1,7 @@
 package acr.appcradle.shoppinglist.ui.screens.listsAll.nav
 
 import acr.appcradle.shoppinglist.model.ListElement
+import acr.appcradle.shoppinglist.ui.screens.greeting.nav.GreetingRoute
 import acr.appcradle.shoppinglist.ui.screens.listsAll.ListsAll
 import acr.appcradle.shoppinglist.utils.ThemeOption
 import androidx.navigation.NavController
@@ -11,7 +12,11 @@ import kotlinx.serialization.Serializable
 @Serializable
 data object ListsAllRoute
 
-internal fun NavController.navigateListsAll() = navigate(route = ListsAllRoute)
+internal fun NavController.navigateListsAll() = navigate(ListsAllRoute) {
+    popUpTo(GreetingRoute) {
+        inclusive = false
+    }
+}
 
 internal fun NavGraphBuilder.listsAll(
     createNewListClick: () -> Unit,
