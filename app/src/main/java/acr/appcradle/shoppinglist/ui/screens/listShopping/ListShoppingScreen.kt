@@ -3,7 +3,8 @@ package acr.appcradle.shoppinglist.ui.screens.listShopping
 import acr.appcradle.shoppinglist.model.ShoppingListIntent
 import acr.appcradle.shoppinglist.ui.components.AppNavTopBar
 import acr.appcradle.shoppinglist.ui.components.DropDownMenus
-import acr.appcradle.shoppinglist.ui.viewmodels.ShoppingListViewModel
+import acr.appcradle.shoppinglist.ui.screens.listShopping.coomponents.EmptyListUi
+import acr.appcradle.shoppinglist.ui.screens.listShopping.coomponents.FilledListUi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold

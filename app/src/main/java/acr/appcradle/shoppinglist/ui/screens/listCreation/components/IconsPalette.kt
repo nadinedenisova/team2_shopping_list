@@ -1,8 +1,8 @@
-package acr.appcradle.shoppinglist.ui.screens.listCreation
+package acr.appcradle.shoppinglist.ui.screens.listCreation.components
 
 import acr.appcradle.shoppinglist.R
 import acr.appcradle.shoppinglist.model.NewListData
-import acr.appcradle.shoppinglist.ui.screens.listCreation.IconsPaletteConstants.GRID_CELLS
+import acr.appcradle.shoppinglist.ui.screens.listCreation.components.IconsPaletteConstants.GRID_CELLS
 import acr.appcradle.shoppinglist.ui.theme.ShoppingListTheme
 import acr.appcradle.shoppinglist.ui.theme.Team2Colors
 import acr.appcradle.shoppinglist.ui.theme.Typography
@@ -55,8 +55,8 @@ internal fun IconsPalette(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp),
-                horizontalArrangement = Arrangement.SpaceEvenly, // Отступы между столбцами
-                verticalArrangement = Arrangement.spacedBy(12.dp), // Отступы между строками
+                horizontalArrangement = Arrangement.SpaceEvenly,
+                verticalArrangement = Arrangement.spacedBy(12.dp),
                 columns = GridCells.Fixed(GRID_CELLS),
                 content = {
                     items(listOfIcons.size) { index ->

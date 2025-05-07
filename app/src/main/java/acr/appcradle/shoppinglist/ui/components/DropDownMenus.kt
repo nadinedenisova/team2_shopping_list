@@ -1,7 +1,7 @@
 package acr.appcradle.shoppinglist.ui.components
 
-import acr.appcradle.shoppinglist.model.AppIntents
-import acr.appcradle.shoppinglist.ui.AppViewModel
+import acr.appcradle.shoppinglist.model.ShoppingListIntent
+import acr.appcradle.shoppinglist.ui.screens.listShopping.ShoppingListViewModel
 import acr.appcradle.shoppinglist.ui.theme.Typography
 import acr.appcradle.shoppinglist.utils.ThemeOption
 import androidx.compose.foundation.clickable
@@ -32,7 +32,7 @@ internal object DropDownMenus {
     @Composable
     fun ShoppingListMenu(
         listId: Long,
-        viewModel: AppViewModel = hiltViewModel(),
+        viewModel: ShoppingListViewModel = hiltViewModel(),
         onShareClick: () -> Unit
     ) {
         var expanded by remember { mutableStateOf(false) }
@@ -56,7 +56,7 @@ internal object DropDownMenus {
                 DropdownMenuItem(
                     text = { Text("Сортировать по алфавиту") },
                     onClick = {
-                        viewModel.actionIntent(AppIntents.LoadSortedItems(listId))
+                        viewModel.handleIntent(ShoppingListIntent.LoadItems(listId, true))
                         expanded = false
                     }
                 )
@@ -69,7 +69,7 @@ internal object DropDownMenus {
                 DropdownMenuItem(
                     text = { Text("Снять отметки со всех товаров") },
                     onClick = {
-                        viewModel.actionIntent(AppIntents.MakeAllUnChecked(listId))
+                        viewModel.handleIntent(ShoppingListIntent.MakeAllUnChecked(listId))
                         expanded = false
                     }
                 )
@@ -84,7 +84,7 @@ internal object DropDownMenus {
                     dialogText = "Вы действительно хотите удалить все купленные товары?",
                     onDismissRequest = { openDeleteAllDialog = false },
                     onConfirmation = {
-                        viewModel.actionIntent(AppIntents.DeleteAllChecked(listId))
+                        viewModel.handleIntent(ShoppingListIntent.DeleteAllChecked(listId))
                         openDeleteAllDialog = false
                         expanded = false
                     }
@@ -96,7 +96,6 @@ internal object DropDownMenus {
                     dialogText = "Вы действительно хотите удалить товар?",
                     onDismissRequest = { openDeleteAllDialog = false },
                     onConfirmation = {
-//                        viewModel.actionIntent(AppIntents.DeleteItem(id = ))
                         openDeleteDialog = false
                     }
                 )
@@ -106,7 +105,7 @@ internal object DropDownMenus {
 
     @Composable
     internal fun AllListsMenu(
-        viewModel: AppViewModel = hiltViewModel(),
+        viewModel: ShoppingListViewModel = hiltViewModel(),
         onThemeChange: (ThemeOption) -> Unit
     ) {
         var expanded by remember { mutableStateOf(false) }
@@ -127,7 +126,7 @@ internal object DropDownMenus {
             ) {
                 DropdownMenuItem(
                     text = { Text("Сортировать по алфавиту") },
-                    onClick = { viewModel.actionIntent(AppIntents.LoadSortedLists) }
+                    onClick = { viewModel.handleIntent(ShoppingListIntent.LoadItems(0, true)) }
                 )
                 DropdownMenuItem(
                     text = { Text("Установить тему") },

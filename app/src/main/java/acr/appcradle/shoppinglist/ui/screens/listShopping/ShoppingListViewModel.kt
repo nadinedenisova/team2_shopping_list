@@ -1,4 +1,4 @@
-package acr.appcradle.shoppinglist.ui.viewmodels
+package acr.appcradle.shoppinglist.ui.screens.listShopping
 
 import acr.appcradle.shoppinglist.model.ItemsRepository
 import acr.appcradle.shoppinglist.model.ListRepository
@@ -149,17 +149,15 @@ class ShoppingListViewModel @Inject internal constructor(
                 val totalCount = items.size
                 val boughtCount = items.count { it.checked }
                 val list = listRepository.getListById(listId)
+                val updatedList = list.copy(
+                    totalCount = totalCount,
+                    boughtCount = boughtCount
+                )
+                listRepository.updateList(updatedList)
 
-                if (list != null) {
-                    val updatedList = list.copy(
-                        totalCount = totalCount,
-                        boughtCount = boughtCount
-                    )
-                    listRepository.updateList(updatedList)
-                }
             } catch (e: Exception) {
                 _state.update { it.copy(error = e.message) }
             }
         }
     }
-} 
+}

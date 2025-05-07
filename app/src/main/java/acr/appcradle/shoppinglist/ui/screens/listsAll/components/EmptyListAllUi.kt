@@ -1,4 +1,4 @@
-package acr.appcradle.shoppinglist.ui.screens.listsAll
+package acr.appcradle.shoppinglist.ui.screens.listsAll.components
 
 import acr.appcradle.shoppinglist.R
 import acr.appcradle.shoppinglist.ui.components.ShoppingListButtons

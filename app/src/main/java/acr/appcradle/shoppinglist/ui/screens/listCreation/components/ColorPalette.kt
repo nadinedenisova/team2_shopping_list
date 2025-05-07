@@ -1,4 +1,4 @@
-package acr.appcradle.shoppinglist.ui.screens.listCreation
+package acr.appcradle.shoppinglist.ui.screens.listCreation.components
 
 import acr.appcradle.shoppinglist.model.NewListData
 import acr.appcradle.shoppinglist.ui.theme.Team2Colors

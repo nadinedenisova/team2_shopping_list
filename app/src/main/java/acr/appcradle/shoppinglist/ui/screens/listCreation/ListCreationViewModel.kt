@@ -1,4 +1,4 @@
-package acr.appcradle.shoppinglist.ui.viewmodels
+package acr.appcradle.shoppinglist.ui.screens.listCreation
 
 import acr.appcradle.shoppinglist.model.ListCreationIntent
 import acr.appcradle.shoppinglist.model.ListCreationState
@@ -87,7 +87,7 @@ class ListCreationViewModel @Inject internal constructor(
     }
 
     private fun setExistingList(list: ListElement) {
-        _state.update { 
+        _state.update {
             it.copy(
                 title = list.listName,
                 icon = list.icon,
@@ -106,4 +106,4 @@ class ListCreationViewModel @Inject internal constructor(
             repository.updateList(updatedList)
         }
     }
-} 
+}

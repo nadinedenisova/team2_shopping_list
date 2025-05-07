@@ -1,4 +1,4 @@
-package acr.appcradle.shoppinglist.ui.viewmodels
+package acr.appcradle.shoppinglist.ui.screens.listsAll
 
 import acr.appcradle.shoppinglist.model.ListElement
 import acr.appcradle.shoppinglist.model.ListRepository
@@ -68,14 +68,12 @@ class ListsViewModel @Inject constructor(
             _state.update { it.copy(error = null) }
             try {
                 val originalList = repository.getListById(id)
-                if (originalList != null) {
-                    val newList = originalList.copy(
-                        id = 0L,
-                        listName = "${originalList.listName} копия"
-                    )
-                    repository.addItem(newList)
-                    loadLists()
-                }
+                val newList = originalList.copy(
+                    id = 0L,
+                    listName = "${originalList.listName} копия"
+                )
+                repository.addItem(newList)
+                loadLists()
             } catch (e: Exception) {
                 _state.update { it.copy(error = e.message) }
             }
@@ -93,4 +91,4 @@ class ListsViewModel @Inject constructor(
             }
         }
     }
-} 
+}

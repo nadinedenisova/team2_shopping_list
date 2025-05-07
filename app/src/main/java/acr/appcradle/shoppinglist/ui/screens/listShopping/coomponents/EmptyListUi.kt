@@ -1,12 +1,11 @@
-package acr.appcradle.shoppinglist.ui.screens.listShopping
+package acr.appcradle.shoppinglist.ui.screens.listShopping.coomponents
 
 import acr.appcradle.shoppinglist.R
-import acr.appcradle.shoppinglist.model.ShoppingElement
 import acr.appcradle.shoppinglist.model.ShoppingListIntent
 import acr.appcradle.shoppinglist.ui.components.AppBottomSheets
 import acr.appcradle.shoppinglist.ui.components.ShoppingListButtons
 import acr.appcradle.shoppinglist.ui.theme.Typography
-import acr.appcradle.shoppinglist.ui.viewmodels.ShoppingListViewModel
+import acr.appcradle.shoppinglist.ui.screens.listShopping.ShoppingListViewModel
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer

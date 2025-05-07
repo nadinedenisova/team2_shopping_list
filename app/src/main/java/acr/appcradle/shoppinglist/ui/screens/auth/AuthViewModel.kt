@@ -1,5 +1,6 @@
 package acr.appcradle.shoppinglist.ui.screens.auth
 
+import acr.appcradle.shoppinglist.data.model.AuthResponse
 import acr.appcradle.shoppinglist.data.repository.AuthRepository
 import android.util.Log
 import androidx.lifecycle.ViewModel
@@ -37,7 +38,7 @@ class AuthViewModel @Inject constructor(
 sealed class AuthUiState {
     object Initial : AuthUiState()
     object Loading : AuthUiState()
-    data class Success(val response: acr.appcradle.shoppinglist.data.model.AuthResponse) :
+    data class Success(val response: AuthResponse) :
         AuthUiState()
 
     data class Error(val message: String) : AuthUiState()

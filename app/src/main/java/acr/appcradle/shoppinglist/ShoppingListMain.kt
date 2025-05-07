@@ -17,7 +17,7 @@ import androidx.compose.ui.platform.LocalContext
 import dagger.hilt.android.EntryPointAccessors
 
 @Composable
-internal fun ShoppingListApp() {
+internal fun ShoppingListMain() {
     val context = LocalContext.current
     val entryPoint = EntryPointAccessors.fromApplication(
         context = context,
@@ -25,7 +25,7 @@ internal fun ShoppingListApp() {
     )
     val themeRemember = entryPoint.themeRemember()
     var theme by remember { mutableStateOf(themeRemember.getTheme()) }
-    
+
     val isDarkTheme = when (theme) {
         ThemeOption.SYSTEM -> isSystemInDarkTheme()
         ThemeOption.DARK -> true

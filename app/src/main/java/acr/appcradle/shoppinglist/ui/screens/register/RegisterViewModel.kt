@@ -1,5 +1,6 @@
 package acr.appcradle.shoppinglist.ui.screens.register
 
+import acr.appcradle.shoppinglist.data.model.AuthResponse
 import acr.appcradle.shoppinglist.data.repository.AuthRepository
 import android.util.Log
 import androidx.lifecycle.ViewModel
@@ -37,7 +38,7 @@ class RegisterViewModel @Inject constructor(
 sealed class RegisterUiState {
     object Initial : RegisterUiState()
     object Loading : RegisterUiState()
-    data class Success(val response: acr.appcradle.shoppinglist.data.model.AuthResponse) :
+    data class Success(val response: AuthResponse) :
         RegisterUiState()
 
     data class Error(val message: String) : RegisterUiState()

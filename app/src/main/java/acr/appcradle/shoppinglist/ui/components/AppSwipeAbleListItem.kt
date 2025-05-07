@@ -2,7 +2,7 @@ package acr.appcradle.shoppinglist.ui.components
 
 import acr.appcradle.shoppinglist.R
 import acr.appcradle.shoppinglist.model.ShoppingElement
-import acr.appcradle.shoppinglist.ui.screens.listShopping.ShoppingListItem
+import acr.appcradle.shoppinglist.ui.screens.listShopping.coomponents.ShoppingListItem
 import acr.appcradle.shoppinglist.ui.theme.Team2Colors
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

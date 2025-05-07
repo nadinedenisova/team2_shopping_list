@@ -1,7 +1,7 @@
-package acr.appcradle.shoppinglist.ui.screens.listShopping
+package acr.appcradle.shoppinglist.ui.screens.listShopping.coomponents
 
 import acr.appcradle.shoppinglist.model.ShoppingElement
-import acr.appcradle.shoppinglist.ui.screens.listShopping.IconsPaletteConstants.TEXT_ALFA
+import acr.appcradle.shoppinglist.ui.screens.listShopping.coomponents.IconsPaletteConstants.TEXT_ALFA
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -28,7 +28,7 @@ internal fun ShoppingListItem(
         modifier = Modifier
             .fillMaxWidth()
             .clickable { onCheckedChange() }
-            .background(color = colorScheme.background,),
+            .background(color = colorScheme.background),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Box(

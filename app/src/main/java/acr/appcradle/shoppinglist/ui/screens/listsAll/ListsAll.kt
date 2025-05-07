@@ -4,7 +4,8 @@ import acr.appcradle.shoppinglist.model.ListElement
 import acr.appcradle.shoppinglist.model.ListsIntent
 import acr.appcradle.shoppinglist.ui.components.AppNavTopBar
 import acr.appcradle.shoppinglist.ui.components.DropDownMenus
-import acr.appcradle.shoppinglist.ui.viewmodels.ListsViewModel
+import acr.appcradle.shoppinglist.ui.screens.listsAll.components.EmptyListAllUi
+import acr.appcradle.shoppinglist.ui.screens.listsAll.components.SwipeListsItem
 import acr.appcradle.shoppinglist.utils.ThemeOption
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
