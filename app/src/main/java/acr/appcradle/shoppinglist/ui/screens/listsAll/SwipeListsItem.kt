@@ -64,6 +64,7 @@ internal fun SwipeListsItem(
         message = stringResource(R.string.confirmation_deletion_list)
     ) {
         onDelete()
+        shouldShowDialog.value = false
     }
 
     val offsetX = remember { Animatable(0f) }

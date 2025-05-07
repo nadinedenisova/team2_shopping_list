@@ -33,4 +33,14 @@
     <string name="add_product">Добавить товар</string>
     <string name="delete_product">Удаление товара</string>
     <string name="confirmation_deletion_product">Вы действительно хотите удалить товар?</string>
+    <string name="sort_alphabetically">Сортировать по алфавиту</string>
+    <string name="share">Поделиться</string>
+    <string name="remove_all_marks">Снять отметки со всех товаров</string>
+    <string name="delete_all_products">Удалить купленные товары</string>
+    <string name="deleting_purchased_product">Удаление купленных товаров</string>
+    <string name="confirmation_deletion_purchased_product">Вы действительно хотите удалить все купленные товары?</string>
+    <string name="set_theme">Установить тему</string>
+    <string name="system_theme">Системная</string>
+    <string name="dark_theme">Тёмная</string>
+    <string name="light_theme">Светлая</string>
 </resources>

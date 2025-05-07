@@ -74,6 +74,7 @@ internal object AppSwipeAbleListItem {
             message = stringResource(R.string.confirmation_deletion_product)
         ) {
             onDelete()
+            shouldShowDialog.value = false
         }
 
         Box(
