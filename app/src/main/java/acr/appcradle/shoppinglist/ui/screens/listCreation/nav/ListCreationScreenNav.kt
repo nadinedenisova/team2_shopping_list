@@ -33,7 +33,6 @@ internal fun NavController.navigateToListCreation(list: ListElement? = null) {
 internal fun NavGraphBuilder.creationScreen(
     onBackClick: () -> Unit,
     onNextClick: () -> Unit,
-    onThemeChange: (ThemeOption) -> Unit
 ) {
     composable(
         route = "$ROUTE_BASE?$ARG_LIST_JSON={$ARG_LIST_JSON}",

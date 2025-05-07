@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 
@@ -26,17 +27,17 @@ internal fun EmptyListAllUi(onNextClick: () -> Unit) {
         )
         Spacer(Modifier.height(52.dp))
         Text(
-            text = "Давайте спланируем покупки!",
-            style = Typography.titleLarge.copy(textAlign = TextAlign.Center),
+            text = stringResource(R.string.plan_our_purchases),
+            style = Typography.headlineSmall.copy(textAlign = TextAlign.Center),
         )
         Text(
             modifier = Modifier.padding(top = 12.dp),
-            text = "Создайте свой первый список",
+            text = stringResource(R.string.create_first_list),
             style = Typography.bodyLarge.copy(textAlign = TextAlign.Center)
         )
         Spacer(Modifier.weight(1f))
         ShoppingListButtons.AppLargeButton(
-            text = "Создать список",
+            text = stringResource(R.string.create_list_button_text),
             onClick = {
                 onNextClick()
             }

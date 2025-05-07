@@ -2,6 +2,7 @@ package acr.appcradle.shoppinglist.ui.screens.listShopping
 
 import acr.appcradle.shoppinglist.model.ShoppingElement
 import acr.appcradle.shoppinglist.ui.screens.listShopping.IconsPaletteConstants.TEXT_ALFA
+import acr.appcradle.shoppinglist.ui.theme.Team2Colors
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -10,12 +11,14 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -28,18 +31,23 @@ internal fun ShoppingListItem(
         modifier = Modifier
             .fillMaxWidth()
             .clickable { onCheckedChange() }
-            .background(color = colorScheme.background,),
+            .background(color = colorScheme.background),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Box(
             modifier = Modifier
                 .padding(horizontal = 16.dp, vertical = 3.5.dp)
-                .size(48.dp),
+                .size(56.dp),
             contentAlignment = Alignment.Center
         ) {
             Checkbox(
                 checked = item.checked,
                 onCheckedChange = { onCheckedChange() },
+                colors = CheckboxDefaults.colors(
+                    checkedColor = Team2Colors.tortoise,     // Цвет фона галочки (галка + квадрат)
+                    checkmarkColor = Color.White,           // Цвет самой галки
+                    uncheckedColor = Color.Gray             // Цвет рамки, если не выбран
+                )
             )
         }
         Text(
@@ -49,8 +57,7 @@ internal fun ShoppingListItem(
             text = item.name,
         )
         Text(
-            modifier = Modifier
-                .padding(horizontal = 16.dp),
+            modifier = Modifier.padding(horizontal = 16.dp).alpha(textAlpha),
             text = "${item.amount} ${item.unit}"
         )
     }

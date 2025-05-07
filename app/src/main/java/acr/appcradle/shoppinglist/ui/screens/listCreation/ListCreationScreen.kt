@@ -1,5 +1,6 @@
 package acr.appcradle.shoppinglist.ui.screens.listCreation
 
+import acr.appcradle.shoppinglist.R
 import acr.appcradle.shoppinglist.model.IconsIntent
 import acr.appcradle.shoppinglist.model.ListElement
 import acr.appcradle.shoppinglist.model.NewListData
@@ -28,6 +29,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -89,7 +91,11 @@ internal fun ListCreationScreenUi(
         topBar = {
             AppNavTopBar(
                 isBackIconEnable = true,
-                title = if (isEditing) "Редактировать список" else "Создать список",
+                title = if (isEditing) {
+                    stringResource(R.string.edit_list)
+                } else {
+                    stringResource(R.string.create_list_button_text)
+                },
                 onBackIconClick = { onBackClick() },
             )
         }
@@ -105,18 +111,17 @@ internal fun ListCreationScreenUi(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp),
-                placeholderText = "Введите название списка",
+                placeholderText = stringResource(R.string.enter_list_name),
                 editedValue = inputText,
                 isError = isDuplicate,
                 onValueChange = {
                     inputText = it
                     viewModel.checkTitleUniqueness(it)
                 },
-
                 )
             if (isDuplicate) {
                 Text(
-                    text = "Это название уже используется, пожалуйста, измените его.",
+                    text = stringResource(R.string.duplicate_list_name),
                     color = Team2Colors.team2color_red,
                     style = MaterialTheme.typography.bodySmall,
                     modifier = Modifier.padding(horizontal = 32.dp)
@@ -135,7 +140,11 @@ internal fun ListCreationScreenUi(
             ShoppingListButtons.AppLargeButton(
                 enabled = inputText.isNotBlank() && !isDuplicate,
                 onClick = { if (inputText.isNotBlank()) onNextClick(inputText.trim()) },
-                text = if (isEditing) "Сохранить" else "Создать"
+                text = if (isEditing) {
+                    stringResource(R.string.save_button_text)
+                } else {
+                    stringResource(R.string.create_button_text)
+                }
             )
         }
     }
