@@ -68,6 +68,11 @@ android {
     buildFeatures {
         compose = true
     }
+    packaging {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1,INDEX.LIST}"
+        }
+    }
 }
 
 dependencies {
@@ -110,6 +115,14 @@ dependencies {
 
     //Saket swipe
     implementation(libs.swipe)
+
+    //Ktor
+    implementation(libs.ktor.client.android)
+    implementation(libs.ktor.client.core)
+    implementation(libs.ktor.client.content.negotiation)
+    implementation(libs.ktor.serialization.kotlinx.json)
+    implementation(libs.ktor.client.logging)
+    implementation(libs.napier)
 }
 
 sqldelight {
