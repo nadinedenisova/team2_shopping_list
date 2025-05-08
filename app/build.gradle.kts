@@ -36,6 +36,15 @@ tasks.withType<DetektCreateBaselineTask>().configureEach {
 
 //endregion
 android {
+    signingConfigs {
+        create("release") {
+            storeFile =
+                file("/Users/sergeyboykov/Yandex.Disk.localized/Develop/AppReleases/ShoppingList/key/key")
+            storePassword = "shoppinglistteam2"
+            keyAlias = "shopping_list_team2"
+            keyPassword = "shoppinglistteam2"
+        }
+    }
     namespace = "acr.appcradle.shoppinglist"
     compileSdk = 35
 
@@ -51,11 +60,12 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName("release")
         }
     }
     compileOptions {
