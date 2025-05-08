@@ -74,3 +74,6 @@ app/
 
 Более подробная информация указана в канбане команды https://github.com/users/nadinedenisova/projects/2/views/1
 
+5. **Видео с осовным функционалом приложения**
+   https://disk.yandex.ru/i/dt4NkG_2LAN00g
+
