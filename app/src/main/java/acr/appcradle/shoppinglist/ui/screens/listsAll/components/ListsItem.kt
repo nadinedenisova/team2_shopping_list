@@ -1,5 +1,6 @@
 package acr.appcradle.shoppinglist.ui.screens.listsAll.components
 
+import acr.appcradle.shoppinglist.ui.theme.RubikFontFamily
 import acr.appcradle.shoppinglist.ui.theme.Typography
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
@@ -19,7 +20,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 @Composable
 internal fun ListsItem(
@@ -65,7 +71,21 @@ internal fun ListsItem(
 
         Text(
             modifier = Modifier.padding(end = 16.dp),
-            text = "$boughtCount/$totalCount",
+            text = buildAnnotatedString {
+                withStyle(style = SpanStyle(
+                    fontFamily = RubikFontFamily,
+                    fontWeight = FontWeight.Normal,
+                    fontSize = 14.sp)) {
+                    append("$boughtCount")
+                }
+                append("/")
+                withStyle(style = SpanStyle(
+                    fontFamily = RubikFontFamily,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 14.sp)) {
+                    append("$totalCount")
+                }
+            }
         )
     }
 }

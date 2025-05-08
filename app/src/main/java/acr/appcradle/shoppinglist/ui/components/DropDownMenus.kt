@@ -1,8 +1,10 @@
 package acr.appcradle.shoppinglist.ui.components
 
 import acr.appcradle.shoppinglist.R
+import acr.appcradle.shoppinglist.model.ListsIntent
 import acr.appcradle.shoppinglist.model.ShoppingListIntent
 import acr.appcradle.shoppinglist.ui.screens.listShopping.ShoppingListViewModel
+import acr.appcradle.shoppinglist.ui.screens.listsAll.ListsViewModel
 import acr.appcradle.shoppinglist.ui.theme.Team2Colors
 import acr.appcradle.shoppinglist.ui.theme.Typography
 import acr.appcradle.shoppinglist.utils.ThemeOption
@@ -109,10 +111,13 @@ internal object DropDownMenus {
                     interactionSource = removeMarksInteractionSource
                 )
                 DropdownMenuItem(
-                    text = { Text(stringResource(R.string.delete_all_products)) },
+                    text = {Text(
+                        text = stringResource(R.string.delete_all_products),
+                        color = Team2Colors.team2color_red) },
                     onClick = { openDeleteAllDialog = true },
                     modifier = Modifier.background(if (isDeleteAllPressed) Team2Colors.tortoiseLight else Color.Transparent),
-                    interactionSource = deleteAllInteractionSource
+                    interactionSource = deleteAllInteractionSource,
+
                 )
             }
             if (openDeleteAllDialog) {
@@ -142,7 +147,7 @@ internal object DropDownMenus {
 
     @Composable
     internal fun AllListsMenu(
-        viewModel: ShoppingListViewModel = hiltViewModel(),
+        viewModel: ListsViewModel = hiltViewModel(),
         onThemeChange: (ThemeOption) -> Unit
     ) {
         var expanded by remember { mutableStateOf(false) }
@@ -179,7 +184,7 @@ internal object DropDownMenus {
 
                 DropdownMenuItem(
                     text = { Text(stringResource(R.string.sort_alphabetically)) },
-                    onClick = { viewModel.handleIntent(ShoppingListIntent.LoadItems(0, true)) },
+                    onClick = { viewModel.handleIntent(ListsIntent.LoadLists(true)) },
                     modifier = Modifier.background(if (isSortPressed) Team2Colors.tortoiseLight else Color.Transparent),
                     interactionSource = sortInteractionSource
                 )

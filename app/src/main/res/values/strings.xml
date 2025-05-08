@@ -44,4 +44,9 @@
     <string name="dark_theme">Тёмная</string>
     <string name="light_theme">Светлая</string>
     <string name="enter_item_name_placeholder">Введите название товара</string>
+    <string name="delete">Удалить</string>
+    <string name="cancel">Отменить</string>
+    <string name="adding_product">Добавление товара</string>
+    <string name="duplicate_product">Этот товар уже есть в списке, добавьте другой</string>
+    <string name="edit_product">Редактирование товара</string>
 </resources>

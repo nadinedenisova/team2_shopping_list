@@ -17,6 +17,7 @@ WHERE listId = ?;
 selectAllSortedByName:
 SELECT id, listId, name, amount, unit, checked
 FROM ShoppingItems
+WHERE listId = ?
 ORDER BY name COLLATE NOCASE ASC;
 
 insertItems:

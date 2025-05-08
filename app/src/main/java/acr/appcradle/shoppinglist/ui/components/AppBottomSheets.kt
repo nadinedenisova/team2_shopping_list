@@ -1,5 +1,6 @@
 package acr.appcradle.shoppinglist.ui.components
 
+import acr.appcradle.shoppinglist.R
 import acr.appcradle.shoppinglist.model.ShoppingElement
 import acr.appcradle.shoppinglist.ui.components.AppBottomSheets.Constants.WEIGHT
 import acr.appcradle.shoppinglist.ui.theme.Team2Colors
@@ -27,6 +28,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 
 internal object AppBottomSheets {
@@ -80,7 +82,7 @@ internal object AppBottomSheets {
                                 .padding(vertical = 18.dp, horizontal = 16.dp)
                                 .height(48.dp)
                                 .weight(1f),
-                            text = "Добавление товара",
+                            text = stringResource(R.string.adding_product),
                             style = Typography.titleLarge
                         )
                         Box(
@@ -101,7 +103,11 @@ internal object AppBottomSheets {
                             Icon(
                                 imageVector = Icons.Default.Check,
                                 contentDescription = null,
-                                tint = Team2Colors.team2colors_gray
+                                tint = if (newItem.name.isNotEmpty() && newItem.amount.isNotEmpty()) {
+                                    Team2Colors.tortoise
+                                } else {
+                                    Team2Colors.team2colors_gray
+                                }
                             )
                         }
                     }
@@ -110,7 +116,8 @@ internal object AppBottomSheets {
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp),
-                    placeholderText = "Введите название товара",
+                    placeholderText = stringResource(R.string.enter_the_product_name),
+                    isError = errorText != null,
                     onValueChange = {
                         newItem = newItem.copy(name = it)
                         errorText = null
@@ -119,8 +126,9 @@ internal object AppBottomSheets {
                 if (errorText != null) {
                     Text(
                         text = errorText!!,
-                        color = Color.Red,
-                        modifier = Modifier.padding(start = 16.dp, top = 4.dp)
+                        color = Team2Colors.team2color_red,
+                        style = Typography.bodySmall,
+                        modifier = Modifier.padding(start = 16.dp, top = 4.dp).padding(horizontal = 32.dp)
                     )
                 }
                 Row(
@@ -165,7 +173,7 @@ internal object AppBottomSheets {
                                 .padding(vertical = 18.dp, horizontal = 16.dp)
                                 .height(48.dp)
                                 .weight(1f),
-                            text = "Добавление товара",
+                            text = stringResource(R.string.edit_product),
                             style = Typography.titleLarge
                         )
                         Box(
@@ -179,10 +187,15 @@ internal object AppBottomSheets {
                                     }
                                 }
                         ) {
+
                             Icon(
                                 imageVector = Icons.Default.Check,
                                 contentDescription = null,
-                                tint = Team2Colors.team2colors_gray
+                                tint = if (newItem.name.isNotEmpty() && newItem.amount.isNotEmpty()) {
+                                    Team2Colors.tortoise
+                                } else {
+                                    Team2Colors.team2colors_gray
+                                }
                             )
                         }
                     }
@@ -192,7 +205,7 @@ internal object AppBottomSheets {
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp),
                     editedValue = newItem.name,
-                    placeholderText = "Введите название товара",
+                    placeholderText = stringResource(R.string.enter_the_product_name),
                     onValueChange = {
                         newItem = newItem.copy(name = it)
                     },

@@ -75,7 +75,7 @@ internal object AppInputFields {
                 } else if (inputText != "") {
                     Icon(
                         modifier = Modifier.clickable { inputText = "" },
-                        imageVector = Icons.Default.Clear,
+                        painter = painterResource(R.drawable.ic_cancel),
                         contentDescription = "Clear Button"
                     )
                 }

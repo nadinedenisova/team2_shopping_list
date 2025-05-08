@@ -12,6 +12,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -28,6 +30,7 @@ internal fun AppNavTopBar(
     isSearchIconEnabled: Boolean = false,
     onSearchIconClick: () -> Unit = {},
     dropDownMenu: @Composable () -> Unit = {},
+    titleTextStyle: androidx.compose.ui.text.TextStyle = Typography.titleLarge
 ) {
 
     val iconsInnerSize = 22.dp
@@ -58,7 +61,7 @@ internal fun AppNavTopBar(
                 .weight(1f)
                 .padding(start = 20.dp),
             text = title,
-            style = Typography.titleLarge,
+            style = titleTextStyle,
             overflow = TextOverflow.Ellipsis
         )
         if (isSearchIconEnabled) {

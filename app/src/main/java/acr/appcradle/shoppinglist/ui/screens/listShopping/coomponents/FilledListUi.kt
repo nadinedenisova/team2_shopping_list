@@ -52,7 +52,7 @@ internal fun FilledListUi(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp),
-                placeholderText = stringResource(R.string.enter_item_name_placeholder),
+                placeholderText = stringResource(R.string.enter_the_product_name),
                 isSearchIconNeeded = true,
                 onValueChange = { searchText = it }
             )
@@ -111,7 +111,8 @@ internal fun FilledListUi(
             onAddClick = { viewModel.handleIntent(ShoppingListIntent.AddItem(it)) },
             onEditClick = { viewModel.handleIntent(ShoppingListIntent.UpdateItem(it)) },
             editItem = selectedItem,
-            listId = listId
+            listId = listId,
+            existingNames = listOfItems.map{it.name.trim().lowercase()}
         )
     }
 }

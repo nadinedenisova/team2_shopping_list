@@ -19,6 +19,7 @@ object Team2Colors {
     val team2color_orange = Color(color = 0xFFF89C08)
     val team2color_red = Color(color = 0xFFFF593A)
     val team2color_list_item_bg_dark = Color(color = 0xFF28282A)
+    val team2color_light_black = Color(color = 0xFF1D1B20 )
 
     val additionalColorGreen = Color(color = 0xFFB4D8CC)
     val additionalColorPurple = Color(color = 0xFFBDBAD8)

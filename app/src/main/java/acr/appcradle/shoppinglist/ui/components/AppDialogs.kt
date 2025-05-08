@@ -1,11 +1,14 @@
 package acr.appcradle.shoppinglist.ui.components
 
+import acr.appcradle.shoppinglist.R
+import acr.appcradle.shoppinglist.ui.theme.Team2Colors
 import acr.appcradle.shoppinglist.ui.theme.Typography
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 
 internal object AppDialogs {
 
@@ -35,9 +38,9 @@ internal object AppDialogs {
                     onClick = { onConfirmation() }
                 ) {
                     Text(
-                        text = "Удалить",
+                        text = stringResource(R.string.delete),
                         style = Typography.labelLarge,
-                        color = Color.Red
+                        color = Team2Colors.team2color_red
                     )
                 }
             },
@@ -46,7 +49,7 @@ internal object AppDialogs {
                     onClick = { onDismissRequest() }
                 ) {
                     Text(
-                        text = "Отменить",
+                        text = stringResource(R.string.cancel),
                         style = Typography.labelLarge
                     )
                 }

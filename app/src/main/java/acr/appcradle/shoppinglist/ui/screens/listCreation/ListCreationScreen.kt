@@ -11,6 +11,7 @@ import acr.appcradle.shoppinglist.ui.components.ShoppingListButtons
 import acr.appcradle.shoppinglist.ui.screens.listCreation.components.ColorPalette
 import acr.appcradle.shoppinglist.ui.screens.listCreation.components.IconsPalette
 import acr.appcradle.shoppinglist.ui.theme.Team2Colors
+import acr.appcradle.shoppinglist.ui.theme.Typography
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -99,8 +100,8 @@ internal fun ListCreationScreen(
                 Text(
                     text = stringResource(R.string.duplicate_list_name),
                     color = Team2Colors.team2color_red,
-                    style = MaterialTheme.typography.bodySmall,
-                    modifier = Modifier.padding(horizontal = 32.dp)
+                    style = Typography.bodySmall,
+                    modifier = Modifier.padding(start = 16.dp, top = 4.dp).padding(horizontal = 32.dp)
                 )
             }
 

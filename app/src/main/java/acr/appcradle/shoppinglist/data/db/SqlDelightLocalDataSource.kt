@@ -117,7 +117,7 @@ internal class SqlDelightLocalDataSource @Inject internal constructor(
             }
 
     override fun getSortedItems(listId: Long): Flow<List<ShoppingElement>> =
-        itemsQueries.selectAllSortedByName()
+        itemsQueries.selectAllSortedByName(listId)
             .asFlow()
             .mapToList(Dispatchers.IO)
             .map { dbList -> dbList.map { converterItem.map(it) } }
