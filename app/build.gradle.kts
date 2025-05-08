@@ -1,5 +1,7 @@
 import io.gitlab.arturbosch.detekt.Detekt
 import io.gitlab.arturbosch.detekt.DetektCreateBaselineTask
+import java.io.FileInputStream
+import java.util.Properties
 
 plugins {
     alias(libs.plugins.android.application)
@@ -11,6 +13,10 @@ plugins {
     id("app.cash.sqldelight")
     id("io.gitlab.arturbosch.detekt") version "1.23.8"
 }
+
+val keystorePropertiesFile = rootProject.file("keystore.properties")
+val keystoreProperties = Properties()
+keystoreProperties.load(FileInputStream(keystorePropertiesFile))
 
 //region detekt
 detekt {
@@ -38,11 +44,10 @@ tasks.withType<DetektCreateBaselineTask>().configureEach {
 android {
     signingConfigs {
         create("release") {
-            storeFile =
-                file("/Users/sergeyboykov/Yandex.Disk.localized/Develop/AppReleases/ShoppingList/key/key")
-            storePassword = "shoppinglistteam2"
-            keyAlias = "shopping_list_team2"
-            keyPassword = "shoppinglistteam2"
+            storeFile = file(keystoreProperties["RELEASE_STORE_FILE"] as String)
+            storePassword = keystoreProperties["RELEASE_STORE_PASSWORD"] as String
+            keyAlias = keystoreProperties["RELEASE_KEY_ALIAS"] as String
+            keyPassword = keystoreProperties["RELEASE_KEY_PASSWORD"] as String
         }
     }
     namespace = "acr.appcradle.shoppinglist"
