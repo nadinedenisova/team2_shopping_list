@@ -80,7 +80,6 @@ internal fun AppNavHost(
         creationScreen(
             onBackClick = { navController.popBackStack() },
             onNextClick = { navController.navigateListsAll() },
-            onThemeChange = onThemeChange
         )
 
         shoppingScreen(

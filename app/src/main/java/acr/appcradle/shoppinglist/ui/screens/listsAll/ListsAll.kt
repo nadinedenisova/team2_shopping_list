@@ -1,11 +1,14 @@
 package acr.appcradle.shoppinglist.ui.screens.listsAll
 
+import acr.appcradle.shoppinglist.R
+import acr.appcradle.shoppinglist.model.AppIntents
 import acr.appcradle.shoppinglist.model.ListElement
 import acr.appcradle.shoppinglist.model.ListsIntent
 import acr.appcradle.shoppinglist.ui.components.AppNavTopBar
 import acr.appcradle.shoppinglist.ui.components.DropDownMenus
 import acr.appcradle.shoppinglist.ui.screens.listsAll.components.EmptyListAllUi
 import acr.appcradle.shoppinglist.ui.screens.listsAll.components.SwipeListsItem
+import acr.appcradle.shoppinglist.ui.theme.Team2Colors
 import acr.appcradle.shoppinglist.utils.ThemeOption
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -26,6 +29,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 
@@ -46,7 +51,7 @@ internal fun ListsAll(
     Scaffold(
         topBar = {
             AppNavTopBar(
-                title = "Мои списки",
+                title = stringResource(R.string.my_list_text),
                 onBackIconClick = {},
                 dropDownMenu = { DropDownMenus.AllListsMenu(onThemeChange = onThemeChange) },
             )
@@ -54,7 +59,8 @@ internal fun ListsAll(
         floatingActionButton = {
             if (!state.isEmpty) {
                 FloatingActionButton(
-                    onClick = { createNewListClick() }
+                    onClick = { createNewListClick() },
+                    containerColor = Team2Colors.tortoise
                 ) {
                     Icon(imageVector = Icons.Default.Add, contentDescription = "Добавить список")
                 }

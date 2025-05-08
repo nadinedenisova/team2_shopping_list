@@ -1,7 +1,7 @@
 package acr.appcradle.shoppinglist.ui.components
 
-import acr.appcradle.shoppinglist.model.ShoppingListIntent
-import acr.appcradle.shoppinglist.ui.screens.listShopping.ShoppingListViewModel
+import acr.appcradle.shoppinglist.model.AppIntents
+import acr.appcradle.shoppinglist.ui.AppViewModel
 import acr.appcradle.shoppinglist.ui.theme.Typography
 import acr.appcradle.shoppinglist.utils.ThemeOption
 import androidx.compose.foundation.clickable
@@ -54,34 +54,34 @@ internal object DropDownMenus {
                 onDismissRequest = { expanded = false }
             ) {
                 DropdownMenuItem(
-                    text = { Text("Сортировать по алфавиту") },
+                    text = { Text(stringResource(R.string.sort_alphabetically)) },
                     onClick = {
-                        viewModel.handleIntent(ShoppingListIntent.LoadItems(listId, true))
+                        viewModel.actionIntent(AppIntents.LoadSortedItems(listId))
                         expanded = false
                     }
                 )
                 DropdownMenuItem(
-                    text = { Text("Поделиться") },
+                    text = { Text(stringResource(R.string.share)) },
                     onClick = {
                         onShareClick()
                     }
                 )
                 DropdownMenuItem(
-                    text = { Text("Снять отметки со всех товаров") },
+                    text = { Text(stringResource(R.string.remove_all_marks)) },
                     onClick = {
                         viewModel.handleIntent(ShoppingListIntent.MakeAllUnChecked(listId))
                         expanded = false
                     }
                 )
                 DropdownMenuItem(
-                    text = { Text("Удалить купленные товары") },
+                    text = { Text(stringResource(R.string.delete_all_products)) },
                     onClick = { openDeleteAllDialog = true }
                 )
             }
             if (openDeleteAllDialog) {
                 AppDialogs.MainAppDialog(
-                    dialogTitle = "Удаление купленных товаров",
-                    dialogText = "Вы действительно хотите удалить все купленные товары?",
+                    dialogTitle = stringResource(R.string.deleting_purchased_product),
+                    dialogText = stringResource(R.string.confirmation_deletion_purchased_product),
                     onDismissRequest = { openDeleteAllDialog = false },
                     onConfirmation = {
                         viewModel.handleIntent(ShoppingListIntent.DeleteAllChecked(listId))
@@ -92,8 +92,8 @@ internal object DropDownMenus {
             }
             if (openDeleteDialog) {
                 AppDialogs.MainAppDialog(
-                    dialogTitle = "Удаление товара",
-                    dialogText = "Вы действительно хотите удалить товар?",
+                    dialogTitle = stringResource(R.string.delete_product),
+                    dialogText = stringResource(R.string.confirmation_deletion_product),
                     onDismissRequest = { openDeleteAllDialog = false },
                     onConfirmation = {
                         openDeleteDialog = false
@@ -125,11 +125,11 @@ internal object DropDownMenus {
                 onDismissRequest = { expanded = false }
             ) {
                 DropdownMenuItem(
-                    text = { Text("Сортировать по алфавиту") },
-                    onClick = { viewModel.handleIntent(ShoppingListIntent.LoadItems(0, true)) }
+                    text = { Text(stringResource(R.string.sort_alphabetically)) },
+                    onClick = { viewModel.actionIntent(AppIntents.LoadSortedLists) }
                 )
                 DropdownMenuItem(
-                    text = { Text("Установить тему") },
+                    text = { Text(stringResource(R.string.set_theme)) },
                     onClick = { themeMenuExpanded = !themeMenuExpanded }
                 )
             }
@@ -141,11 +141,11 @@ internal object DropDownMenus {
             ) {
                 Text(
                     modifier = Modifier.padding(12.dp),
-                    text = "Установить тему",
+                    text = stringResource(R.string.set_theme),
                     style = Typography.bodyMedium
                 )
                 DropdownMenuItem(
-                    text = { Text("Системная") },
+                    text = { Text(stringResource(R.string.system_theme)) },
                     onClick = {
                         onThemeChange(ThemeOption.SYSTEM)
                         themeMenuExpanded = false
@@ -153,7 +153,7 @@ internal object DropDownMenus {
                     }
                 )
                 DropdownMenuItem(
-                    text = { Text("Темная") },
+                    text = { Text(stringResource(R.string.dark_theme)) },
                     onClick = {
                         onThemeChange(ThemeOption.DARK)
                         themeMenuExpanded = false
@@ -161,7 +161,7 @@ internal object DropDownMenus {
                     }
                 )
                 DropdownMenuItem(
-                    text = { Text("Светлая") },
+                    text = { Text(stringResource(R.string.light_theme)) },
                     onClick = {
                         onThemeChange(ThemeOption.LIGHT)
                         themeMenuExpanded = false

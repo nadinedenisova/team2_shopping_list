@@ -22,6 +22,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 
@@ -48,20 +49,20 @@ internal fun EmptyListUi(
 
         Text(
             modifier = Modifier.padding(top = 52.dp),
-            text = "Давайте спланируем покупки!",
+            text = stringResource(R.string.plan_our_purchases),
             style = Typography.headlineSmall.copy(textAlign = TextAlign.Center)
         )
 
         Text(
             modifier = Modifier.padding(top = 12.dp),
-            text = "Начните добавлять товары",
+            text = stringResource(R.string.start_adding_products),
             style = Typography.bodyLarge.copy(textAlign = TextAlign.Center)
         )
 
         Spacer(Modifier.weight(1f))
 
         ShoppingListButtons.AppLargeButton(
-            text = "Добавить товар",
+            text = stringResource(R.string.add_product),
             onClick = { addItemBottomSheetVisibility = true }
         )
         if (addItemBottomSheetVisibility) {

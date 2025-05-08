@@ -1,6 +1,8 @@
 package acr.appcradle.shoppinglist.ui.screens.listCreation
 
 import acr.appcradle.shoppinglist.model.ListCreationIntent
+import acr.appcradle.shoppinglist.R
+import acr.appcradle.shoppinglist.model.IconsIntent
 import acr.appcradle.shoppinglist.model.ListElement
 import acr.appcradle.shoppinglist.model.NewListData
 import acr.appcradle.shoppinglist.ui.components.AppInputFields
@@ -27,8 +29,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 @Composable
 internal fun ListCreationScreen(
@@ -58,7 +63,11 @@ internal fun ListCreationScreen(
         topBar = {
             AppNavTopBar(
                 isBackIconEnable = true,
-                title = if (isEditing) "Редактировать список" else "Создать список",
+                title = if (isEditing) {
+                    stringResource(R.string.edit_list)
+                } else {
+                    stringResource(R.string.create_list_button_text)
+                },
                 onBackIconClick = { onBackClick() },
             )
         }
@@ -76,7 +85,7 @@ internal fun ListCreationScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp),
-                placeholderText = "Введите название списка",
+                placeholderText = stringResource(R.string.enter_list_name),
                 editedValue = inputText,
                 isError = state.isTitleDuplicate,
                 onValueChange = {
@@ -87,9 +96,10 @@ internal fun ListCreationScreen(
 
             if (state.isTitleDuplicate) {
                 Text(
-                    text = "Список с таким названием уже существует",
-                    color = MaterialTheme.colorScheme.error,
-                    modifier = Modifier.padding(start = 16.dp, top = 4.dp)
+                    text = stringResource(R.string.duplicate_list_name),
+                    color = Team2Colors.team2color_red,
+                    style = MaterialTheme.typography.bodySmall,
+                    modifier = Modifier.padding(horizontal = 32.dp)
                 )
             }
 
