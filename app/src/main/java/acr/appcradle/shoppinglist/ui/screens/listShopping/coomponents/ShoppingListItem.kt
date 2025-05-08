@@ -1,7 +1,7 @@
-package acr.appcradle.shoppinglist.ui.screens.listShopping
+package acr.appcradle.shoppinglist.ui.screens.listShopping.coomponents
 
 import acr.appcradle.shoppinglist.model.ShoppingElement
-import acr.appcradle.shoppinglist.ui.screens.listShopping.IconsPaletteConstants.TEXT_ALFA
+import acr.appcradle.shoppinglist.ui.screens.listShopping.coomponents.IconsPaletteConstants.TEXT_ALFA
 import acr.appcradle.shoppinglist.ui.theme.Team2Colors
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
-import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -47,7 +46,7 @@ internal fun ShoppingListItem(
                 colors = CheckboxDefaults.colors(
                     checkedColor = Team2Colors.tortoise,     // Цвет фона галочки (галка + квадрат)
                     checkmarkColor = Color.White,           // Цвет самой галки
-                    uncheckedColor = Color.Gray             // Цвет рамки, если не выбран
+                    uncheckedColor = Color.Gray
                 )
             )
         }

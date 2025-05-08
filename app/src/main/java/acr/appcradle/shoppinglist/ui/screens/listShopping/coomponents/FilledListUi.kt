@@ -4,6 +4,7 @@ import acr.appcradle.shoppinglist.R
 import acr.appcradle.shoppinglist.model.ShoppingElement
 import acr.appcradle.shoppinglist.model.ShoppingListIntent
 import acr.appcradle.shoppinglist.ui.components.AppBottomSheets
+import acr.appcradle.shoppinglist.ui.components.AppInputFields
 import acr.appcradle.shoppinglist.ui.components.AppSwipeAbleListItem
 import acr.appcradle.shoppinglist.ui.screens.listShopping.ShoppingListViewModel
 import acr.appcradle.shoppinglist.ui.theme.Team2Colors
@@ -17,8 +18,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material3.Divider
 import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -39,19 +40,30 @@ internal fun FilledListUi(
 ) {
     var editItemBottomSheetVisibility by remember { mutableStateOf(false) }
     var selectedItem by remember { mutableStateOf<ShoppingElement?>(null) }
+    var searchText by remember { mutableStateOf("") }
 
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp)
+            modifier = Modifier.fillMaxSize()
         ) {
+            AppInputFields.MainInputField(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp),
+                placeholderText = "Введите название товара",
+                isSearchIconNeeded = true,
+                onValueChange = { searchText = it }
+            )
             LazyColumn(
                 modifier = Modifier.weight(1f)
             ) {
-                items(listOfItems) { item ->
+                items(
+                    listOfItems.filter { item ->
+                        item.name.contains(searchText, ignoreCase = true)
+                    }
+                ) { item ->
                     AppSwipeAbleListItem.SwipeAbleShoppingItems(
                         item = item,
                         onEdit = {
@@ -65,7 +77,7 @@ internal fun FilledListUi(
                             viewModel.handleIntent(ShoppingListIntent.UpdateItemCheck(item))
                         }
                     )
-                    Divider(
+                    HorizontalDivider(
                         modifier = Modifier.fillMaxWidth(),
                         color = Color.White,
                         thickness = 1.dp,
@@ -92,7 +104,7 @@ internal fun FilledListUi(
 
     if (editItemBottomSheetVisibility) {
         AppBottomSheets.AddItemDialog(
-            onDismissCallback = { 
+            onDismissCallback = {
                 editItemBottomSheetVisibility = false
                 selectedItem = null
             },
