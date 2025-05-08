@@ -60,9 +60,12 @@ internal fun ListsAll(
             if (!state.isEmpty) {
                 FloatingActionButton(
                     onClick = { createNewListClick() },
-                    containerColor = Team2Colors.tortoise
+                    containerColor = Team2Colors.tortoise,
+
                 ) {
-                    Icon(imageVector = Icons.Default.Add, contentDescription = "Добавить список")
+                    Icon(imageVector = Icons.Default.Add,
+                        contentDescription = "Добавить список",
+                        tint = Color.White)
                 }
             }
         },

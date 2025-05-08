@@ -1,7 +1,6 @@
 package acr.appcradle.shoppinglist.ui.screens.listShopping
 
 import acr.appcradle.shoppinglist.model.ShoppingElement
-import acr.appcradle.shoppinglist.ui.screens.listShopping.coomponents.IconsPaletteConstants.TEXT_ALFA
 import acr.appcradle.shoppinglist.ui.screens.listShopping.IconsPaletteConstants.TEXT_ALFA
 import acr.appcradle.shoppinglist.ui.theme.Team2Colors
 import androidx.compose.foundation.background
@@ -13,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
+import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -62,6 +62,7 @@ internal fun ShoppingListItem(
             text = "${item.amount} ${item.unit}"
         )
     }
+
 }
 
 private object IconsPaletteConstants {

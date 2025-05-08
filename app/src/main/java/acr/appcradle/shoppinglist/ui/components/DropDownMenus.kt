@@ -1,7 +1,9 @@
 package acr.appcradle.shoppinglist.ui.components
 
+import acr.appcradle.shoppinglist.R
 import acr.appcradle.shoppinglist.model.AppIntents
-import acr.appcradle.shoppinglist.ui.AppViewModel
+import acr.appcradle.shoppinglist.model.ShoppingListIntent
+import acr.appcradle.shoppinglist.ui.screens.listShopping.ShoppingListViewModel
 import acr.appcradle.shoppinglist.ui.theme.Typography
 import acr.appcradle.shoppinglist.utils.ThemeOption
 import androidx.compose.foundation.clickable
@@ -23,6 +25,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -56,7 +59,7 @@ internal object DropDownMenus {
                 DropdownMenuItem(
                     text = { Text(stringResource(R.string.sort_alphabetically)) },
                     onClick = {
-                        viewModel.actionIntent(AppIntents.LoadSortedItems(listId))
+                        viewModel.handleIntent(ShoppingListIntent.LoadItems(listId, true))
                         expanded = false
                     }
                 )
@@ -126,7 +129,7 @@ internal object DropDownMenus {
             ) {
                 DropdownMenuItem(
                     text = { Text(stringResource(R.string.sort_alphabetically)) },
-                    onClick = { viewModel.actionIntent(AppIntents.LoadSortedLists) }
+                    onClick = { viewModel.handleIntent(ShoppingListIntent.LoadItems(0, true)) }
                 )
                 DropdownMenuItem(
                     text = { Text(stringResource(R.string.set_theme)) },

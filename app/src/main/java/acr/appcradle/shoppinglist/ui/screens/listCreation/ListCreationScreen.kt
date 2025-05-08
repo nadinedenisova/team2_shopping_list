@@ -10,6 +10,7 @@ import acr.appcradle.shoppinglist.ui.components.AppNavTopBar
 import acr.appcradle.shoppinglist.ui.components.ShoppingListButtons
 import acr.appcradle.shoppinglist.ui.screens.listCreation.components.ColorPalette
 import acr.appcradle.shoppinglist.ui.screens.listCreation.components.IconsPalette
+import acr.appcradle.shoppinglist.ui.theme.Team2Colors
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -130,7 +131,11 @@ internal fun ListCreationScreen(
             Spacer(modifier = Modifier.padding(32.dp))
 
             ShoppingListButtons.AppLargeButton(
-                text = if (isEditing) "Сохранить" else "Создать",
+                text = if (isEditing) {
+                    stringResource(R.string.save_button_text)
+                } else {
+                    stringResource(R.string.create_button_text)
+                },
                 onClick = {
                     if (!state.isTitleDuplicate) {
                         if (isEditing) {

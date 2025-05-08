@@ -1,5 +1,7 @@
 package acr.appcradle.shoppinglist.ui.screens.auth
 
+import acr.appcradle.shoppinglist.R
+import acr.appcradle.shoppinglist.model.AuthUiState
 import acr.appcradle.shoppinglist.ui.theme.ShoppingListTheme
 import acr.appcradle.shoppinglist.utils.ThemePreviews
 import androidx.compose.foundation.layout.Arrangement
@@ -26,6 +28,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
@@ -90,7 +93,7 @@ fun AuthScreenUi(
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         Text(
-            text = "Авторизация",
+            text = stringResource(R.string.authorization),
             style = MaterialTheme.typography.headlineMedium,
             modifier = Modifier.padding(vertical = 32.dp)
         )
@@ -101,7 +104,7 @@ fun AuthScreenUi(
                 email = it
                 validateEmail(it)
             },
-            label = { Text("Email") },
+            label = { Text(stringResource(R.string.email)) },
             modifier = Modifier.fillMaxWidth(),
             singleLine = true,
             isError = emailError != null,
@@ -119,7 +122,7 @@ fun AuthScreenUi(
                 password = it
                 validatePassword(it)
             },
-            label = { Text("Пароль") },
+            label = { Text(stringResource(R.string.password)) },
             modifier = Modifier.fillMaxWidth(),
             visualTransformation = PasswordVisualTransformation(),
             singleLine = true,
@@ -139,21 +142,21 @@ fun AuthScreenUi(
                 .height(50.dp),
             enabled = isLoginButtonEnabled
         ) {
-            Text("Войти")
+            Text(stringResource(R.string.enter))
         }
 
         TextButton(
             onClick = onNavigateToRegister,
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("Зарегистрироваться")
+            Text(stringResource(R.string.register))
         }
 
         TextButton(
             onClick = onNavigateToRestorePassword,
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("Восстановить пароль")
+            Text(stringResource(R.string.recover_the_password))
         }
 
         when (uiState) {

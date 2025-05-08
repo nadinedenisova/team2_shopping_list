@@ -1,5 +1,7 @@
 package acr.appcradle.shoppinglist.ui.screens.register
 
+import acr.appcradle.shoppinglist.R
+import acr.appcradle.shoppinglist.model.RegisterUiState
 import acr.appcradle.shoppinglist.ui.components.AppNavTopBar
 import acr.appcradle.shoppinglist.ui.theme.ShoppingListTheme
 import acr.appcradle.shoppinglist.utils.ThemePreviews
@@ -27,6 +29,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
@@ -104,7 +107,7 @@ fun RegisterScreenUi(
     Scaffold(
         topBar = {
             AppNavTopBar(
-                title = "Регистрация",
+                title = stringResource(R.string.registration),
                 onBackIconClick = onNavigateBack,
                 isBackIconEnable = true,
             )
@@ -124,7 +127,7 @@ fun RegisterScreenUi(
                     email = it
                     validateEmail(it)
                 },
-                label = { Text("Email") },
+                label = { Text(stringResource(R.string.email)) },
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true,
                 isError = emailError != null,
@@ -143,7 +146,7 @@ fun RegisterScreenUi(
                     validatePassword(it)
                     validateConfirmPassword(it, confirmPassword)
                 },
-                label = { Text("Пароль") },
+                label = { Text(stringResource(R.string.password)) },
                 modifier = Modifier.fillMaxWidth(),
                 visualTransformation = PasswordVisualTransformation(),
                 singleLine = true,
@@ -162,7 +165,7 @@ fun RegisterScreenUi(
                     confirmPassword = it
                     validateConfirmPassword(password, it)
                 },
-                label = { Text("Подтвердите пароль") },
+                label = { Text(stringResource(R.string.confirm_password_text)) },
                 modifier = Modifier.fillMaxWidth(),
                 visualTransformation = PasswordVisualTransformation(),
                 singleLine = true,
@@ -182,7 +185,7 @@ fun RegisterScreenUi(
                     .height(50.dp),
                 enabled = isRegisterButtonEnabled
             ) {
-                Text("Зарегистрироваться")
+                Text(stringResource(R.string.register))
             }
 
             when (uiState) {
