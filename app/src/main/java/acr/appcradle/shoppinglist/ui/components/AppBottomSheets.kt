@@ -27,11 +27,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 
 internal object AppBottomSheets {
+
+    //todo упростить для предотвращения дублирования кода
 
     private object Constants {
         const val WEIGHT = 0.5f
@@ -80,7 +81,6 @@ internal object AppBottomSheets {
                         Text(
                             modifier = Modifier
                                 .padding(vertical = 18.dp, horizontal = 16.dp)
-                                .height(48.dp)
                                 .weight(1f),
                             text = stringResource(R.string.adding_product),
                             style = Typography.titleLarge
@@ -98,7 +98,8 @@ internal object AppBottomSheets {
                                         onAddClick(newItem)
                                         onDismissCallback()
                                     }
-                                }
+                                },
+                            contentAlignment = Alignment.Center
                         ) {
                             Icon(
                                 imageVector = Icons.Default.Check,
@@ -128,7 +129,9 @@ internal object AppBottomSheets {
                         text = errorText!!,
                         color = Team2Colors.team2color_red,
                         style = Typography.bodySmall,
-                        modifier = Modifier.padding(start = 16.dp, top = 4.dp).padding(horizontal = 32.dp)
+                        modifier = Modifier
+                            .padding(start = 16.dp, top = 4.dp)
+                            .padding(horizontal = 32.dp)
                     )
                 }
                 Row(

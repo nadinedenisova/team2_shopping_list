@@ -5,8 +5,7 @@ import acr.appcradle.shoppinglist.model.ListRepository
 import acr.appcradle.shoppinglist.model.ShoppingElement
 import acr.appcradle.shoppinglist.model.ShoppingListIntent
 import acr.appcradle.shoppinglist.model.ShoppingListState
-import android.content.Context
-import android.content.Intent
+import acr.appcradle.shoppinglist.utils.shareList
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -120,26 +119,6 @@ class ShoppingListViewModel @Inject internal constructor(
                 _state.update { it.copy(error = e.message) }
             }
         }
-    }
-
-    private fun shareList(name: String, list: List<ShoppingElement>, context: Context) {
-        val text = buildString {
-            appendLine("Название списка: $name")
-            appendLine()
-            appendLine("Список товаров:")
-            list.forEach {
-                appendLine("- ${it.name}")
-            }
-        }
-
-        val sendIntent = Intent(Intent.ACTION_SEND).apply {
-            type = "text/plain"
-            putExtra(Intent.EXTRA_TEXT, text)
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK
-        }
-
-        val shareIntent = Intent.createChooser(sendIntent, "Поделиться списком")
-        context.startActivity(shareIntent)
     }
 
     private fun updateListCounters(listId: Long) {
