@@ -52,7 +52,7 @@ internal fun FilledListUi(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp),
-                placeholderText = "Введите название товара",
+                placeholderText = stringResource(R.string.enter_item_name_placeholder),
                 isSearchIconNeeded = true,
                 onValueChange = { searchText = it }
             )

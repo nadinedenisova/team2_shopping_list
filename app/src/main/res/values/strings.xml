@@ -43,4 +43,5 @@
     <string name="system_theme">Системная</string>
     <string name="dark_theme">Тёмная</string>
     <string name="light_theme">Светлая</string>
+    <string name="enter_item_name_placeholder">Введите название товара</string>
 </resources>

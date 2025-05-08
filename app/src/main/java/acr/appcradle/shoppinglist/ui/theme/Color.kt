@@ -12,6 +12,7 @@ val Pink40 = Color(color = 0xFF7D5260)
 
 object Team2Colors {
     val tortoise = Color(color = 0xFF147A85)
+    val tortoiseLight = Color(color = 0xFF5B8387)
     val iconsBg = Color(color = 0xFFCBCCCC)
     val team2colors_gray = Color(color = 0xFF74797E)
     val team2colors_lightGray = Color(color = 0xFFBDBDBD)
